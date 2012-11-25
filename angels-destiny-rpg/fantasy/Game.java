@@ -68,6 +68,8 @@ public class Game extends JPanel implements ActionListener {
 	//a battle phase is being displayed
     boolean battlegoingon = false;
 
+    BattleGrid battlegrid = new BattleGrid(6);
+
     public Game() {
 
         addKeyListener(new TAdapter());
@@ -353,6 +355,7 @@ public class Game extends JPanel implements ActionListener {
 	   	}
 	   	if (key == KeyEvent.VK_X) {
 			battlegoingon = true;
+			///battlegrid.get(handcursorwidget.getx()
 		}
 		//flee battle
 	   	if (key == KeyEvent.VK_ESCAPE) {
