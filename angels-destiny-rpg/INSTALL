@@ -1,0 +1,9 @@
+Run these 2 lines in a shell:
+
+javac fantasy/*.java;
+java fantasy/FF
+
+Play Keys:
+
+- arrow keys : movement on map
+- escape key : exit battle
