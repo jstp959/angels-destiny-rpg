@@ -37,7 +37,7 @@ public class Game extends JPanel implements ActionListener {
     String prefix = "./pics/";
     Dimension d;
     Font smallfont = new Font("Helvetica", Font.BOLD, 14);
-
+    private int level = 1;
     double mapy = 0;
     double mapx = 0;
     double activationPixel = 0;
@@ -48,11 +48,14 @@ public class Game extends JPanel implements ActionListener {
     short screendata;
     Timer timer;
 
-    private Random rng;
+    private Random rng = new Random();
 
-    LinkedList buildings = new LinkedList();
-    LinkedList nonplayercharacters = new LinkedList();
-    LinkedList monsters = new LinkedList();
+    private LinkedList buildings = new LinkedList();
+    private LinkedList nonplayercharacters = new LinkedList();
+ 
+    private int numberofmonsters = 2; /////Random().nextInt(3)+1;
+    private LinkedList monsters = new LinkedList();
+    private MonsterDatabase monsterdatabase = new MonsterDatabaseLevel1();
 
     Player player = new Player(100,100);
     Map map = new Map(0,0,640,640, new ImageIcon(prefix+"map-1024x1024-1.png").getImage(), 0, 0);
@@ -61,7 +64,7 @@ public class Game extends JPanel implements ActionListener {
     FantasyHandCursorWidget handcursorwidget = new FantasyHandCursorWidget(96-20,96);
 
 	//battle screen is on 
-    boolean battle = false;//FIXME false to start game
+    boolean battle = false;//NOTE! false to start game
 	//a battle phase is being displayed
     boolean battlegoingon = false;
 
@@ -78,12 +81,32 @@ public class Game extends JPanel implements ActionListener {
 
 	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage())); //FIXME
 	nonplayercharacters.add(new Bartender(0,0)); //FIXME
-	monsters.add(new Slime(48,96)); //FIXME
+	//monsters.add(new Slime(48,96)); //FIXME
+
+
+	//delete, for starting battle mode
+				int randomnumber2 = rng.nextInt(4);
+				numberofmonsters = randomnumber2 + 1;
+				
+				int number;
+				for (number = 0; number < numberofmonsters; number++) {
+					int randomnumber3 = rng.nextInt(monsterdatabase.size());
+					if (level == 1) 
+						addMonsterLevel1(randomnumber3, number);
+				}
     }
 
     public void addNotify() {
         super.addNotify();
         GameInit();
+    }
+
+    public void addMonsterLevel1(int index, int numberofmonster) {
+	String monstername = monsterdatabase.getMonster(index);
+	if (monstername == "slime")
+		monsters.add(new Slime(48+(numberofmonster%3)*48,48+(numberofmonster%2)*48));
+	else
+		monsters.add(new Slime(48+(numberofmonster%4)*48,48+(numberofmonster%2)*48));
     }
 
     public void DrawMap(Graphics2D g2d) {
@@ -239,6 +262,12 @@ public class Game extends JPanel implements ActionListener {
 	DrawBattleWidgets(g2d);
 	if (!battlegoingon) {
 		DrawBattleMonsterHandCursor(g2d);
+	} else if (battlegoingon) {
+		int randomnumber = rng.nextInt(60);
+		if (randomnumber == 0) {
+			int randomnumber2 = rng.nextInt(numberofmonsters);
+			
+		}		
 	}
       }
 /*      g2d.setColor(Color.white);
@@ -293,9 +322,19 @@ public class Game extends JPanel implements ActionListener {
 			key == KeyEvent.VK_RIGHT ||
 			key == KeyEvent.VK_UP ||
 			key == KeyEvent.VK_DOWN) {
-      			int randomnumber = rng.nextInt(300);
+      			int randomnumber = rng.nextInt(3000);
       			if (randomnumber == 0) {
 				battle = true;
+
+				int randomnumber2 = rng.nextInt(4);
+				numberofmonsters = randomnumber2 + 1;
+				
+				int number;
+				for (number = 0; number < numberofmonsters; number++) {
+					int randomnumber3 = rng.nextInt(monsterdatabase.size());
+					if (level == 1) 
+						addMonsterLevel1(randomnumber3, number);
+				}
 				return;//NOTE!
 			}
 		}	
@@ -312,6 +351,9 @@ public class Game extends JPanel implements ActionListener {
 	   	if (key == KeyEvent.VK_DOWN) {
 			handcursorwidget.sety(handcursorwidget.gety()+48);//FIXME - monster height
 	   	}
+	   	if (key == KeyEvent.VK_X) {
+			battlegoingon = true;
+		}
 		//flee battle
 	   	if (key == KeyEvent.VK_ESCAPE) {
 			battle = false;
