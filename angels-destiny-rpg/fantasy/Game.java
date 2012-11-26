@@ -58,6 +58,8 @@ public class Game extends JPanel implements ActionListener {
     private MonsterDatabase monsterdatabase = new MonsterDatabaseLevel1();
 
     Player player = new Player(100,100);
+    int playerindex = -1;//NOTE!
+    int numberofplayercharacters = 3;
     Map map = new Map(0,0,640,640, new ImageIcon(prefix+"map-1024x1024-1.png").getImage(), 0, 0);
 
     FantasyBattleWidget battlewidget = new FantasyBattleWidget(0,200-64);
@@ -70,7 +72,8 @@ public class Game extends JPanel implements ActionListener {
 	//a battle phase is being displayed
     boolean battlegoingon = false;
     boolean chooseattackmode = false;
-   
+    boolean attack = false;
+ 
     private int battlegridmonstertoattackx = 0;
     private int battlegridmonstertoattacky = 0;
     private String battlegridmonstertoattackname = "";
@@ -120,7 +123,13 @@ public class Game extends JPanel implements ActionListener {
 
 		battlegridmonstertoattackx = 1 + numberofmonster % 3;
 		battlegridmonstertoattackx = 1 + numberofmonster % 2;
+
+		//sets slime monster on x and y
+
 		battlegrid.set(battlegridmonstertoattackx, battlegridmonstertoattacky, "slime");
+
+		//sets hand cursor to this slime monster
+
 		battlewidget.sethandx(battlegridmonstertoattackx*48-handcursordrawoffset);
 		battlewidget.sethandy(battlegridmonstertoattacky*48);
 	} else {
@@ -304,8 +313,10 @@ public class Game extends JPanel implements ActionListener {
 			////battlewidget.
 		}	
 	} else if (battlegoingon) {
+            int monsterindex;
+	    for (monsterindex = 0; monsterindex < battlegrid.getsizex()+battlegrid.getsizey(); monsterindex++) {
 		int randomnumber = rng.nextInt(60);
-		if (randomnumber == 0) {//monster attacks first
+		if (randomnumber == 0) {	//monster attacks first
 			int randomnumber2 = rng.nextInt(numberofmonsters);
 			
 			int gridxx, gridyy;
@@ -322,7 +333,7 @@ public class Game extends JPanel implements ActionListener {
 						        g2d.setColor(Color.white);
         						g2d.setFont(smallfont);
         						g2d.drawString(str, player.getx(), player.gety());
-							//FIXME timer wait!
+							//FIXME battle timer wait!
 							
 						}
 
@@ -333,6 +344,8 @@ public class Game extends JPanel implements ActionListener {
 					}
 				}
 			}
+		}
+		DoPlayerAttack();
 			
 		battlegoingon = false;
 		chooseattackmode= false;	
@@ -343,6 +356,48 @@ public class Game extends JPanel implements ActionListener {
       g.dispose();
 
     }
+
+    /*
+     * walk through full list of player charcacters
+     */
+
+    public String DoPlayerAttack()
+    {
+	String monstername = battlegrid.get(battlegridmonstertoattackx,battlegridmonstertoattacky);
+	if (monstername == "none") {//no monster selected
+		int i;
+		int randomnumber = rng.nextInt(numberofmonsters);
+	
+		//skip a few monsters so the attacked monster gets randomized	
+		for (i = 0; i < (randomnumber * battlegrid.getsize()); i++)//FIXME fixed size 6
+			;
+
+			
+		String s = battlegrid.get(i % battlegrid.getsizex(), i % battlegrid.getsizey());
+			if (s == "none")//never reached
+				return "none";
+
+		
+		
+	}
+        int i;
+        for (i = 0; i < numberofplayercharacters; i++) {
+		
+		int chancetohit = player.getPlayerHitchance(i);
+
+		int randomnumber = rng.nextInt(chancetohit);
+		if (randomnumber == 0)//monster fails to hit
+			return "Miss!";
+
+		int str = player.getPlayerStrength(i);
+		int randomnumber2 = rng.nextInt(str) + 1;
+		///player.hit(randomnumber2);
+
+		String returnstring = "" + randomnumber2;
+		return returnstring;
+	}
+	return "none";
+    }	
 
     public int GetMonsterIndex(String monstername)
     {
@@ -446,6 +501,9 @@ public class Game extends JPanel implements ActionListener {
 	   	if (key == KeyEvent.VK_UP) {
 			if (!chooseattackmode) {
 				handcursorwidget.sety(handcursorwidget.gety()-48);//FIXME - monster height
+				battlegridmonstertoattackx = handcursorwidget.getx() % 48;
+				battlegridmonstertoattackx = handcursorwidget.gety() % 48;
+				
 	   		} else {
 				battlewidget.movehandup();
 			}
@@ -453,6 +511,8 @@ public class Game extends JPanel implements ActionListener {
 	   	if (key == KeyEvent.VK_DOWN) {
 			if (!chooseattackmode) {
 				handcursorwidget.sety(handcursorwidget.gety()+48);//FIXME - monster height
+				battlegridmonstertoattackx = handcursorwidget.getx() % 48;
+				battlegridmonstertoattackx = handcursorwidget.gety() % 48;
 	   		} else {
 				battlewidget.movehanddown();
 			}
@@ -461,12 +521,15 @@ public class Game extends JPanel implements ActionListener {
 
 			if (!chooseattackmode) {
 				chooseattackmode = true;
+				
 			} else if (chooseattackmode) {
-
+				
 				switch(battlewidget.getindex()) {
 					case 0://Attack
+						attack = true;
 						battlegoingon = true;
 					default://Attack
+						attack = true;
 						battlegoingon = true;	
 				}
 

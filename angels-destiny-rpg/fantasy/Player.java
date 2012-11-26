@@ -26,6 +26,7 @@ import java.util.*;
 class Player extends NonPlayerCharacter
 {
 protected int hitpoints = 10;
+protected MonsterDatabasePlayers characterdatabase = new MonsterDatabasePlayers();
 
 public Player(int startx, int starty)
 {
@@ -69,6 +70,41 @@ public boolean collision(Entity e)
 public void hit(int hp)
 {
 	hitpoints -= hp;
+}
+
+public String getPlayerName(int index)
+{
+	return characterdatabase.getMonsterName(index); 
+}
+
+public int getPlayerHitpoints(int index)
+{
+	return characterdatabase.getMonsterHitpoints(index); 
+}
+
+public int getPlayerStrength(int index)
+{
+	return characterdatabase.getMonsterStrength(index); 
+}
+
+public int getPlayerDexterity(int index)
+{
+	return characterdatabase.getMonsterDexterity(index); 
+}
+
+public int getPlayerIntelligence(int index)
+{
+	return characterdatabase.getMonsterIntelligence(index); 
+}
+
+public int getPlayerConstitution(int index)
+{
+	return characterdatabase.getMonsterConstitution(index); 
+}
+
+public int getPlayerHitchance(int index)
+{
+	return characterdatabase.getMonsterHitchance(index); 
 }
 
 };

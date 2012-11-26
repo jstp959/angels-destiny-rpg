@@ -23,62 +23,26 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-class BattleGrid 
+/*
+ */
+
+class MonsterDatabasePlayers extends MonsterDatabase
 {
 
-protected LinkedList grid = new LinkedList();
-protected int size = 6;
-
-public BattleGrid(int sz)
+public MonsterDatabasePlayers()
 {
-	size = sz;
+	super();
 
-	int i;
-	for (i = 0; i < sz; i++)
-		grid.add("none");
-}
 
-public void set(int xx, int yy, String monstername)
-{
+	//add first player character "Anita" 
+	monsternames.add("Anita");
+	monsterhitpoints.add("45");	
+	monsterstrengths.add("10");
+	monsterdexterities.add("10");
+	monsterintelligences.add("14");
+	monsterconstitutions.add("10");
+	monsterhitchances.add("12");
 
-	LinkedList backupgrid = new LinkedList();
-	int i;
-	for (i = 0; i < size; i++)
-		backupgrid.add(grid.get(i));
-
-	grid.clear();
-
-	int index = xx + yy*size/2;
-
-	for (i = 0; i < index; i++)
-		grid.add(backupgrid.get(i));
-
-	grid.add(monstername);
-
-	for (i = index; i < size; i++)
-		grid.add(grid.get(i));
-}
-
-public String get(int xx, int yy)
-{
-	Object o = grid.get(yy*size/2+xx);
-	String s = (String)o;
-	return s;
-}
-
-public int getsizex()
-{
-	return size/2;// == 3
-}
-
-public int getsizey()
-{
-	return size/3;// == 2
-}
-
-public int getsize()
-{
-	return size;
 }
 
 };
