@@ -66,7 +66,7 @@ public class Game extends JPanel implements ActionListener {
     FantasyHandCursorWidget handcursorwidget = new FantasyHandCursorWidget(96,96);
 
 	//battle screen is on 
-    boolean battle = false;//NOTE! false to start game
+    boolean battle = true;//NOTE! false to start game
 	//a battle phase is being displayed
     boolean battlegoingon = false;
     boolean chooseattackmode = false;
@@ -318,7 +318,11 @@ public class Game extends JPanel implements ActionListener {
 						String monstername = battlegrid.get(gridxx,gridyy);
 						if (monstername != "none") {
 						
-							DoMonsterAttack(gridxx, gridyy);
+							String str = DoMonsterAttack(gridxx, gridyy);
+						        g2d.setColor(Color.white);
+        						g2d.setFont(smallfont);
+        						g2d.drawString(str, player.getx(), player.gety());
+
 							
 						}
 
@@ -333,22 +337,38 @@ public class Game extends JPanel implements ActionListener {
 		}		
 	}
       
-/*      g2d.setColor(Color.white);
-        g2d.setFont(smallfont);
-        g2d.drawString("foobar", 0,0);
-*/
       Toolkit.getDefaultToolkit().sync();
       g.dispose();
 
     }
 
+    public int GetMonsterIndex(String monstername)
+    {
+	int i;
+	for (i = 0; i < monsterdatabase.size(); i++) {
+		if (monsterdatabase.getMonsterName(i) == monstername)
+			return i;
+	}
+	return 0;//NOTE! should never be reached
+    }
 
-    public void DoMonsterAttack(int xx, int yy) 
+    public String DoMonsterAttack(int xx, int yy) 
     {
 
 	String monstername = battlegrid.get(xx,yy);
-	monsternames.
+	int index = GetMonsterIndex(monstername);
+	int chancetohit = monsterdatabase.getMonsterHitchance(index);
 
+	int randomnumber = rng.nextInt(chancetohit);
+	if (randomnumber == 0)//monster fails to hit
+		return "Miss!";
+
+	int str = monsterdatabase.getMonsterStrength(index);
+	int randomnumber2 = rng.nextInt(str) + 1;
+	player.hit(randomnumber2);
+
+	String returnstring = "" + randomnumber2;
+	return returnstring;
     }
 
     class TAdapter extends KeyAdapter {

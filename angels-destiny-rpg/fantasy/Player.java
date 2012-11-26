@@ -25,7 +25,7 @@ import java.util.*;
 
 class Player extends NonPlayerCharacter
 {
-
+protected int hitpoints = 10;
 
 public Player(int startx, int starty)
 {
@@ -65,4 +65,10 @@ public boolean collision(Entity e)
 	else
 		return false;
 }*/
+
+public void hit(int hp)
+{
+	hitpoints -= hp;
+}
+
 };
