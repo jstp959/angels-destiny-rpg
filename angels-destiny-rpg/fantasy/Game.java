@@ -325,6 +325,11 @@ public class Game extends JPanel implements ActionListener {
         			g2d.drawString(introstr, 10,100);
 				repaint();
 			}
+			/**try {
+				Thread.currentThread().sleep(700);//FIXME battle timer wait!
+			}
+			catch(InterruptedException ie){}
+			**/
 		}
 	}
 
