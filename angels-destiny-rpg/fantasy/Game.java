@@ -314,6 +314,7 @@ public class Game extends JPanel implements ActionListener {
 		int i = 0;
 
 		for (i = 0; i < introstrings.size(); i++) {
+			alpha = 1f;
 			for ( ; alpha >= 0; alpha += DELTA) {
 			
         			g2d.fillRect(0, 0, SCREENWIDTH, SCREENHEIGHT);
