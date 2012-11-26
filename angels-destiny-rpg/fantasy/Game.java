@@ -8,6 +8,8 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 */
+import java.awt.*;
+import javax.swing.*;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -67,6 +69,8 @@ public class Game extends JPanel implements ActionListener {
     int handcursormonsteroffset = 48;//hand jump offset between monsters on battle screen
     FantasyHandCursorWidget handcursorwidget = new FantasyHandCursorWidget(96,96);
 
+    boolean showintro = true;
+    LinkedList introstrings = new LinkedList();
 	//battle screen is on 
     boolean battle = true;//NOTE! false to start game
 	//a battle phase is being displayed
@@ -80,6 +84,17 @@ public class Game extends JPanel implements ActionListener {
     BattleGrid battlegrid = new BattleGrid(6);
 
     public Game() {
+
+	/// intro string show setup
+	introstrings.add("The land of Aricea was at peace");
+	introstrings.add("For a long time...");
+	introstrings.add("Celestia's denizens watched the lands");
+	introstrings.add("But another power rose on another plane");
+	introstrings.add("A mighty demon king arose...");
+	introstrings.add("The battle between good and evil started..");
+	introstrings.add("and Aricea was invaded..");
+	introstrings.add("But there is still a light in the dark..");
+	introstrings.add("a knighthood does not come easy...");
 
         addKeyListener(new TAdapter());
         setFocusable(true);
@@ -285,9 +300,33 @@ public class Game extends JPanel implements ActionListener {
 
     public void paint(Graphics g)
     {
-      super.paint(g);
-
       Graphics2D g2d = (Graphics2D) g;
+
+
+	if (showintro) {
+		float DELTA = -0.01f;
+		float alpha = 1f;
+		Font font2 = new Font("Serif", Font.PLAIN, 8);
+
+		setOpaque(true);
+		setBackground(Color.black);
+        	g2d.setFont(font2);
+		int i = 0;
+
+		for (i = 0; i < introstrings.size(); i++) {
+			for ( ; alpha >= 0; alpha += DELTA) {
+			
+        			g2d.fillRect(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN, alpha));
+        			g2d.setPaint(Color.white);
+
+				Object o = introstrings.get(i);
+				String introstr = (String)o;
+        			g2d.drawString(introstr, 10,100);
+				repaint();
+			}
+		}
+	}
 
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, d.width, d.height);
@@ -528,6 +567,14 @@ public class Game extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
 
           int key = e.getKeyCode();
+
+	if (showintro) {
+   		if (key == KeyEvent.VK_ESCAPE) {
+			showintro = false;
+		}
+	}
+
+
 
 	//do not move if collided
 	   if (CollideBuildings()) {
