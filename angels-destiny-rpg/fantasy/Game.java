@@ -311,11 +311,10 @@ public class Game extends JPanel implements ActionListener {
 			DrawBattleWidgetHandCursor(g2d);
 		} else if (!chooseattackmode) {
 			DrawBattleMonsterHandCursor(g2d);
-			////battlewidget.
 		}	
 	} else if (battlegoingon) {
             int monsterindex;
-	    for (monsterindex = 0; monsterindex < battlegrid.getsizex()+battlegrid.getsizey(); monsterindex++) {
+	    for (monsterindex = 0; monsterindex < battlegrid.getsizex()*battlegrid.getsizey(); monsterindex++) {
 		int randomnumber = rng.nextInt(60);
 		if (randomnumber == 0) {	//monster attacks first
 			int randomnumber2 = rng.nextInt(numberofmonsters);
@@ -378,7 +377,7 @@ public class Game extends JPanel implements ActionListener {
 
     public String DoPlayerAttack(int index)
     {
-	String monstername = battlegrid.get(battlegridmonstertoattackx,battlegridmonstertoattacky);
+	String monstername = battlegrid.get(battlegridmonstertoattackx-1,battlegridmonstertoattacky-1);
 	if (monstername == "none") {//no monster selected
 		/********int i;
 		int randomnumber = rng.nextInt(numberofmonsters);
@@ -410,10 +409,10 @@ public class Game extends JPanel implements ActionListener {
 
 	int str = player.getPlayerStrength(index);
 	int randomnumber2 = rng.nextInt(str) + 1;
-	int die = battlegrid.hit(battlegridmonstertoattackx, battlegridmonstertoattacky, randomnumber2);
+	int die = battlegrid.hit(battlegridmonstertoattackx-1, battlegridmonstertoattacky-1, randomnumber2);
 	if (die <= 0) {
 
-		battlegrid.set(battlegridmonstertoattackx, battlegridmonstertoattacky, "none", -1);
+		battlegrid.set(battlegridmonstertoattackx-1, battlegridmonstertoattacky-1, "none", 0);//FIXME "0"
 
 		int j;
 		for (j = 0; j < monsters.size(); j++) {
@@ -454,8 +453,8 @@ public class Game extends JPanel implements ActionListener {
 	Object o = monsters.get(0);
 	Monster mo = (Monster)o;
 		
-	battlegridmonstertoattackx = mo.getx() / 48;
-	battlegridmonstertoattacky = mo.gety() / 48;
+	battlegridmonstertoattackx = 1 + mo.getx() / 48;
+	battlegridmonstertoattacky = 1 + mo.gety() / 48;
 
 	String returnstring = "" + randomnumber2;
 	return returnstring;
@@ -565,7 +564,7 @@ public class Game extends JPanel implements ActionListener {
 			if (!chooseattackmode) {
 				handcursorwidget.sety(handcursorwidget.gety()-48);//FIXME - monster height
 				battlegridmonstertoattackx = handcursorwidget.getx() % 48 + 1;
-				battlegridmonstertoattackx = handcursorwidget.gety() % 48 + 1;
+				battlegridmonstertoattacky = handcursorwidget.gety() % 48 + 1;
 				
 	   		} else {
 				battlewidget.movehandup();
@@ -575,7 +574,7 @@ public class Game extends JPanel implements ActionListener {
 			if (!chooseattackmode) {
 				handcursorwidget.sety(handcursorwidget.gety()+48);//FIXME - monster height
 				battlegridmonstertoattackx = handcursorwidget.getx() % 48 + 1;
-				battlegridmonstertoattackx = handcursorwidget.gety() % 48 + 1;
+				battlegridmonstertoattacky = handcursorwidget.gety() % 48 + 1;
 	   		} else {
 				battlewidget.movehanddown();
 			}
