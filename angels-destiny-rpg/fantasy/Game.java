@@ -322,7 +322,7 @@ public class Game extends JPanel implements ActionListener {
 						        g2d.setColor(Color.white);
         						g2d.setFont(smallfont);
         						g2d.drawString(str, player.getx(), player.gety());
-
+							//FIXME timer wait!
 							
 						}
 
@@ -333,7 +333,9 @@ public class Game extends JPanel implements ActionListener {
 					}
 				}
 			}
-				
+			
+		battlegoingon = false;
+		chooseattackmode= false;	
 		}		
 	}
       
