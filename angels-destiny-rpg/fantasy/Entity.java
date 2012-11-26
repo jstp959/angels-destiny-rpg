@@ -43,5 +43,13 @@ public int gety()
 	return y;
 }
 
+public void setx(int xx)
+{
+	x = xx;
+}
 
+public void sety(int yy)
+{
+	y = yy;
+}
 };

@@ -187,9 +187,9 @@ public class Game extends JPanel implements ActionListener {
 	g2d.drawImage(new ImageIcon(prefix+"battlestage-1.png").getImage(), 0, 0, this);
     }
 
-    public void DrawBattlePlayer(Graphics g2d) {
+    public void DrawBattlePlayer(Graphics g2d, int dx, int dy) {
 	//draw battle stage in combination with map environment
-	g2d.drawImage(player.getLeftImage(2), 250, 96, this);
+	g2d.drawImage(player.getLeftImage(2), 250+dx, 96+dy, this);
     }
 
     public void DrawBattleMonsters(Graphics2D g2d)
@@ -301,7 +301,7 @@ public class Game extends JPanel implements ActionListener {
       } else if (battle) {//battle screen
 	DrawBattleStage(g2d);
 	DrawBattleMonsters(g2d);
-	DrawBattlePlayer(g2d);
+	DrawBattlePlayer(g2d,0,0);
 	DrawBattleWidget(g2d);
 	if (!battlegoingon) {
 		if (chooseattackmode) {
@@ -353,7 +353,24 @@ public class Game extends JPanel implements ActionListener {
 
         	int i;
         	for (i = 0; i < numberofplayercharacters; i++) {
+			//leveraging player towards left before he/she fights
+			int j;
+			for (j = 0; j < 48; j+=2) {
+      				g2d.setColor(Color.black);
+      				g2d.fillRect(0, 0, d.width, d.height);
+
+				DrawBattlePlayer(g2d,-j,0);
+				try {
+					Thread.currentThread().sleep(20);//FIXME battle timer wait!
+				} catch(InterruptedException ie){}
+				
+      				Toolkit.getDefaultToolkit().sync();
+      				g.dispose();
+
+			}
+
 			String str = DoPlayerAttack(i);
+
 			g2d.setColor(Color.white);
         		g2d.setFont(smallfont);
         		g2d.drawString(str, battlegridmonstertoattackx, battlegridmonstertoattacky);
@@ -361,6 +378,19 @@ public class Game extends JPanel implements ActionListener {
 				Thread.currentThread().sleep(1000);//FIXME battle timer wait!
 			}
 			catch(InterruptedException ie){}
+			//leveraging player towards left before he/she fights
+			for (j = 0; j < 48; j+=2) {
+      				g2d.setColor(Color.black);
+      				g2d.fillRect(0, 0, d.width, d.height);
+
+				DrawBattlePlayer(g2d,j,0);
+				try {
+					Thread.currentThread().sleep(20);//FIXME battle timer wait!
+				} catch(InterruptedException ie){}
+				
+      				Toolkit.getDefaultToolkit().sync();
+      				g.dispose();
+			}
 		}
 		battlegoingon = false;
 		chooseattackmode = false;	
