@@ -63,7 +63,7 @@ public void set(int xx, int yy, String monstername, int hp)
 	}
 
 	grid.add(monstername);
-	hitpointsgrid.add(hp);
+	hitpointsgrid.add("" + hp);
 
 	for (i = index; i < size; i++) {
 		grid.add(backupgrid.get(i));
@@ -95,7 +95,7 @@ public int hit(int xx, int yy, int hp)
 	int i = Integer.parseInt(s);
 	i -= hp;
 
-	set(xx,yy,s2,i);
+	set(xx,yy,s2, i);
 
 	if (i <= 0) {
 		System.out.println("a monster died");

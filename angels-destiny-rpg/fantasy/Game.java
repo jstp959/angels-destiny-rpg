@@ -380,20 +380,26 @@ public class Game extends JPanel implements ActionListener {
     {
 	String monstername = battlegrid.get(battlegridmonstertoattackx,battlegridmonstertoattacky);
 	if (monstername == "none") {//no monster selected
-		int i;
+		/********int i;
 		int randomnumber = rng.nextInt(numberofmonsters);
 	
 		//skip a few monsters so the attacked monster gets randomized	
 		for (i = 0; i < (randomnumber * battlegrid.getsize()); i++)//FIXME fixed size 6
 			;
 
-			
 		String s = battlegrid.get(i % battlegrid.getsizex(), i % battlegrid.getsizey());
 			if (s == "none")//never reached
 				return "none";
 
+		*******/
+		int j;
+		//for (j = 0; j < monsters.size(); j++) {
+			Object o = monsters.get(0);
+			Monster mo = (Monster)o;
 		
-		
+		//	battlegridmonstertoattackx = 1 + mo.getx() / 48;
+		//	battlegridmonstertoattacky = 1 + mo.gety() / 48;
+		//}
 	}
 		
 	int chancetohit = player.getPlayerHitchance(index);
@@ -407,7 +413,7 @@ public class Game extends JPanel implements ActionListener {
 	int die = battlegrid.hit(battlegridmonstertoattackx, battlegridmonstertoattacky, randomnumber2);
 	if (die <= 0) {
 
-		battlegrid.set(battlegridmonstertoattackx-1, battlegridmonstertoattacky-1, "none", -1);
+		battlegrid.set(battlegridmonstertoattackx, battlegridmonstertoattacky, "none", -1);
 
 		int j;
 		for (j = 0; j < monsters.size(); j++) {
@@ -415,15 +421,41 @@ public class Game extends JPanel implements ActionListener {
 			//instanceof
 			Monster m = (Monster)o;
 
-			System.out.println("m.x= " + m.getx() + " m.y= " + m.gety() + " x=" + battlegridmonstertoattackx +" y=" + battlegridmonstertoattacky);
+			System.out.println("m.x= " + m.getx()/48 + " m.y= " + m.gety()/48 + " x=" + battlegridmonstertoattackx +" y=" + battlegridmonstertoattacky);
 
-			if (battlegridmonstertoattackx == m.getx() % 48 && battlegridmonstertoattacky == m.gety() % 48) {
+			if (battlegridmonstertoattackx == m.getx() / 48 && battlegridmonstertoattacky == m.gety() / 48) {
 				monsters.remove(j);
 				numberofmonsters -= 1;
+
+				if (monsters.size() <= 0) {
+
+					battlegoingon = false;
+					chooseattackmode = false;
+					attack = false;
+					battle = false;
+					return "0";
+				}
+				/**********
+				int k;
+				for (k = 0; k < monsters.size(); k++) {
+
+					Object o3 = monsters.get(k);
+					Monster mo = (Monster)o3;
+
+					battlegridmonstertoattackx = 1 + mo.getx() / 48;	
+					battlegridmonstertoattacky = 1 + mo.gety() / 48;	
+				
+				}
+				**********/
 				break;
 			}
 		}
 	}
+	Object o = monsters.get(0);
+	Monster mo = (Monster)o;
+		
+	battlegridmonstertoattackx = mo.getx() / 48;
+	battlegridmonstertoattacky = mo.gety() / 48;
 
 	String returnstring = "" + randomnumber2;
 	return returnstring;
@@ -532,8 +564,8 @@ public class Game extends JPanel implements ActionListener {
 	   	if (key == KeyEvent.VK_UP) {
 			if (!chooseattackmode) {
 				handcursorwidget.sety(handcursorwidget.gety()-48);//FIXME - monster height
-				battlegridmonstertoattackx = handcursorwidget.getx() % 48;
-				battlegridmonstertoattackx = handcursorwidget.gety() % 48;
+				battlegridmonstertoattackx = handcursorwidget.getx() % 48 + 1;
+				battlegridmonstertoattackx = handcursorwidget.gety() % 48 + 1;
 				
 	   		} else {
 				battlewidget.movehandup();
@@ -542,8 +574,8 @@ public class Game extends JPanel implements ActionListener {
 	   	if (key == KeyEvent.VK_DOWN) {
 			if (!chooseattackmode) {
 				handcursorwidget.sety(handcursorwidget.gety()+48);//FIXME - monster height
-				battlegridmonstertoattackx = handcursorwidget.getx() % 48;
-				battlegridmonstertoattackx = handcursorwidget.gety() % 48;
+				battlegridmonstertoattackx = handcursorwidget.getx() % 48 + 1;
+				battlegridmonstertoattackx = handcursorwidget.gety() % 48 + 1;
 	   		} else {
 				battlewidget.movehanddown();
 			}
