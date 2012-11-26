@@ -114,6 +114,7 @@ public class Game extends JPanel implements ActionListener {
 
     public void addMonsterLevel1(int index, int numberofmonster) {
 	String monstername = monsterdatabase.getMonsterName(index);
+	int hp = monsterdatabase.getMonsterHitpoints(index);
 	//NOTE! different moduli
 	if (monstername == "slime") {
 		monsters.add(new Slime(48+(numberofmonster%3)*48,48+(numberofmonster%2)*48));
@@ -122,11 +123,11 @@ public class Game extends JPanel implements ActionListener {
 		//e.g. automatic battle play
 
 		battlegridmonstertoattackx = 1 + numberofmonster % 3;
-		battlegridmonstertoattackx = 1 + numberofmonster % 2;
+		battlegridmonstertoattacky = 1 + numberofmonster % 2;
 
 		//sets slime monster on x and y
 
-		battlegrid.set(battlegridmonstertoattackx, battlegridmonstertoattacky, "slime");
+		battlegrid.set(battlegridmonstertoattackx-1, battlegridmonstertoattacky-1, "slime", hp);//NOTE! -1 
 
 		//sets hand cursor to this slime monster
 
@@ -135,8 +136,8 @@ public class Game extends JPanel implements ActionListener {
 	} else {
 		monsters.add(new Slime(48+(numberofmonster%4)*48,48+(numberofmonster%2)*48));
 		battlegridmonstertoattackx = 1 + numberofmonster % 4;
-		battlegridmonstertoattackx = 1 + numberofmonster % 2;
-		battlegrid.set(battlegridmonstertoattackx, battlegridmonstertoattacky, "slime");
+		battlegridmonstertoattacky = 1 + numberofmonster % 2;
+		battlegrid.set(battlegridmonstertoattackx-1, battlegridmonstertoattacky-1, "slime", hp);
 		battlewidget.sethandx(battlegridmonstertoattackx*48-handcursordrawoffset);
 		battlewidget.sethandy(battlegridmonstertoattacky*48);
 	}
@@ -398,12 +399,31 @@ public class Game extends JPanel implements ActionListener {
 	int chancetohit = player.getPlayerHitchance(index);
 
 	int randomnumber = rng.nextInt(chancetohit);
-	if (randomnumber == 0)//monster fails to hit
+	if (randomnumber == 0)//player fails to hit
 		return "Miss!";
 
 	int str = player.getPlayerStrength(index);
 	int randomnumber2 = rng.nextInt(str) + 1;
-	///player.hit(randomnumber2);
+	int die = battlegrid.hit(battlegridmonstertoattackx, battlegridmonstertoattacky, randomnumber2);
+	if (die <= 0) {
+
+		battlegrid.set(battlegridmonstertoattackx-1, battlegridmonstertoattacky-1, "none", -1);
+
+		int j;
+		for (j = 0; j < monsters.size(); j++) {
+			Object o = monsters.get(j);
+			//instanceof
+			Monster m = (Monster)o;
+
+			System.out.println("m.x= " + m.getx() + " m.y= " + m.gety() + " x=" + battlegridmonstertoattackx +" y=" + battlegridmonstertoattacky);
+
+			if (battlegridmonstertoattackx == m.getx() % 48 && battlegridmonstertoattacky == m.gety() % 48) {
+				monsters.remove(j);
+				numberofmonsters -= 1;
+				break;
+			}
+		}
+	}
 
 	String returnstring = "" + randomnumber2;
 	return returnstring;
@@ -556,6 +576,7 @@ public class Game extends JPanel implements ActionListener {
 			battle = false;
 			chooseattackmode = false;
 			battlegoingon = false;
+			attack = false;
 	   	}
 	   }
 	}

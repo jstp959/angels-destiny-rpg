@@ -27,43 +27,81 @@ class BattleGrid
 {
 
 protected LinkedList grid = new LinkedList();
+protected LinkedList hitpointsgrid = new LinkedList(); 
 protected int size = 6;
+
 
 public BattleGrid(int sz)
 {
 	size = sz;
 
 	int i;
-	for (i = 0; i < sz; i++)
+	for (i = 0; i < sz; i++) {
 		grid.add("none");
+		hitpointsgrid.add("0");
+	}
 }
 
-public void set(int xx, int yy, String monstername)
+public void set(int xx, int yy, String monstername, int hp)
 {
 
 	LinkedList backupgrid = new LinkedList();
+	LinkedList backuphitpointsgrid = new LinkedList();
 	int i;
-	for (i = 0; i < size; i++)
+	for (i = 0; i < size; i++) {
 		backupgrid.add(grid.get(i));
+		backuphitpointsgrid.add(hitpointsgrid.get(i));	
+	}
 
 	grid.clear();
 
-	int index = xx + yy*size/2;
+	int index = xx + yy*size/3;
 
-	for (i = 0; i < index; i++)
+	for (i = 0; i < index; i++) {
 		grid.add(backupgrid.get(i));
+		hitpointsgrid.add(backuphitpointsgrid.get(i));
+	}
 
 	grid.add(monstername);
+	hitpointsgrid.add(hp);
 
-	for (i = index; i < size; i++)
-		grid.add(grid.get(i));
+	for (i = index; i < size; i++) {
+		grid.add(backupgrid.get(i));
+		hitpointsgrid.add(backuphitpointsgrid.get(i));
+	}
 }
 
 public String get(int xx, int yy)
 {
-	Object o = grid.get(yy*size/2+xx);
+	Object o = grid.get(yy*size/3+xx);
 	String s = (String)o;
 	return s;
+}
+
+public String getHitpoints(int xx, int yy)
+{
+	Object o = hitpointsgrid.get(yy*size/3+xx);
+	String s = (String)o;
+	return s;
+}
+
+public int hit(int xx, int yy, int hp)
+{
+	Object o = hitpointsgrid.get(yy*size/3+xx);
+	String s = (String)o;
+	Object o2 = grid.get(yy*size/3+xx);
+	String s2 = (String)o2;
+
+	int i = Integer.parseInt(s);
+	i -= hp;
+
+	set(xx,yy,s2,i);
+
+	if (i <= 0) {
+		System.out.println("a monster died");
+	}	
+
+	return i;
 }
 
 public int getsizex()
