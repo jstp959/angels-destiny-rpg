@@ -61,13 +61,19 @@ public class Game extends JPanel implements ActionListener {
     Map map = new Map(0,0,640,640, new ImageIcon(prefix+"map-1024x1024-1.png").getImage(), 0, 0);
 
     FantasyBattleWidget battlewidget = new FantasyBattleWidget(0,200-64);
-    FantasyHandCursorWidget handcursorwidget = new FantasyHandCursorWidget(96-20,96);
+    int handcursordrawoffset = 20;//draw hand -20 pixels to the left
+    int handcursormonsteroffset = 48;//hand jump offset between monsters on battle screen
+    FantasyHandCursorWidget handcursorwidget = new FantasyHandCursorWidget(96,96);
 
 	//battle screen is on 
     boolean battle = false;//NOTE! false to start game
 	//a battle phase is being displayed
     boolean battlegoingon = false;
-
+    boolean chooseattackmode = false;
+   
+    private int battlegridmonstertoattackx = 0;
+    private int battlegridmonstertoattacky = 0;
+    private String battlegridmonstertoattackname = "";
     BattleGrid battlegrid = new BattleGrid(6);
 
     public Game() {
@@ -104,13 +110,30 @@ public class Game extends JPanel implements ActionListener {
     }
 
     public void addMonsterLevel1(int index, int numberofmonster) {
-	String monstername = monsterdatabase.getMonster(index);
-	if (monstername == "slime")
+	String monstername = monsterdatabase.getMonsterName(index);
+	//NOTE! different moduli
+	if (monstername == "slime") {
 		monsters.add(new Slime(48+(numberofmonster%3)*48,48+(numberofmonster%2)*48));
-	else
-		monsters.add(new Slime(48+(numberofmonster%4)*48,48+(numberofmonster%2)*48));
-    }
 
+		//the attackx and y get set to the last monster generated for 
+		//e.g. automatic battle play
+
+		battlegridmonstertoattackx = 1 + numberofmonster % 3;
+		battlegridmonstertoattackx = 1 + numberofmonster % 2;
+		battlegrid.set(battlegridmonstertoattackx, battlegridmonstertoattacky, "slime");
+		battlewidget.sethandx(battlegridmonstertoattackx*48-handcursordrawoffset);
+		battlewidget.sethandy(battlegridmonstertoattacky*48);
+	} else {
+		monsters.add(new Slime(48+(numberofmonster%4)*48,48+(numberofmonster%2)*48));
+		battlegridmonstertoattackx = 1 + numberofmonster % 4;
+		battlegridmonstertoattackx = 1 + numberofmonster % 2;
+		battlegrid.set(battlegridmonstertoattackx, battlegridmonstertoattacky, "slime");
+		battlewidget.sethandx(battlegridmonstertoattackx*48-handcursordrawoffset);
+		battlewidget.sethandy(battlegridmonstertoattacky*48);
+	}
+
+    }
+    
     public void DrawMap(Graphics2D g2d) {
         g2d.drawImage(map.getImage(), map.getx(), map.gety(), this);
     }
@@ -134,11 +157,19 @@ public class Game extends JPanel implements ActionListener {
  */ 
 
     public void DrawBattleMonsterHandCursor(Graphics g2d) {
-	g2d.drawImage(handcursorwidget.getImage(), handcursorwidget.getx(), handcursorwidget.gety(), this);
+	g2d.drawImage(handcursorwidget.getImage(), handcursorwidget.getx()-handcursordrawoffset, handcursorwidget.gety(), this);
     }
 
-    public void DrawBattleWidgets(Graphics g2d) {
+    public void DrawBattleWidget(Graphics g2d) {
 	g2d.drawImage(battlewidget.getImage(), battlewidget.getx(), battlewidget.gety(), this);
+    }
+
+    public void DrawBattleWidgetHandCursor(Graphics g2d) {
+	g2d.drawImage(battlewidget.getHandImage(), battlewidget.gethandx(), battlewidget.gethandy(), this);
+    }
+
+    public void DrawBattleWidgetList(Graphics g2d) {
+	g2d.drawImage(battlewidget.getListImage(), battlewidget.getx(), battlewidget.gety(), this);
     }
 
     public void DrawBattleStage(Graphics g2d) {
@@ -261,23 +292,62 @@ public class Game extends JPanel implements ActionListener {
 	DrawBattleStage(g2d);
 	DrawBattleMonsters(g2d);
 	DrawBattlePlayer(g2d);
-	DrawBattleWidgets(g2d);
+	DrawBattleWidget(g2d);
 	if (!battlegoingon) {
-		DrawBattleMonsterHandCursor(g2d);
+		if (chooseattackmode) {
+			battlewidget.sethandx(battlewidget.getx());//redundant
+			battlewidget.sethandy(battlewidget.gety());
+			DrawBattleWidgetList(g2d);
+			DrawBattleWidgetHandCursor(g2d);
+		} else if (!chooseattackmode) {
+			DrawBattleMonsterHandCursor(g2d);
+			////battlewidget.
+		}	
 	} else if (battlegoingon) {
 		int randomnumber = rng.nextInt(60);
-		if (randomnumber == 0) {
+		if (randomnumber == 0) {//monster attacks first
 			int randomnumber2 = rng.nextInt(numberofmonsters);
 			
+			int gridxx, gridyy;
+
+			for (gridyy = 0; gridyy < battlegrid.getsizey(); gridyy++) {	
+				for (gridxx = 0; gridxx < battlegrid.getsizex(); gridxx++) {
+
+					if (randomnumber2 == gridxx + gridyy*battlegrid.getsizex()) {
+
+						String monstername = battlegrid.get(gridxx,gridyy);
+						if (monstername != "none") {
+						
+							DoMonsterAttack(gridxx, gridyy);
+							
+						}
+
+					}
+
+							
+
+					}
+				}
+			}
+				
 		}		
 	}
-      }
+      
 /*      g2d.setColor(Color.white);
         g2d.setFont(smallfont);
         g2d.drawString("foobar", 0,0);
 */
       Toolkit.getDefaultToolkit().sync();
       g.dispose();
+
+    }
+
+
+    public void DoMonsterAttack(int xx, int yy) 
+    {
+
+	String monstername = battlegrid.get(xx,yy);
+	monsternames.
 
     }
 
@@ -342,24 +412,53 @@ public class Game extends JPanel implements ActionListener {
 		}	
 	   } else if (battle) {
 	   	if (key == KeyEvent.VK_LEFT) {
-			handcursorwidget.setx(handcursorwidget.getx()-48);//FIXME - monster height
-	   	}
+			if (!chooseattackmode) {
+				handcursorwidget.setx(handcursorwidget.getx()-48);//FIXME - monster height
+	   		}
+		}
 	   	if (key == KeyEvent.VK_RIGHT) {
-			handcursorwidget.setx(handcursorwidget.getx()+48);//FIXME - monster height
-	   	}
+			if (!chooseattackmode) {
+				handcursorwidget.setx(handcursorwidget.getx()+48);//FIXME - monster height
+	   		}
+		}
 	   	if (key == KeyEvent.VK_UP) {
-			handcursorwidget.sety(handcursorwidget.gety()-48);//FIXME - monster height
-	   	}
+			if (!chooseattackmode) {
+				handcursorwidget.sety(handcursorwidget.gety()-48);//FIXME - monster height
+	   		} else {
+				battlewidget.movehandup();
+			}
+		}
 	   	if (key == KeyEvent.VK_DOWN) {
-			handcursorwidget.sety(handcursorwidget.gety()+48);//FIXME - monster height
+			if (!chooseattackmode) {
+				handcursorwidget.sety(handcursorwidget.gety()+48);//FIXME - monster height
+	   		} else {
+				battlewidget.movehanddown();
+			}
 	   	}
 	   	if (key == KeyEvent.VK_X) {
-			battlegoingon = true;
-			///battlegrid.get(handcursorwidget.getx()
+
+			if (!chooseattackmode) {
+				chooseattackmode = true;
+			} else if (chooseattackmode) {
+
+				switch(battlewidget.getindex()) {
+					case 0://Attack
+						battlegoingon = true;
+					default://Attack
+						battlegoingon = true;	
+				}
+
+			}
+			//battlegoingon = true;
+			//battlegrid.get(handcursorwidget.getx() % handcursormonsteroffset, handcursorwidget.gety() % handcursormonsteroffset);
+
+			
 		}
+		
 		//flee battle
 	   	if (key == KeyEvent.VK_ESCAPE) {
 			battle = false;
+			chooseattackmode = false;
 			battlegoingon = false;
 	   	}
 	   }

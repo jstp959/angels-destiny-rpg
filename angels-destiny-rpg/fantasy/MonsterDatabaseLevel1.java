@@ -33,9 +33,18 @@ public MonsterDatabaseLevel1()
 {
 	super();
 
-////////monsternames.add("goblin");
+
+	//add slime monster
 	monsternames.add("slime");
-	
+	monsterhitpoints.add("24");	
+	monsterstrengths.add("3");
+	monsterdexterities.add("2");
+	monsterintelligences.add("4");
+	monsterconstitutions.add("3");
+	monsterhitchances.add("10");
+
+	//add goblin monster
+////////monsternames.add("goblin");
 }
 
 };

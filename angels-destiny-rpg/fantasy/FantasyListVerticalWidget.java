@@ -25,11 +25,38 @@ import java.util.*;
 
 class FantasyListVerticalWidget extends FantasyListWidget
 {
-protected FantasyHandCursorVerticalWidget hand = new FantasyHandCursorVerticalWidget(getx()+0,gety()+0);//FIXME x y 
- 
-public FantasyListVerticalWidget(int startx, int starty)
+protected int yoffset = 21;
+protected int startx, starty;
+protected int index = 0; 
+public FantasyListVerticalWidget(int sx, int sy, int sz, int yoff)
 {
-	super(startx,starty);
+	super(sx,sy,sz);
+	yoffset = yoff;
+	startx = sx;
+	starty = sy;
+}
+
+public void movehanddown()
+{
+	if (hand.gety() >= starty + size*yoffset)
+		return;
+
+	index++;
+	hand.sety(hand.gety()+yoffset);
+}
+
+public void movehandup()
+{
+	if (hand.gety() <= starty) 
+		return;
+
+	index--;
+	hand.sety(hand.gety()-yoffset);
+}
+
+public int getindex()
+{
+	return index;
 }
 
 };

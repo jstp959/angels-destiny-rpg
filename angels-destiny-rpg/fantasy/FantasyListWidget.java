@@ -25,15 +25,52 @@ import java.util.*;
 
 class FantasyListWidget extends FantasyListWidgetBase
 {
-protected FantasyHandCursorWidget hand = new FantasyHandCursorWidget(0,0);//FIXME x y 
- 
-public FantasyListWidget(int startx, int starty)
+protected FantasySmallHandCursorWidget hand = new FantasySmallHandCursorWidget(0,0);//FIXME x y 
+protected int size = 1; 
+public FantasyListWidget(int startx, int starty, int sz)
 {
 	super(startx,starty);
-
+	size = sz;
 	hand.setx(startx);
 	hand.sety(starty);
-	////addImage("widget-1.png");
+
+	///hand.addImage("widget-handcursor-20x20-1.png");
+	addImage("battlewidgetlist-1.png");
+}
+
+public int getsize()
+{
+	return size;
+}
+
+public void setsize(int sz)
+{
+	size = sz;
+}
+
+public Image getHandImage()
+{
+	return hand.getImage();
+}
+
+public void sethandx(int xx)
+{
+	hand.setx(xx);
+}
+
+public void sethandy(int yy)
+{
+	hand.sety(yy);
+}
+
+public int gethandx()
+{
+	return hand.getx();
+}
+
+public int gethandy()
+{
+	return hand.gety();
 }
 
 };

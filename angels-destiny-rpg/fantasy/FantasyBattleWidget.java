@@ -25,15 +25,66 @@ import java.util.*;
 
 class FantasyBattleWidget extends FantasyWidget
 {
-protected FantasyListVerticalWidget listwidget = new FantasyListVerticalWidget(0, 0);//NOTE set x y 
- 
-public FantasyBattleWidget(int startx, int starty)
+protected FantasyAttackListVerticalWidget listwidget = new FantasyAttackListVerticalWidget(0, 0);//set x y later on 
+protected int listwidgetoffsetx = 50;
+public FantasyBattleWidget(int sx, int sy)
 {
-	super(startx,starty);
+	super(sx,sy);
 
-	listwidget.setx(startx);
-	listwidget.sety(starty);
-	addImage("widget-1.png");
+	listwidget.setx(sx+listwidgetoffsetx);
+	listwidget.sety(sy);
+	listwidget.setsize(3);
+
+	addImage("battlewidget-1.png");
+}
+
+public Image getListImage()
+{
+	return listwidget.getImage();
+}
+public Image getHandImage()
+{
+	return listwidget.getHandImage();
+}
+
+public void movehandup()
+{
+	listwidget.movehandup();
+}
+
+public void movehanddown()
+{
+	listwidget.movehanddown();
+}
+
+public int gethandx()
+{
+	return listwidget.gethandx();
+}
+
+public int gethandy()
+{
+	return listwidget.gethandy();
+}
+
+public void sethandx(int xx)
+{
+	listwidget.sethandx(xx);
+}
+
+public void sethandy(int yy)
+{
+	listwidget.sethandx(yy);
+}
+
+public int getindex()
+{
+	return listwidget.getindex();
+}
+
+public int getListSize()
+{
+	return listwidget.getsize();
 }
 
 };

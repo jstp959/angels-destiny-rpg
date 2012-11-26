@@ -29,6 +29,12 @@ import java.util.*;
 class MonsterDatabase
 {
 protected LinkedList monsternames = new LinkedList();
+protected LinkedList monsterhitpoints = new LinkedList();
+protected LinkedList monsterstrengths = new LinkedList();
+protected LinkedList monsterdexterities = new LinkedList();
+protected LinkedList monsterintelligences = new LinkedList();
+protected LinkedList monsterconstitutions = new LinkedList();
+protected LinkedList monsterhitchances = new LinkedList();
 
 public MonsterDatabase()
 {
@@ -40,11 +46,59 @@ public int size()
 	return monsternames.size();
 }
 
-public String getMonster(int index)
+public String getMonsterName(int index)
 {
 	Object o = monsternames.get(index);
 	String s = (String)o;
 	return s;
+}
+
+public int getMonsterHitpoints(int index)
+{
+	Object o = monsterhitpoints.get(index);
+	String s = (String)o;
+	int r = Integer.parseInt(s);	
+	return (int)r;
+}
+
+public int getMonsterStrength(int index)
+{
+	Object o = monsterstrengths.get(index);
+	String s = (String)o;
+	int r = Integer.parseInt(s);	
+	return (int)r;
+}
+
+public int getMonsterDexterity(int index)
+{
+	Object o = monsterdexterities.get(index);
+	String s = (String)o;
+	int r = Integer.parseInt(s);	
+	return (int)r;
+}
+
+public int getMonsterIntelligence(int index)
+{
+	Object o = monsterintelligences.get(index);
+	String s = (String)o;
+	int r = Integer.parseInt(s);	
+	return (int)r;
+}
+
+public int getMonsterConstitution(int index)
+{
+	Object o = monsterconstitutions.get(index);
+	String s = (String)o;
+	int r = Integer.parseInt(s);	
+	return (int)r;
+}
+
+public int getMonsterHitchance(int index)
+{
+	Object o = monsterhitchances.get(index);
+	String s = (String)o;
+	int r = Integer.parseInt(s);	
+	return (int)r;
 }
 
 };

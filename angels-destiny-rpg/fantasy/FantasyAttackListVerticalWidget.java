@@ -1,6 +1,6 @@
 package fantasy;
 /*
-Copyright (C) 2012 Johan Ceuppens
+Copyright (C) <year> <name of author>
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -23,57 +23,15 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-class BattleGrid 
+class FantasyAttackListVerticalWidget extends FantasyListVerticalWidget
 {
-
-protected LinkedList grid = new LinkedList();
-protected int size = 6;
-
-public BattleGrid(int sz)
+ 
+public FantasyAttackListVerticalWidget(int sx, int sy)
 {
-	size = sz;
-
-	int i;
-	for (i = 0; i < sz; i++)
-		grid.add("none");
+	super(sx,sy,6,21);
+	startx = sx;
+	starty = sy;
 }
 
-public void set(int xx, int yy, String monstername)
-{
-
-	LinkedList backupgrid = new LinkedList();
-	int i;
-	for (i = 0; i < size; i++)
-		backupgrid.add(grid.get(i));
-
-	grid.clear();
-
-	int index = xx + yy*size/2;
-
-	for (i = 0; i < index; i++)
-		grid.add(backupgrid.get(i));
-
-	grid.add(monstername);
-
-	for (i = index; i < size; i++)
-		grid.add(grid.get(i));
-}
-
-public String get(int xx, int yy)
-{
-	Object o = grid.get(yy*size/2+xx);
-	String s = (String)o;
-	return s;
-}
-
-public int getsizex()
-{
-	return size/2;// == 3
-}
-
-public int getsizey()
-{
-	return size/3;// == 2
-}
 
 };
