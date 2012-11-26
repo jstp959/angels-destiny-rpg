@@ -59,7 +59,7 @@ public class Game extends JPanel implements ActionListener {
 
     Player player = new Player(100,100);
     int playerindex = -1;//NOTE!
-    int numberofplayercharacters = 3;
+    int numberofplayercharacters = 1;//start the game with 1 player character
     Map map = new Map(0,0,640,640, new ImageIcon(prefix+"map-1024x1024-1.png").getImage(), 0, 0);
 
     FantasyBattleWidget battlewidget = new FantasyBattleWidget(0,200-64);
@@ -333,7 +333,10 @@ public class Game extends JPanel implements ActionListener {
 						        g2d.setColor(Color.white);
         						g2d.setFont(smallfont);
         						g2d.drawString(str, player.getx(), player.gety());
-							//FIXME battle timer wait!
+							try {
+								Thread.currentThread().sleep(1000);//FIXME battle timer wait!
+							}
+							catch(InterruptedException ie){}
 							
 						}
 
@@ -345,10 +348,22 @@ public class Game extends JPanel implements ActionListener {
 				}
 			}
 		}
-		DoPlayerAttack();
-			
+
+		//walk through all charcters to let them attack
+
+        	int i;
+        	for (i = 0; i < numberofplayercharacters; i++) {
+			String str = DoPlayerAttack(i);
+			g2d.setColor(Color.white);
+        		g2d.setFont(smallfont);
+        		g2d.drawString(str, battlegridmonstertoattackx, battlegridmonstertoattacky);
+			try {
+				Thread.currentThread().sleep(1000);//FIXME battle timer wait!
+			}
+			catch(InterruptedException ie){}
+		}
 		battlegoingon = false;
-		chooseattackmode= false;	
+		chooseattackmode = false;	
 		}		
 	}
       
@@ -358,10 +373,9 @@ public class Game extends JPanel implements ActionListener {
     }
 
     /*
-     * walk through full list of player charcacters
      */
 
-    public String DoPlayerAttack()
+    public String DoPlayerAttack(int index)
     {
 	String monstername = battlegrid.get(battlegridmonstertoattackx,battlegridmonstertoattacky);
 	if (monstername == "none") {//no monster selected
@@ -380,23 +394,20 @@ public class Game extends JPanel implements ActionListener {
 		
 		
 	}
-        int i;
-        for (i = 0; i < numberofplayercharacters; i++) {
 		
-		int chancetohit = player.getPlayerHitchance(i);
+	int chancetohit = player.getPlayerHitchance(index);
 
-		int randomnumber = rng.nextInt(chancetohit);
-		if (randomnumber == 0)//monster fails to hit
-			return "Miss!";
+	int randomnumber = rng.nextInt(chancetohit);
+	if (randomnumber == 0)//monster fails to hit
+		return "Miss!";
 
-		int str = player.getPlayerStrength(i);
-		int randomnumber2 = rng.nextInt(str) + 1;
-		///player.hit(randomnumber2);
+	int str = player.getPlayerStrength(index);
+	int randomnumber2 = rng.nextInt(str) + 1;
+	///player.hit(randomnumber2);
 
-		String returnstring = "" + randomnumber2;
-		return returnstring;
-	}
-	return "none";
+	String returnstring = "" + randomnumber2;
+	return returnstring;
+	
     }	
 
     public int GetMonsterIndex(String monstername)
