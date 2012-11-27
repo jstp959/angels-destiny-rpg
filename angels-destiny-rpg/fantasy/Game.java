@@ -154,10 +154,13 @@ public class Game extends JPanel implements ActionListener {
 	nonplayercharacters.clear();
 
     	map = new Map(0,0,640,640, new ImageIcon(prefix+"map-1024x1024-1.png").getImage(), 0, 0);
-	map.setxy(-100,-100);
+	map.setxy(0,0);
 
-	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage())); //FIXME
-	gateways.add(new Gateway(0,0,1024,100,2,1,new ImageIcon(prefix+"gateway-1.png").getImage()));//FIXME
+	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage()));
+	gateways.add(new Gateway(0,0,1024,50,2,1,new ImageIcon(prefix+"nullimage.png").getImage()));
+	gateways.add(new Gateway(0,1024,1024,50,2,1,new ImageIcon(prefix+"nullimage.png").getImage()));
+	gateways.add(new Gateway(0,0,50,1024,2,1,new ImageIcon(prefix+"nullimage.png").getImage()));
+	gateways.add(new Gateway(1024,0,50,1024,2,1,new ImageIcon(prefix+"nullimage.png").getImage()));//FIXME
 	nonplayercharacters.add(new ElfGreen(200,0,displaylanguage)); //FIXME
 	//monsters.add(new Slime(48,96)); //FIXME
     }
@@ -173,9 +176,9 @@ public class Game extends JPanel implements ActionListener {
 
     	map = new Map(0,0,640,640, new ImageIcon(prefix+"map-1024x1024-2.png").getImage(), 0, 0);
 
-	map.setxy(100,100);
+	map.setxy(0,0);
 
-	gateways.add(new Gateway(0,350,1024,100,1,1,new ImageIcon(prefix+"gateway-1.png").getImage()));//FIXME
+	gateways.add(new Gateway(0,350,48,48,1,1,new ImageIcon(prefix+"gateway-1.png").getImage()));
 
     }
 
