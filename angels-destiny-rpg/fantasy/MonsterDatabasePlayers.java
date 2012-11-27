@@ -37,6 +37,7 @@ public MonsterDatabasePlayers()
 	//add first player character "Anita" 
 	monsternames.add("Anita");
 	monsterhitpoints.add("45");	
+	monstermaxhitpoints.add("45");	
 	monsterstrengths.add("10");
 	monsterdexterities.add("10");
 	monsterintelligences.add("14");

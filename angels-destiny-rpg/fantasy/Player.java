@@ -26,12 +26,15 @@ import java.util.*;
 class Player extends NonPlayerCharacter
 {
 protected int hitpoints = 10;
+protected int maxhitpoints = 10;
 protected MonsterDatabasePlayers characterdatabase = new MonsterDatabasePlayers();
 
 public Player(int startx, int starty)
 {
 	super(startx,starty);
 	direction = "down";
+
+	maxhitpoints = hitpoints;
 
 	addLeftImage("girlglassesleft-32x32-1.png");
 	addLeftImage("girlglassesleft-32x32-2.png");
@@ -67,9 +70,12 @@ public boolean collision(Entity e)
 		return false;
 }*/
 
-public void hit(int hp)
+public void hit(int index, int hp)
 {
 	hitpoints -= hp;
+
+	characterdatabase.setMonsterHitpoints(index, hitpoints);
+
 }
 
 public String getPlayerName(int index)
@@ -80,6 +86,10 @@ public String getPlayerName(int index)
 public int getPlayerHitpoints(int index)
 {
 	return characterdatabase.getMonsterHitpoints(index); 
+}
+public int getPlayerMaxHitpoints(int index)
+{
+	return characterdatabase.getMonsterMaxHitpoints(index); 
 }
 
 public int getPlayerStrength(int index)

@@ -27,6 +27,10 @@ class FantasyBattleWidget extends FantasyWidget
 {
 protected FantasyAttackListVerticalWidget listwidget = new FantasyAttackListVerticalWidget(0, 0);//set x y later on 
 protected int listwidgetoffsetx = 50;
+protected FantasyHitpointsWidget hitpointswidget = new FantasyHitpointsWidget(220,200-50);
+protected int hitpointswidgetoffsetx = 220;
+protected int hitpointswidgetoffsety = 10;
+
 public FantasyBattleWidget(int sx, int sy)
 {
 	super(sx,sy);
@@ -34,6 +38,9 @@ public FantasyBattleWidget(int sx, int sy)
 	listwidget.setx(sx+listwidgetoffsetx);
 	listwidget.sety(sy);
 	listwidget.setsize(3);
+
+        hitpointswidget.setx(sx+hitpointswidgetoffsetx);
+        hitpointswidget.sety(sy+hitpointswidgetoffsety);
 
 	addImage("battlewidget-1.png");
 }
@@ -45,6 +52,11 @@ public Image getListImage()
 public Image getHandImage()
 {
 	return listwidget.getHandImage();
+}
+
+public Image getHitpointsImage()
+{
+	return hitpointswidget.getImage();
 }
 
 public void movehandup()

@@ -30,6 +30,7 @@ class MonsterDatabase
 {
 protected LinkedList monsternames = new LinkedList();
 protected LinkedList monsterhitpoints = new LinkedList();
+protected LinkedList monstermaxhitpoints = new LinkedList();
 protected LinkedList monsterstrengths = new LinkedList();
 protected LinkedList monsterdexterities = new LinkedList();
 protected LinkedList monsterintelligences = new LinkedList();
@@ -59,6 +60,24 @@ public int getMonsterHitpoints(int index)
 	String s = (String)o;
 	int r = Integer.parseInt(s);	
 	return (int)r;
+}
+
+public void setMonsterHitpoints(int index, int hp)
+{
+	monsterhitpoints.set(index, "" + hp);
+}
+
+public int getMonsterMaxHitpoints(int index)
+{
+	Object o = monstermaxhitpoints.get(index);
+	String s = (String)o;
+	int r = Integer.parseInt(s);	
+	return (int)r;
+}
+
+public void setMonsterMaxHitpoints(int index, int maxhp)
+{
+	monsterhitpoints.set(index, "" + maxhp);
 }
 
 public int getMonsterStrength(int index)

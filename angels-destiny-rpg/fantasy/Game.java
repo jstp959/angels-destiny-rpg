@@ -39,6 +39,7 @@ public class Game extends JPanel implements ActionListener {
     String prefix = "./pics/";
     Dimension d;
     Font smallfont = new Font("Helvetica", Font.BOLD, 14);
+    Font font2 = new Font("Serif", Font.PLAIN, 12);
     private int level = 1;
     double mapy = 0;
     double mapx = 0;
@@ -69,7 +70,8 @@ public class Game extends JPanel implements ActionListener {
     int handcursormonsteroffset = 48;//hand jump offset between monsters on battle screen
     FantasyHandCursorWidget handcursorwidget = new FantasyHandCursorWidget(96,96);
 
-    boolean showintro = true;
+    boolean gameover = false;
+    boolean showintro = false;
     LinkedList introstrings = new LinkedList();
 	//battle screen is on 
     boolean battle = true;//NOTE! false to start game
@@ -189,6 +191,15 @@ public class Game extends JPanel implements ActionListener {
 	g2d.drawImage(battlewidget.getImage(), battlewidget.getx(), battlewidget.gety(), this);
     }
 
+    public void DrawBattleHitpointsWidget(Graphics g2d) {
+	g2d.drawImage(battlewidget.getHitpointsImage(), battlewidget.getx()+200, battlewidget.gety()+10, this);
+	int i;
+        for (i = 0; i < numberofplayercharacters; i++) {
+      		g2d.setColor(Color.white);
+    		g2d.drawString("" + player.getPlayerName(i) + "  " + player.getPlayerHitpoints(i) + "/" + player.getPlayerMaxHitpoints(i), battlewidget.getx()+210, battlewidget.gety()+30);
+	}
+    }
+
     public void DrawBattleWidgetHandCursor(Graphics g2d) {
 	g2d.drawImage(battlewidget.getHandImage(), battlewidget.gethandx(), battlewidget.gethandy(), this);
     }
@@ -298,15 +309,28 @@ public class Game extends JPanel implements ActionListener {
 ****************/
     }
 
+	
     public void paint(Graphics g)
     {
       Graphics2D g2d = (Graphics2D) g;
-
+	//FIXME use some return and else statements for speed
+	if (gameover) {
+      		Image gameoverimage = new ImageIcon(prefix+"gameoverscreen.png").getImage();
+    		Font fontfoo = new Font("Serif", Font.PLAIN, 20);
+        	g2d.setFont(font2);
+      		g2d.setColor(Color.white);
+		
+        	g2d.fillRect(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        	g2d.drawImage(gameoverimage, 0,0, this);
+		String str = "The demon king prevails!";
+       		g2d.drawString(str, 10,200);
+		repaint();
+		return;
+	}
 
 	if (showintro) {
 		float DELTA = -0.01f;
 		float alpha = 1f;
-		Font font2 = new Font("Serif", Font.PLAIN, 8);
 
 		setOpaque(true);
 		setBackground(Color.black);
@@ -334,7 +358,7 @@ public class Game extends JPanel implements ActionListener {
 		}
 	}
 
-      g2d.setColor(Color.black);
+      g2d.setColor(Color.white);
       g2d.fillRect(0, 0, d.width, d.height);
 
 	//map screen
@@ -348,6 +372,7 @@ public class Game extends JPanel implements ActionListener {
 	DrawBattleMonsters(g2d);
 	DrawBattlePlayer(g2d,0,0);
 	DrawBattleWidget(g2d);
+	DrawBattleHitpointsWidget(g2d);
 	if (!battlegoingon) {
 		if (chooseattackmode) {
 			battlewidget.sethandx(battlewidget.getx());//redundant
@@ -401,7 +426,7 @@ public class Game extends JPanel implements ActionListener {
 			//leveraging player towards left before he/she fights
 			int j;
 			for (j = 0; j < 48; j+=2) {
-      				g2d.setColor(Color.black);
+      				g2d.setColor(Color.white);
       				g2d.fillRect(0, 0, d.width, d.height);
 
 				DrawBattlePlayer(g2d,-j,0);
@@ -425,7 +450,7 @@ public class Game extends JPanel implements ActionListener {
 			catch(InterruptedException ie){}
 			//leveraging player towards left before he/she fights
 			for (j = 0; j < 48; j+=2) {
-      				g2d.setColor(Color.black);
+      				g2d.setColor(Color.white);
       				g2d.fillRect(0, 0, d.width, d.height);
 
 				DrawBattlePlayer(g2d,j,0);
@@ -437,6 +462,18 @@ public class Game extends JPanel implements ActionListener {
       				g.dispose();
 			}
 		}
+
+		//let monsters attack
+		int gridxx, gridyy;
+		for (gridyy = 0; gridyy < battlegrid.getsizey(); gridyy++) {	
+			for (gridxx = 0; gridxx < battlegrid.getsizex(); gridxx++) {
+			
+				int randomnumber4 = rng.nextInt(3);//FIXME use hitchance
+				if (randomnumber4 != 0 && randomnumber4 != 1)
+					DoMonsterAttack(gridxx, gridyy);
+			}
+		}
+
 		battlegoingon = false;
 		chooseattackmode = false;	
 		}		
@@ -559,8 +596,22 @@ public class Game extends JPanel implements ActionListener {
 
 	int str = monsterdatabase.getMonsterStrength(index);
 	int randomnumber2 = rng.nextInt(str) + 1;
-	player.hit(randomnumber2);
 
+	//hit a random player character
+	int randomnumber3 = rng.nextInt(numberofplayercharacters);
+
+	player.hit(randomnumber3, randomnumber2);
+
+	int i;
+	int hp = 0;
+	for (i = 0; i < numberofplayercharacters; i++) {
+		hp += player.getPlayerHitpoints(i);
+	}
+
+	if (hp <= 0) {
+		gameover = true;
+		return "0";//FIXME
+	}
 	String returnstring = "" + randomnumber2;
 	return returnstring;
     }
@@ -580,6 +631,11 @@ public class Game extends JPanel implements ActionListener {
 		}
 	}
 
+	if (gameover) {
+   		if (key == KeyEvent.VK_ESCAPE) {
+			System.exit(0);
+		}
+	}
 
 
 	//do not move if collided

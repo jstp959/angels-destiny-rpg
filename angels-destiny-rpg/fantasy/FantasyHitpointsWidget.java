@@ -1,6 +1,6 @@
 package fantasy;
 /*
-Copyright (C) 2012 Johan Ceuppens
+Copyright (C) <year> <name of author>
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -23,28 +23,14 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-/*
- */
-
-class MonsterDatabaseLevel1 extends MonsterDatabase
+class FantasyHitpointsWidget extends FantasyWidget
 {
-
-public MonsterDatabaseLevel1()
+////Font font = new Font("Helvetica", Font.PLAIN, 8);
+ 
+public FantasyHitpointsWidget(int startx, int starty)
 {
-	super();
-
-
-	//add slime monster
-	monsternames.add("slime");
-	monsterhitpoints.add("24");	
-	monsterstrengths.add("3");
-	monsterdexterities.add("2");
-	monsterintelligences.add("4");
-	monsterconstitutions.add("3");
-	monsterhitchances.add("3");
-
-	//add goblin monster
-////////monsternames.add("goblin");
+	super(startx,starty);
+	addImage("battlehitpointswidget-1.png");
 }
 
 };
