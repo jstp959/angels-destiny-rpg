@@ -1,6 +1,6 @@
 package fantasy;
 /*
-Copyright (C) 2012 Johan Ceuppens
+Copyright (C) <year> <name of author>
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -23,17 +23,34 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-/*
- */
-
-class CityNameDatabase extends CityNameDatabaseBase
+class ElfPurple extends TownsFolk 
 {
 
-public CityNameDatabase()
+public ElfPurple(int startx, int starty, String language)
 {
-	//add all citynames 
-	words.add("Elven City of Dalundar");
-	words.add("Thief lair");
+	super(startx,starty);
+
+	direction = "down";
+
+	addDownImage("elfpurple-48x48-1.png");
+
+	if (language == "Dutch" || language == "dutch") {
+
+		textlib.addText("..I heb niets te zeggen..");
+
+		asktextlib.addText("Hallo vriend.");
+
+	} else if (language == "English" || language == "english") {
+
+		textlib.addText("..I do not have anything to say to you..");
+
+		asktextlib.addText("Hello friend.");
+	} else {
+
+		textlib.addText("..I do not have anything to say to you..");
+
+		asktextlib.addText("Hello friend.");
+	}
 }
 
 };

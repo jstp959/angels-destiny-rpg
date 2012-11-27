@@ -32,9 +32,14 @@ class Gateway extends BoundingBox
 protected Image image;
 protected int id = -1;
 protected int overlandcitynumber = -1;
-public Gateway(int startx, int starty, int startw, int starth, int identity, int cityn, Image img)
+protected int xoffset = 0;
+protected int yoffset = 0;
+public Gateway(int startx, int starty, int startw, int starth, int identity, int cityn, Image img, int xx, int yy)
 {
 	super(startx,starty,startw,starth);
+
+	xoffset = xx;
+	yoffset = yy;
 
 	image = img;
 
@@ -61,5 +66,15 @@ public int getid()
 public Image getImage()
 {
 	return image;
+}
+
+public int getxoffset()
+{
+	return xoffset;
+}
+
+public int getyoffset()
+{
+	return yoffset;
 }
 };

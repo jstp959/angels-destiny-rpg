@@ -58,6 +58,8 @@ public class Game extends JPanel implements ActionListener {
     private LinkedList gateways = new LinkedList();
     private int levelnumber = 1;
     private int overlandcitynumber = 1;
+    private int overlandx = 0;
+    private int overlandy = 0;
     private boolean levelnomonsters = true;
     private LinkedList nonplayercharacters = new LinkedList();
  
@@ -156,8 +158,8 @@ public class Game extends JPanel implements ActionListener {
 	gateways.clear();
 	nonplayercharacters.clear();
 
-    	map = new Map(0,0,640,640, new ImageIcon(prefix+"map-1024x1024-1.png").getImage(), 0, 0);
-	map.setxy(0,0);
+    	map = new Map(0,0,1024,1024, new ImageIcon(prefix+"map-1024x1024-1.png").getImage(), 0, 0);
+	map.setxy(overlandx,overlandy);
 
 	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage()));
 	buildings.add(new Building(0,300,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
@@ -165,10 +167,10 @@ public class Game extends JPanel implements ActionListener {
 	buildings.add(new Building(300,600,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
 	buildings.add(new Building(800,400,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
 
-	gateways.add(new Gateway(0,0,1024,50,2,-1,new ImageIcon(prefix+"nullimage.png").getImage()));
-	gateways.add(new Gateway(0,1024,1024,50,2,-1,new ImageIcon(prefix+"nullimage.png").getImage()));
-	gateways.add(new Gateway(0,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage()));
-	gateways.add(new Gateway(1024,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage()));
+	gateways.add(new Gateway(0,0,1024,50,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
+	gateways.add(new Gateway(0,1024,1024,50,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
+	gateways.add(new Gateway(0,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
+	gateways.add(new Gateway(1024,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
 	nonplayercharacters.add(new ElfGreen(163,500,displaylanguage));
 	//monsters.add(new Slime(48,96)); //FIXME
     }
@@ -184,12 +186,36 @@ public class Game extends JPanel implements ActionListener {
 	gateways.clear();
 	nonplayercharacters.clear();
 
-    	map = new Map(0,0,640,640, new ImageIcon(prefix+"map-1024x1024-2.png").getImage(), 0, 0);
+    	map = new Map(0,0,1024,1024, new ImageIcon(prefix+"map-1024x1024-2.png").getImage(), 0, 0);
 
-	map.setxy(0,0);
+	map.setxy(overlandx,overlandy);
 
-	gateways.add(new Gateway(0,350,48,48,1,1,new ImageIcon(prefix+"gateway-1.png").getImage()));
+	gateways.add(new Gateway(0,350,48,48,3,2,new ImageIcon(prefix+"gateway-1.png").getImage(),-100,-10));
 
+    }
+
+    public void loadlevel3()
+    {
+
+	levelnomonsters = true;
+
+	drawcounter1 = 0;
+
+	buildings.clear();
+	gateways.clear();
+	nonplayercharacters.clear();
+
+    	map = new Map(0,0,480,480, new ImageIcon(prefix+"map-480x480-1.png").getImage(), 0, 0);
+	map.setxy(overlandx,overlandy);
+
+	buildings.add(new Building(100,200,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
+
+	gateways.add(new Gateway(0,0,480,50,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),80,-300));
+	gateways.add(new Gateway(0,480,480,50,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),0,-320));
+	gateways.add(new Gateway(0,0,50,480,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),0,-320));
+	gateways.add(new Gateway(480,0,50,480,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),0,-320));
+	nonplayercharacters.add(new ElfPurple(163,140,displaylanguage));
+	//monsters.add(new Slime(48,96)); //FIXME
     }
 
 
@@ -399,6 +425,8 @@ public class Game extends JPanel implements ActionListener {
 		collide = collision(player.getx(), player.gety(), 32,32, b.getx()+map.getx(), b.gety()+map.gety(), b.getw(), b.geth()); //FIXME fixed width&height of player
 		if (collide) {
 			overlandcitynumber = b.getoverlandcitynumber();
+			overlandx = b.getxoffset();
+			overlandy = b.getyoffset();
 			return b.getid();
 		}
 	}
@@ -856,6 +884,9 @@ public class Game extends JPanel implements ActionListener {
 				break;
 			case 2:
 				loadlevel2();
+				break;
+			case 3:
+				loadlevel3();
 				break;
 			default:
 				break;
