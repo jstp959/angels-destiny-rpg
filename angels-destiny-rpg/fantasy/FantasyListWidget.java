@@ -35,7 +35,6 @@ public FantasyListWidget(int startx, int starty, int sz)
 	hand.sety(starty);
 
 	///hand.addImage("widget-handcursor-20x20-1.png");
-	addImage("battlewidgetlist-1.png");
 }
 
 public int getsize()

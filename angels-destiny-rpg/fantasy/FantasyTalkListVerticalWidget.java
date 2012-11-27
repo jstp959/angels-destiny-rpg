@@ -23,15 +23,15 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-class FantasyAttackListVerticalWidget extends FantasyListVerticalWidget
+class FantasyTalkListVerticalWidget extends FantasyListVerticalWidget
 {
  
-public FantasyAttackListVerticalWidget(int sx, int sy)
+public FantasyTalkListVerticalWidget(int sx, int sy)
 {
 	super(sx,sy,6,21);
 	startx = sx;
 	starty = sy;
-	addImage("battlewidgetlist-1.png");
+	addImage("talkwidgetlist-1.png");
 }
 
 

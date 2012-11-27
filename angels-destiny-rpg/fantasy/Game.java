@@ -69,12 +69,14 @@ public class Game extends JPanel implements ActionListener {
     int handcursordrawoffset = 20;//draw hand -20 pixels to the left
     int handcursormonsteroffset = 48;//hand jump offset between monsters on battle screen
     FantasyHandCursorWidget handcursorwidget = new FantasyHandCursorWidget(96,96);
+    FantasyTalkWidget talkwidget = new FantasyTalkWidget(0,0);
 
+    boolean talk = false;
     boolean gameover = false;
     boolean showintro = false;
     LinkedList introstrings = new LinkedList();
 	//battle screen is on 
-    boolean battle = true;//NOTE! false to start game
+    boolean battle = false;//NOTE! false to start game
 	//a battle phase is being displayed
     boolean battlegoingon = false;
     boolean chooseattackmode = false;
@@ -178,6 +180,20 @@ public class Game extends JPanel implements ActionListener {
 	}
 
      }
+
+
+/*
+ * drawing talk
+ */
+
+    public void DrawTalkListWidget(Graphics g2d) {
+	g2d.drawImage(talkwidget.getListImage(), talkwidget.getx(), talkwidget.gety(), this);
+    }
+
+    public void DrawTalkWidget(Graphics g2d) {
+	g2d.drawImage(talkwidget.getImage(), talkwidget.getx(), talkwidget.gety(), this);
+    }
+
 
 /*
  * drawing battles 
@@ -367,6 +383,10 @@ public class Game extends JPanel implements ActionListener {
 	DrawBuildingsOnMap(g2d);	
 	DrawNonPlayerCharacters(g2d);	
 	DrawPlayer(g2d);
+	if (talk) {
+		DrawTalkWidget(g2d);
+		DrawTalkListWidget(g2d);
+	}
       } else if (battle) {//battle screen
 	DrawBattleStage(g2d);
 	DrawBattleMonsters(g2d);
@@ -688,6 +708,10 @@ public class Game extends JPanel implements ActionListener {
 				return;//NOTE!
 			}
 		}	
+	   	if (key == KeyEvent.VK_X) {
+			talk = true;
+		//	player.talk();
+	   	}
 	   } else if (battle) {
 	   	if (key == KeyEvent.VK_LEFT) {
 			if (!chooseattackmode) {
