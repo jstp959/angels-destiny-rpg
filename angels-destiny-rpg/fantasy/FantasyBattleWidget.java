@@ -26,7 +26,7 @@ import java.util.*;
 class FantasyBattleWidget extends FantasyWidget
 {
 protected FantasyAttackListVerticalWidget listwidget = new FantasyAttackListVerticalWidget(0, 0);//set x y later on 
-protected int listwidgetoffsetx = 50;
+protected int listwidgetoffsetx = 5;
 protected FantasyHitpointsWidget hitpointswidget = new FantasyHitpointsWidget(220,200-50);
 protected int hitpointswidgetoffsetx = 220;
 protected int hitpointswidgetoffsety = 10;

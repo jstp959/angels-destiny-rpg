@@ -36,27 +36,33 @@ public FantasyListVerticalWidget(int sx, int sy, int sz, int yoff)
 	starty = sy;
 }
 
-public void movehanddown()
+public int getyoffset()
 {
-	if (hand.gety() >= starty + size*yoffset)
-		return;
-
-	index++;
-	hand.sety(hand.gety()+yoffset);
-}
-
-public void movehandup()
-{
-	if (hand.gety() <= starty) 
-		return;
-
-	index--;
-	hand.sety(hand.gety()-yoffset);
+	return yoffset;
 }
 
 public int getindex()
 {
 	return index;
+}
+
+public void movehanddown()//moves relative to list
+{
+	if (index >= size)
+		return;
+
+	index++;
+	hand.sety(hand.gety()+yoffset);
+
+}
+
+public void movehandup()//moves relative to list
+{
+	if (index <= 0)
+		return;
+
+	index--;
+	hand.sety(hand.gety()-yoffset);
 }
 
 };

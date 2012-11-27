@@ -28,11 +28,21 @@ class FantasyAttackListVerticalWidget extends FantasyListVerticalWidget
  
 public FantasyAttackListVerticalWidget(int sx, int sy)
 {
-	super(sx,sy,6,21);
+	super(sx,sy,2,21);//attack list size 2!FIXME
 	startx = sx;
 	starty = sy;
 	addImage("battlewidgetlist-1.png");
 }
 
+public void setx(int xx)
+{
+	hand.setx(xx);
+	x = xx;
+}
+public void sety(int yy)
+{
+	hand.sety(yy);
+	y = yy;
+}
 
 };

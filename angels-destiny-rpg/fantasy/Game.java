@@ -207,7 +207,7 @@ public class Game extends JPanel implements ActionListener {
 	int i;
 	for (i = 0; i < askworddatabase.learnedwordsize(); i++) {
 
-		g2d.drawString(askworddatabase.getLearnedWord(i), 20, (i+1)*21);
+		g2d.drawString(askworddatabase.getLearnedWord(i), 10, (i+1)*21);
 	}
     }
 
@@ -254,7 +254,7 @@ public class Game extends JPanel implements ActionListener {
     }
 
     public void DrawBattleWidgetHandCursor(Graphics g2d) {
-	g2d.drawImage(battlewidget.getHandImage(), battlewidget.gethandx(), battlewidget.gethandy(), this);
+	g2d.drawImage(battlewidget.getHandImage(), /*battlewidget.getx() +*/ battlewidget.gethandx(),/*battlewidget.gety()+*/ battlewidget.gethandy(), this);//FIXME
     }
 
     public void DrawBattleWidgetList(Graphics g2d) {
