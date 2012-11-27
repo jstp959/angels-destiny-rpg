@@ -75,6 +75,10 @@ public class Game extends JPanel implements ActionListener {
     String currenttalktext = "";
     int currenttalktextindex = -1;
     int currenttalktextmax = 0;
+    FantasyAskWidget askwidget = new FantasyAskWidget(0,0);
+    AskWordDatabase askworddatabase = new AskWordDatabase();
+
+    boolean askmode = false;
 
     boolean talk = false;
     boolean collidedwithnonplayercharacter = false;
@@ -193,6 +197,24 @@ public class Game extends JPanel implements ActionListener {
  * drawing talk
  */
 
+    public void DrawAskLearnedWords(Graphics g2d) {
+      
+	g2d.setColor(Color.white);
+    	Font fontfoo = new Font("Serif", Font.PLAIN, 17);
+        g2d.setFont(fontfoo);
+
+
+	int i;
+	for (i = 0; i < askworddatabase.learnedwordsize(); i++) {
+
+		g2d.drawString(askworddatabase.getLearnedWord(i), 20, (i+1)*21);
+	}
+    }
+
+    public void DrawAskBackgroundWidget(Graphics g2d) {
+	g2d.drawImage(askwidget.getBackgroundImage(), 0, 0, this);//FIXME fixed size
+    }
+
     public void DrawTalkBackgroundWidget(Graphics g2d) {
 	g2d.drawImage(talkwidget.getBackgroundImage(), 0, 0, this);//FIXME fixed size
     }
@@ -203,6 +225,10 @@ public class Game extends JPanel implements ActionListener {
 
     public void DrawTalkWidget(Graphics g2d) {
 	g2d.drawImage(talkwidget.getImage(), 48, 200-64, this);
+    }
+
+    public void DrawTalkWidgetHandCursor(Graphics g2d) {
+	g2d.drawImage(talkwidget.getHandImage(), talkwidget.gethandx(), talkwidget.gethandy()+210, this);//FIXME +210 fixed size talkwidget offsets
     }
 
 
@@ -417,17 +443,27 @@ public class Game extends JPanel implements ActionListener {
 	DrawNonPlayerCharacters(g2d);	
 	DrawPlayer(g2d);
 	if (talk && collidedwithnonplayercharacter) {
-		DrawTalkBackgroundWidget(g2d);
 
+		if (!askmode) {
+			DrawTalkBackgroundWidget(g2d);
+			if (choosetalkmode) {
 
-		if (choosetalkmode) {
-
-			DrawTalkWidget(g2d);
-			DrawTalkListWidget(g2d);
+				DrawTalkWidget(g2d);
+				DrawTalkListWidget(g2d);
 			
+				DrawTalkWidgetHandCursor(g2d);	
+
+			}
+	
+		}
+
+		if (askmode) {
+
+			DrawAskBackgroundWidget(g2d);
+			DrawAskLearnedWords(g2d);
 
 		}
-	
+
 		if (!choosetalkmode && currenttalktextmax-1 == currenttalktextindex) {	
 			DrawTalkWidget(g2d);
 			DrawTalkListWidget(g2d);
@@ -436,12 +472,13 @@ public class Game extends JPanel implements ActionListener {
 			choosetalkmode = true;
 		}
 
-      		g2d.setColor(Color.white);
-    		Font fontfoo = new Font("Serif", Font.PLAIN, 17);
-        	g2d.setFont(fontfoo);
+		if (!askmode) {
+      			g2d.setColor(Color.white);
+    			Font fontfoo = new Font("Serif", Font.PLAIN, 17);
+        		g2d.setFont(fontfoo);
 
-		g2d.drawString(currenttalktext,20, 20);
-
+			g2d.drawString(currenttalktext,20, 20);
+		}
 	}
       } else if (battle) {//battle screen
 	DrawBattleStage(g2d);
@@ -739,38 +776,59 @@ public class Game extends JPanel implements ActionListener {
 
 		collidedwithnonplayercharacter = true;
 
-		return;//FIXME leave this, collidedwithnonplayercharacter gets set in (key == ...) further on
+		//FIXMEif (!choosetalkmode) {
+			return;//FIXME leave this, collidedwithnonplayercharacter gets set in (key == ...) further on
+		//}
 	   } else {//NOTE!
-		talk = false;
+		if (!choosetalkmode) {//FIXME
+			talk = false;
+		}
 	   }
 	   if (!battle) {//map screen
 
 	   	if (key == KeyEvent.VK_LEFT) {
-			player.settomoving("left");
-			map.moveright();
+
+			if (!choosetalkmode) {
+				player.settomoving("left");
+				map.moveright();
+			}
 	   	}
 	   	if (key == KeyEvent.VK_RIGHT) {
-			player.settomoving("right");
-			map.moveleft();
+			if (!choosetalkmode) {
+				player.settomoving("right");
+				map.moveleft();
+			}
 	   	}
 	   	if (key == KeyEvent.VK_UP) {
-			player.settomoving("up");
-			map.movedown();
+
+			if (choosetalkmode) {
+				talkwidget.movehandup();
+			} else {		
+				player.settomoving("up");
+				map.movedown();
+			}
 	   	}
 	   	if (key == KeyEvent.VK_DOWN) {
-			player.settomoving("down");
-			map.moveup();
+			if (choosetalkmode) {
+				talkwidget.movehanddown();
+			} else {		
+				player.settomoving("down");
+				map.moveup();
+			}
 	   	}
 		if (key == KeyEvent.VK_LEFT || 
 			key == KeyEvent.VK_RIGHT ||
 			key == KeyEvent.VK_UP ||
 			key == KeyEvent.VK_DOWN) {
 
-			collidedwithnonplayercharacter = false;
-			//talk = false;
-			//currenttalktext = "";
+			if (!choosetalkmode) {
 
-      			int randomnumber = rng.nextInt(3000);
+				collidedwithnonplayercharacter = false;
+				//talk = false;
+				//currenttalktext = "";
+			}
+
+      			int randomnumber = rng.nextInt(3200);
       			if (randomnumber == 0) {
 				battle = true;
 
@@ -787,18 +845,31 @@ public class Game extends JPanel implements ActionListener {
 			}
 		}	
 	   	if (key == KeyEvent.VK_X) {
-			if (talk && collidedwithnonplayercharacter) {//FIXMENOTE
-				talk = false;
-			} else if (collidedwithnonplayercharacter) {
-				currenttalktextindex++;
-				talk = true;
+
+			if (choosetalkmode) {
+
+				choosetalkmode = false;
+				askmode = true;	//FIXME ask learn item
+
+			} else if (!choosetalkmode) {
+
+				if (talk && collidedwithnonplayercharacter) {//FIXMENOTE
+					talk = false;
+				} else if (collidedwithnonplayercharacter) {
+					currenttalktextindex++;
+					talk = true;
+				}
 			}
 	   	}
-	   	if (key == KeyEvent.VK_Z) {
+	   	if (key == KeyEvent.VK_Z) {//go back to history of talkmodes
 
 			if (choosetalkmode) {
 				choosetalkmode = false;
 				currenttalktextindex = -1;
+			}
+
+			if (askmode) {
+				askmode = false;
 			}
 
 		}

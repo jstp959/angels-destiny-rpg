@@ -1,6 +1,6 @@
 package fantasy;
 /*
-Copyright (C) <year> <name of author>
+Copyright (C) 2012 Johan Ceuppens
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -23,16 +23,41 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-class FantasyTalkListVerticalWidget extends FantasyListVerticalWidget
+/*
+ */
+
+class AskWordDatabaseBase
 {
- 
-public FantasyTalkListVerticalWidget(int sx, int sy)
+protected LinkedList words = new LinkedList();
+protected LinkedList learnedwords = new LinkedList();
+
+public AskWordDatabaseBase()
 {
-	super(sx,sy,6,21);
-	startx = sx;
-	starty = sy;
-	addImage("talkwidgetlist-2.png");
+
 }
 
+public int learnedwordsize()
+{
+	return learnedwords.size();
+}
+
+public int wordsize()
+{
+	return words.size();
+}
+
+public String getWord(int index)
+{
+	Object o = words.get(index);
+	String s = (String)o;
+	return s;
+}
+
+public String getLearnedWord(int index)
+{
+	Object o = learnedwords.get(index);
+	String s = (String)o;
+	return s;
+}
 
 };

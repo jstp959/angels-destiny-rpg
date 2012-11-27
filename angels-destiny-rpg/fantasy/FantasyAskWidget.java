@@ -23,20 +23,20 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-class FantasyTalkWidget extends FantasyWidget
+class FantasyAskWidget extends FantasyWidget
 {
-protected FantasyTalkListVerticalWidget listwidget = new FantasyTalkListVerticalWidget(0,0); 
+protected FantasyAskListVerticalWidget listwidget = new FantasyAskListVerticalWidget(0,0); 
 
 protected Image backgroundimage;
 protected String prefix = "pics/";
-public FantasyTalkWidget(int sx, int sy)
+public FantasyAskWidget(int sx, int sy)
 {
 	super(sx,sy);
 	listwidget.setx(sx);
 	listwidget.sety(sy);
 
-	backgroundimage = new ImageIcon(prefix+"talkbackgroundwidget-2.png").getImage();
-	addImage("talkwidget-1.png");//FIXME
+	backgroundimage = new ImageIcon(prefix+"askwidgetlistbackground-1.png").getImage();
+	///addImage("talkwidget-1.png");//FIXME
 }
 
 public Image getBackgroundImage()

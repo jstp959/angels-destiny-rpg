@@ -23,75 +23,16 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-class FantasyTalkWidget extends FantasyWidget
+class FantasyAskListVerticalWidget extends FantasyListVerticalWidget
 {
-protected FantasyTalkListVerticalWidget listwidget = new FantasyTalkListVerticalWidget(0,0); 
-
-protected Image backgroundimage;
-protected String prefix = "pics/";
-public FantasyTalkWidget(int sx, int sy)
+ 
+public FantasyAskListVerticalWidget(int sx, int sy)
 {
-	super(sx,sy);
-	listwidget.setx(sx);
-	listwidget.sety(sy);
-
-	backgroundimage = new ImageIcon(prefix+"talkbackgroundwidget-2.png").getImage();
-	addImage("talkwidget-1.png");//FIXME
+	super(sx,sy,6,21);
+	startx = sx;
+	starty = sy;
+	addImage("askwidgetlist-1.png");//background
 }
 
-public Image getBackgroundImage()
-{
-	return backgroundimage;
-}
-
-public Image getListImage()
-{
-	return listwidget.getImage();
-}
-
-public void movehandup()
-{
-	listwidget.movehandup();
-}
-
-public void movehanddown()
-{
-	listwidget.movehanddown();
-}
-
-public int gethandx()
-{
-	return listwidget.gethandx();
-}
-
-public int gethandy()
-{
-	return listwidget.gethandy();
-}
-
-public void sethandx(int xx)
-{
-	listwidget.sethandx(xx);
-}
-
-public void sethandy(int yy)
-{
-	listwidget.sethandx(yy);
-}
-
-public int getindex()
-{
-	return listwidget.getindex();
-}
-
-public int getListSize()
-{
-	return listwidget.getsize();
-}
-
-public Image getHandImage()
-{
-	return listwidget.getHandImage();
-}
 
 };
