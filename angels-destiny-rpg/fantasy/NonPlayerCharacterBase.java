@@ -26,9 +26,9 @@ import java.util.*;
 class NonPlayerCharacterBase extends Entity
 {
 
-public NonPlayerCharacterBase(int startx, int starty)
+public NonPlayerCharacterBase(int startx, int starty, int startw, int starth)
 {
-	super(startx,starty);
+	super(startx,starty,startw,starth);
 
 }
 

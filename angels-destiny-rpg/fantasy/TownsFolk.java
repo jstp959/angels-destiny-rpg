@@ -28,10 +28,10 @@ import java.util.*;
 */
 class TownsFolk extends NonPlayerCharacter 
 {
-
+ 
 public TownsFolk(int startx, int starty)
 {
-	super(startx,starty);
+	super(startx,starty,48,48);//NOTE! fixed width
 	direction = "down";
 }
 

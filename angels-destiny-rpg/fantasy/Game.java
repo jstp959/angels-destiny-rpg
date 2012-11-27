@@ -70,8 +70,10 @@ public class Game extends JPanel implements ActionListener {
     int handcursormonsteroffset = 48;//hand jump offset between monsters on battle screen
     FantasyHandCursorWidget handcursorwidget = new FantasyHandCursorWidget(96,96);
     FantasyTalkWidget talkwidget = new FantasyTalkWidget(0,0);
+    String currenttalktext = "";
 
     boolean talk = false;
+    boolean collidedwithnonplayercharacter = false;
     boolean gameover = false;
     boolean showintro = false;
     LinkedList introstrings = new LinkedList();
@@ -110,7 +112,7 @@ public class Game extends JPanel implements ActionListener {
         timer.start();
 
 	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage())); //FIXME
-	nonplayercharacters.add(new Bartender(0,0)); //FIXME
+	nonplayercharacters.add(new ElfGreen(200,0)); //FIXME
 	//monsters.add(new Slime(48,96)); //FIXME
 
 
@@ -298,6 +300,27 @@ public class Game extends JPanel implements ActionListener {
 	return collide;
      }
 
+    public boolean CollideNonPlayerCharacters()
+    {
+	int i;
+	boolean collide = false;
+
+	for ( i = 0; i < nonplayercharacters.size(); i++) {
+
+		Object o = nonplayercharacters.get(i);
+		NonPlayerCharacter b = (NonPlayerCharacter)o; 
+		
+		collide = collision(player.getx(), player.gety(), 32,32, b.getx()+map.getx(), b.gety()+map.gety(), b.getw(), b.geth()); //FIXME fixed width&height of player
+
+		currenttalktext = b.talkto();
+
+		if (collide) 
+			return collide;
+	}
+
+	return collide;
+     }
+
     public void GameInit() {
         LevelInit();
     }
@@ -333,7 +356,7 @@ public class Game extends JPanel implements ActionListener {
 	if (gameover) {
       		Image gameoverimage = new ImageIcon(prefix+"gameoverscreen.png").getImage();
     		Font fontfoo = new Font("Serif", Font.PLAIN, 20);
-        	g2d.setFont(font2);
+        	g2d.setFont(fontfoo);
       		g2d.setColor(Color.white);
 		
         	g2d.fillRect(0, 0, SCREENWIDTH, SCREENHEIGHT);
@@ -386,6 +409,12 @@ public class Game extends JPanel implements ActionListener {
 	if (talk) {
 		DrawTalkWidget(g2d);
 		DrawTalkListWidget(g2d);
+
+      		g2d.setColor(Color.darkGray);
+    		Font fontfoo = new Font("Serif", Font.PLAIN, 20);
+        	g2d.setFont(fontfoo);
+
+		g2d.drawString(currenttalktext,20, 20);
 	}
       } else if (battle) {//battle screen
 	DrawBattleStage(g2d);
@@ -670,6 +699,21 @@ public class Game extends JPanel implements ActionListener {
 			map.movedown();
 		return;
 	   }
+	   if (CollideNonPlayerCharacters()) {
+
+		if (player.getdirection() == "left")
+			map.moveleft();
+		if (player.getdirection() == "right")
+			map.moveright();
+		if (player.getdirection() == "up")
+			map.moveup();
+		if (player.getdirection() == "down")
+			map.movedown();
+
+		collidedwithnonplayercharacter = true;
+
+		return;//FIXME leave this, collidedwithnonplayercharacter gets set in (key == ...) further on
+	   }
 	   if (!battle) {//map screen
 
 	   	if (key == KeyEvent.VK_LEFT) {
@@ -692,6 +736,9 @@ public class Game extends JPanel implements ActionListener {
 			key == KeyEvent.VK_RIGHT ||
 			key == KeyEvent.VK_UP ||
 			key == KeyEvent.VK_DOWN) {
+
+			collidedwithnonplayercharacter = false;
+
       			int randomnumber = rng.nextInt(3000);
       			if (randomnumber == 0) {
 				battle = true;
@@ -709,7 +756,13 @@ public class Game extends JPanel implements ActionListener {
 			}
 		}	
 	   	if (key == KeyEvent.VK_X) {
-			talk = true;
+			if (talk) {
+				talk = false;
+			}
+
+			if (collidedwithnonplayercharacter) {
+				talk = true;
+			}
 		//	player.talk();
 	   	}
 	   } else if (battle) {

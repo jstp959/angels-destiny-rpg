@@ -36,9 +36,11 @@ protected StateImageLibrary downimages;
 protected boolean moving = false;
 protected String direction = "down";
 
-public NonPlayerCharacter(int startx, int starty)
+protected StateTextLibrary textlib = new StateTextLibrary();
+
+public NonPlayerCharacter(int startx, int starty, int startw, int starth)
 {
-	super(startx,starty);
+	super(startx,starty,startw,starth);
 
 	leftimages = new StateImageLibrary();
 	rightimages = new StateImageLibrary();
@@ -168,5 +170,9 @@ public String getdirection()
 	return direction;
 }
 
-	
+public String talkto()
+{
+	return textlib.getText();
+}
+
 };

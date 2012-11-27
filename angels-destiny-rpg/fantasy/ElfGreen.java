@@ -22,33 +22,19 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import java.util.*;
-import java.util.Observable;
-import java.util.Observer;
 
-public class Enemy extends Entity implements Observer 
+class ElfGreen extends TownsFolk 
 {
 
-protected int hitpoints = 10;
-public Enemy(int startx, int starty, int startw, int starth, int hp)
+public ElfGreen(int startx, int starty)
 {
-	super(startx, starty,startw,starth);
-	hitpoints = hp;
+	super(startx,starty);
+
+	direction = "down";
+
+	addDownImage("elfgreen-48x48-1.png");
+	textlib.addText("There is trouble in the east..");
+
 }
-
-public int hit(Player player)
-{
-	return --hitpoints;
-}
-
-public void message(String message)
-{}
-
-public void update (Observable obj, Object arg) {
-        if (arg instanceof String) {
-            String resp = (String) arg;
-            System.out.println("\nReceived Response: "+ resp );
-        }
-} 
-
 
 };

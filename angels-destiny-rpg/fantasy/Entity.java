@@ -25,12 +25,14 @@ import java.util.*;
 
 class Entity 
 {
-protected int x,y;
+protected int x,y,w,h;
 
-public Entity(int startx, int starty)
+public Entity(int startx, int starty, int startw, int starth)
 {
 	x = startx;
 	y = starty;
+	w = startw;
+	h = starth;
 }
 
 public int getx()
@@ -52,4 +54,15 @@ public void sety(int yy)
 {
 	y = yy;
 }
+
+public int getw()
+{
+	return w;
+}
+
+public int geth()
+{
+	return h;
+}
+
 };

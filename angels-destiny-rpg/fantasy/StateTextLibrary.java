@@ -20,35 +20,40 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import java.util.*;
-import java.util.Observable;
-import java.util.Observer;
 
-public class Enemy extends Entity implements Observer 
+class StateTextLibrary
 {
 
-protected int hitpoints = 10;
-public Enemy(int startx, int starty, int startw, int starth, int hp)
+private LinkedList texts = new LinkedList();//FIXME static array size
+String prefix = "./pics/";
+
+private int index;
+private int max;
+
+public StateTextLibrary()
 {
-	super(startx, starty,startw,starth);
-	hitpoints = hp;
+	index = 0;
+	max = 0;
 }
-
-public int hit(Player player)
+public void addText(String text)
 {
-	return --hitpoints;
+      texts.add(text);
+      max += 1;     	
 }
-
-public void message(String message)
-{}
-
-public void update (Observable obj, Object arg) {
-        if (arg instanceof String) {
-            String resp = (String) arg;
-            System.out.println("\nReceived Response: "+ resp );
-        }
-} 
-
+public String getText()
+{
+      if (index >= max)
+	index = 0;
+      Object s = texts.get(index++);
+      return (String)s;
+}
+public String getText(int idx)
+{
+      if (idx >= max)
+	idx = 0;
+      Object s = texts.get(idx);
+      return (String)s;
+}
 
 };

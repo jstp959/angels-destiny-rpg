@@ -30,7 +30,7 @@ public Bartender(int startx, int starty)
 {
 	super(startx,starty);
 	direction = "down";
-	addDownImage("shipwhite24x24-1.png");
+	addDownImage("elfgreen-48x48-1.png");
 
 }
 

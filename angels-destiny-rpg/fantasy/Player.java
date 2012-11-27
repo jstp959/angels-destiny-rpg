@@ -31,7 +31,7 @@ protected MonsterDatabasePlayers characterdatabase = new MonsterDatabasePlayers(
 
 public Player(int startx, int starty)
 {
-	super(startx,starty);
+	super(startx,starty,48,48);//NOTE! fixed width
 	direction = "down";
 
 	maxhitpoints = hitpoints;
