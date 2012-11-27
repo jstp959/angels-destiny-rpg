@@ -86,7 +86,8 @@ public class Game extends JPanel implements ActionListener {
     FantasyAskWidget askwidget = new FantasyAskWidget(0,0,askworddatabase.learnedwordsize());//NOTE! use setsize for enlarging the askwidget
     ItemWordDatabase itemworddatabase = new ItemWordDatabase();
     FantasyItemWidget itemwidget = new FantasyItemWidget(0,0,itemworddatabase.size());//NOTE! use setsize for enlarging the itemwidget
-    FantasyLearnWidget learnwidget = new FantasyLearnWidget(0,0,askworddatabase.learnedwordsize());//NOTE! use setsize for enlarging the itemwidget
+    LearnWordDatabase learnworddatabase = new LearnWordDatabase();
+    FantasyLearnWidget learnwidget = new FantasyLearnWidget(0,0,learnworddatabase.size());//NOTE! use setsize for enlarging the itemwidget
 
     boolean askmode = false;
     boolean learnmode = false;
@@ -358,14 +359,14 @@ public class Game extends JPanel implements ActionListener {
     public void DrawLearnLearnedWords(Graphics g2d) {
       
 	g2d.setColor(Color.white);
-    	Font fontfoo = new Font("Serif", Font.PLAIN, 17);
+    	Font fontfoo = new Font("Serif", Font.PLAIN, 13);
         g2d.setFont(fontfoo);
 
 
 	int i;
-	for (i = 0; i < askworddatabase.learnedwordsize(); i++) {
+	for (i = 0; i < learnworddatabase.size(); i++) {
 
-		g2d.drawString(askworddatabase.getLearnedWord(i), 10, (i+1)*21);
+		g2d.drawString(learnworddatabase.getWord(i), 10, (i+1)*21);
 	}
     }
 

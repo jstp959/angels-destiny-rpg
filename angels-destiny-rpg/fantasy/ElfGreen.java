@@ -41,7 +41,7 @@ public ElfGreen(int startx, int starty, String language)
 
 		asktextlib.addText("Aangenaam.");
 		itemtextlib.addText("Hopelijk heb je het niet nodig.");
-		learntextlib.addText("Daar weet ik niets over.");
+		learntextlib.addText("Dulandar is dit elfen dorpje.");
 
 	} else if (language == "English" || language == "english") {
 
@@ -50,7 +50,7 @@ public ElfGreen(int startx, int starty, String language)
 
 		asktextlib.addText("Pleased to meet you.");
 		itemtextlib.addText("I hope you will not need it.");
-		learntextlib.addText("I do not know anything about that.");
+		learntextlib.addText("Dulandar is this town, founded by elves.");
 	} else {
 
 		textlib.addText("There is trouble in the east..");
@@ -58,7 +58,7 @@ public ElfGreen(int startx, int starty, String language)
 
 		asktextlib.addText("Pleased to meet you.");
 		itemtextlib.addText("I hope you will not need it.");
-		learntextlib.addText("I do not know anything about that.");
+		learntextlib.addText("Dulandar is this town, founded by elves.");
 	}
 }
 
