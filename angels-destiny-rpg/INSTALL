@@ -4,6 +4,4 @@ javac fantasy/*.java;
 java fantasy/FF
 
 Play Keys:
-
-- arrow keys : movement on map
-- escape key : exit battle
+See README file
