@@ -82,12 +82,13 @@ public class Game extends JPanel implements ActionListener {
     NonPlayerCharacter currentnonplayercharacter;
     int currenttalktextindex = -1;
     int currenttalktextmax = 0;
+    int currentlearn = -1;
     AskWordDatabase askworddatabase = new AskWordDatabase();
     FantasyAskWidget askwidget = new FantasyAskWidget(0,0,askworddatabase.learnedwordsize());//NOTE! use setsize for enlarging the askwidget
     ItemWordDatabase itemworddatabase = new ItemWordDatabase();
     FantasyItemWidget itemwidget = new FantasyItemWidget(0,0,itemworddatabase.size());//NOTE! use setsize for enlarging the itemwidget
     LearnWordDatabase learnworddatabase = new LearnWordDatabase();
-    FantasyLearnWidget learnwidget = new FantasyLearnWidget(0,0,learnworddatabase.size());//NOTE! use setsize for enlarging the itemwidget
+    FantasyLearnWidget learnwidget = new FantasyLearnWidget(0,0,learnworddatabase.size());//NOTE! use setsize for enlarging the learnwidget
 
     boolean askmode = false;
     boolean learnmode = false;
@@ -530,6 +531,7 @@ public class Game extends JPanel implements ActionListener {
 		if (!talkmodeafterask || !talkmodeafteritem || !talkmodeafterlearn) {
 			currenttalktext = b.talkto();
 			currenttalktextmax = b.talktomaxindex();
+			currentlearn = b.learn();
 		}
 		currentnonplayercharacter = b;
 
@@ -687,6 +689,14 @@ public class Game extends JPanel implements ActionListener {
         		g2d.setFont(fontfoo);
 
 			g2d.drawString(currenttalktext,20, 20);
+
+			if (currentlearn > 0) {
+				//askmode = true;
+				askwidget.setindex(1);
+				learnworddatabase.addWord("Foo");	
+				currentlearn = -1;
+			}
+
 		}
 	}
       } else if (battle) {//battle screen
@@ -1101,7 +1111,7 @@ public class Game extends JPanel implements ActionListener {
 			if (learnmode) {
 
 				int idx = learnwidget.getindex();
-				//String word = askworddatabase.getItemWord(idx);
+				//String word = learnworddatabase.getWord(idx);
 
 				
 				currenttalktext = currentnonplayercharacter.learntalkto(idx);	
@@ -1135,7 +1145,7 @@ public class Game extends JPanel implements ActionListener {
 				}
 					
 			} else if (!choosetalkmode) {
-
+				//FIXME!
 				if (talk && collidedwithnonplayercharacter) {//FIXMENOTE
 					talk = false;
 				} else if (collidedwithnonplayercharacter) {
@@ -1158,7 +1168,12 @@ public class Game extends JPanel implements ActionListener {
 			if (talkmodeafterask) {
 				talkmodeafterask = false;
 			}
-
+			if (talkmodeafteritem) {
+				talkmodeafteritem = false;
+			}
+			if (talkmodeafterlearn) {
+				talkmodeafterlearn = false;
+			}
 		}
 	   } else if (battle) {
 	   	if (key == KeyEvent.VK_LEFT) {

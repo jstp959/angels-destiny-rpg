@@ -38,15 +38,19 @@ public ElfGreen(int startx, int starty, String language)
 
 		textlib.addText("Er is onrust in het Oosten..");
 		textlib.addText("een oud kwaad is aan het herrijzen..");
+		//set to "-1" for not popping up the learn widget
+		learnvarlib.addText("-1");
+		learnvarlib.addText("1");
 
 		asktextlib.addText("Aangenaam.");
 		itemtextlib.addText("Hopelijk heb je het niet nodig.");
 		learntextlib.addText("Dulandar is dit elfen dorpje.");
-
 	} else if (language == "English" || language == "english") {
 
 		textlib.addText("There is trouble in the east..");
 		textlib.addText("an old evil stirs again..");
+		learnvarlib.addText("-1");
+		learnvarlib.addText("1");
 
 		asktextlib.addText("Pleased to meet you.");
 		itemtextlib.addText("I hope you will not need it.");
@@ -55,6 +59,8 @@ public ElfGreen(int startx, int starty, String language)
 
 		textlib.addText("There is trouble in the east..");
 		textlib.addText("an old evil stirs again..");
+		learnvarlib.addText("-1");
+		learnvarlib.addText("1");
 
 		asktextlib.addText("Pleased to meet you.");
 		itemtextlib.addText("I hope you will not need it.");

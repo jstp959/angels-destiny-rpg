@@ -95,4 +95,9 @@ public Image getHandImage()
 	return listwidget.getHandImage();
 }
 
+public void setindex(int idx)
+{
+	listwidget.setindex(idx);
+}
+
 };

@@ -84,6 +84,11 @@ public int getindex()
 	return listwidget.getindex();
 }
 
+public void setindex(int idx)
+{
+	listwidget.setindex(idx);
+}
+
 public int getListSize()
 {
 	return listwidget.getsize();

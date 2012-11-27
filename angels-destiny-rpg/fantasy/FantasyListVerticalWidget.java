@@ -46,6 +46,14 @@ public int getindex()
 	return index;
 }
 
+public void setindex(int idx)
+{
+	if (idx >= size || idx <= 0)//NOTE
+		return;
+
+	index  = idx;
+}
+
 public void movehanddown()//moves relative to list
 {
 	if (index >= size)

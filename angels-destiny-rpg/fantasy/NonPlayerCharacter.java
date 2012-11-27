@@ -41,6 +41,8 @@ protected StateTextLibrary asktextlib = new StateTextLibrary();
 protected StateTextLibrary itemtextlib = new StateTextLibrary();
 protected StateTextLibrary learntextlib = new StateTextLibrary();
 
+protected StateTextLibrary learnvarlib = new StateTextLibrary();
+
 public NonPlayerCharacter(int startx, int starty, int startw, int starth)
 {
 	super(startx,starty,startw,starth);
@@ -176,6 +178,13 @@ public String getdirection()
 public String talkto()
 {
 	return textlib.getText();
+}
+
+public int learn()
+{
+	String s = learnvarlib.getText();
+	int i = Integer.parseInt(s);
+	return i;
 }
 
 public String asktalkto(int index)

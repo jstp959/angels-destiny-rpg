@@ -36,4 +36,9 @@ public LearnWordDatabase()
 
 }
 
+public void addWord(String w)
+{
+	words.add(w);
+}
+
 };
