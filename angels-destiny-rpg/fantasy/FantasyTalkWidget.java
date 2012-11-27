@@ -26,12 +26,23 @@ import java.util.*;
 class FantasyTalkWidget extends FantasyWidget
 {
 protected FantasyTalkListVerticalWidget listwidget = new FantasyTalkListVerticalWidget(0,0); 
+
+protected Image backgroundimage;
+protected String prefix = "pics/";
 public FantasyTalkWidget(int sx, int sy)
 {
 	super(sx,sy);
 	listwidget.setx(sx);
 	listwidget.sety(sy);
-	addImage("talkwidgetlist-1.png");
+
+	backgroundimage = new ImageIcon(prefix+"talkbackgroundwidget-1.png").getImage();
+	addImage("talkwidget-1.png");
+	listwidget.addImage("talkwidgetlist-1.png");
+}
+
+public Image getBackgroundImage()
+{
+	return backgroundimage;
 }
 
 public Image getListImage()

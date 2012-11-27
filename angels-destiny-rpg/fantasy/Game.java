@@ -188,12 +188,16 @@ public class Game extends JPanel implements ActionListener {
  * drawing talk
  */
 
+    public void DrawTalkBackgroundWidget(Graphics g2d) {
+	g2d.drawImage(talkwidget.getBackgroundImage(), 0, 0, this);//FIXME fixed size
+    }
+
     public void DrawTalkListWidget(Graphics g2d) {
-	g2d.drawImage(talkwidget.getListImage(), talkwidget.getx(), talkwidget.gety(), this);
+	g2d.drawImage(talkwidget.getListImage(), 48, 200-64, this);//FIXME fixed size
     }
 
     public void DrawTalkWidget(Graphics g2d) {
-	g2d.drawImage(talkwidget.getImage(), talkwidget.getx(), talkwidget.gety(), this);
+	g2d.drawImage(talkwidget.getImage(), 48, 200-64, this);
     }
 
 
@@ -397,7 +401,7 @@ public class Game extends JPanel implements ActionListener {
 		}
 	}
 
-      g2d.setColor(Color.white);
+      g2d.setColor(Color.black);
       g2d.fillRect(0, 0, d.width, d.height);
 
 	//map screen
@@ -407,10 +411,11 @@ public class Game extends JPanel implements ActionListener {
 	DrawNonPlayerCharacters(g2d);	
 	DrawPlayer(g2d);
 	if (talk && collidedwithnonplayercharacter) {
-		DrawTalkWidget(g2d);
-		DrawTalkListWidget(g2d);
+		DrawTalkBackgroundWidget(g2d);
+		//DrawTalkWidget(g2d);
+		//DrawTalkListWidget(g2d);
 
-      		g2d.setColor(Color.darkGray);
+      		g2d.setColor(Color.white);
     		Font fontfoo = new Font("Serif", Font.PLAIN, 17);
         	g2d.setFont(fontfoo);
 
