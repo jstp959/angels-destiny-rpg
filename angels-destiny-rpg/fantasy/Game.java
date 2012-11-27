@@ -86,6 +86,7 @@ public class Game extends JPanel implements ActionListener {
     FantasyAskWidget askwidget = new FantasyAskWidget(0,0,askworddatabase.learnedwordsize());//NOTE! use setsize for enlarging the askwidget
     ItemWordDatabase itemworddatabase = new ItemWordDatabase();
     FantasyItemWidget itemwidget = new FantasyItemWidget(0,0,itemworddatabase.size());//NOTE! use setsize for enlarging the itemwidget
+    FantasyLearnWidget learnwidget = new FantasyLearnWidget(0,0,askworddatabase.learnedwordsize());//NOTE! use setsize for enlarging the itemwidget
 
     boolean askmode = false;
     boolean learnmode = false;
@@ -102,6 +103,7 @@ public class Game extends JPanel implements ActionListener {
     boolean chooseattackmode = false;
     boolean choosetalkmode = false;
     boolean talkmodeafterask = false;
+    boolean talkmodeafterlearn = false;
     boolean talkmodeafteritem = false;
     boolean attack = false;
  
@@ -353,6 +355,28 @@ public class Game extends JPanel implements ActionListener {
 	g2d.drawImage(itemwidget.getHandImage(), itemwidget.gethandx()+50, itemwidget.gethandy(), this);//FIXME + 50
     }
 
+    public void DrawLearnLearnedWords(Graphics g2d) {
+      
+	g2d.setColor(Color.white);
+    	Font fontfoo = new Font("Serif", Font.PLAIN, 17);
+        g2d.setFont(fontfoo);
+
+
+	int i;
+	for (i = 0; i < askworddatabase.learnedwordsize(); i++) {
+
+		g2d.drawString(askworddatabase.getLearnedWord(i), 10, (i+1)*21);
+	}
+    }
+
+    public void DrawLearnBackgroundWidget(Graphics g2d) {
+	g2d.drawImage(learnwidget.getBackgroundImage(), 0, 0, this);//FIXME fixed size
+    }
+
+    public void DrawLearnWidgetHandCursor(Graphics g2d) {
+	g2d.drawImage(learnwidget.getHandImage(), learnwidget.gethandx()+50, learnwidget.gethandy(), this);//FIXME + 50
+    }
+
 /*
  * drawing battles 
  */ 
@@ -490,6 +514,10 @@ public class Game extends JPanel implements ActionListener {
 		
 		collide = collision(player.getx(), player.gety(), 32,32, b.getx()+map.getx(), b.gety()+map.gety(), b.getw(), b.geth()); //FIXME fixed width&height of player
 
+		if (talkmodeafterlearn) {
+			currenttalktext = b.learntalkto(currenttalktextindex);
+			currenttalktextmax = b.learntalktomaxindex();
+		}
 		if (talkmodeafteritem) {
 			currenttalktext = b.itemtalkto(currenttalktextindex);
 			currenttalktextmax = b.itemtalktomaxindex();
@@ -498,7 +526,7 @@ public class Game extends JPanel implements ActionListener {
 			currenttalktext = b.asktalkto(currenttalktextindex);
 			currenttalktextmax = b.asktalktomaxindex();
 		}
-		if (!talkmodeafterask || !talkmodeafteritem) {
+		if (!talkmodeafterask || !talkmodeafteritem || !talkmodeafterlearn) {
 			currenttalktext = b.talkto();
 			currenttalktextmax = b.talktomaxindex();
 		}
@@ -636,7 +664,15 @@ public class Game extends JPanel implements ActionListener {
 			
 		}
 
-		if (!itemmode && !talkmodeafterask && !talkmodeafteritem && !askmode && !choosetalkmode && currenttalktextmax-1 == currenttalktextindex) {	
+		if (learnmode) {
+
+			DrawLearnBackgroundWidget(g2d);
+			DrawLearnLearnedWords(g2d);
+			DrawLearnWidgetHandCursor(g2d);	
+			
+		}
+
+		if (!learnmode && !itemmode && !talkmodeafterask && !talkmodeafteritem && !talkmodeafterlearn && !askmode && !choosetalkmode && currenttalktextmax-1 == currenttalktextindex) {	
 			DrawTalkWidget(g2d);
 			DrawTalkListWidget(g2d);
 			//currenttalktextindex = -1;
@@ -644,7 +680,7 @@ public class Game extends JPanel implements ActionListener {
 			choosetalkmode = true;
 		}
 
-		if ((!askmode && !itemmode) || talkmodeafterask || talkmodeafteritem) {//FIXME !itemmode ?
+		if ((!learnmode && !askmode && !itemmode) || talkmodeafterask || talkmodeafteritem || talkmodeafterlearn) {//FIXME !itemmode ?
       			g2d.setColor(Color.white);
     			Font fontfoo = new Font("Serif", Font.PLAIN, 17);
         		g2d.setFont(fontfoo);
@@ -1060,6 +1096,23 @@ public class Game extends JPanel implements ActionListener {
 				//talk = true;
 				talkmodeafteritem = true;
 			}
+
+			if (learnmode) {
+
+				int idx = learnwidget.getindex();
+				//String word = askworddatabase.getItemWord(idx);
+
+				
+				currenttalktext = currentnonplayercharacter.learntalkto(idx);	
+				//currenttalktextmax = currentnonplayercharacter.learntalktomaxindex();
+				currenttalktextindex = -1;
+				learnmode = false;
+				//choosetalkmode = true;
+				//talk = true;
+				talkmodeafterlearn = true;
+			}
+
+
 			if (choosetalkmode) {
 
 				choosetalkmode = false;

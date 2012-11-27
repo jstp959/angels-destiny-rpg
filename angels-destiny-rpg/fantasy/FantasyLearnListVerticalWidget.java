@@ -23,43 +23,15 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-class ElfGreen extends TownsFolk 
+class FantasyLearnListVerticalWidget extends FantasyListVerticalWidget
 {
-
-public ElfGreen(int startx, int starty, String language)
+ 
+public FantasyLearnListVerticalWidget(int sx, int sy)
 {
-	super(startx,starty);
-
-	direction = "down";
-
-	addDownImage("elfgreen-48x48-1.png");
-
-	if (language == "Dutch" || language == "dutch") {
-
-		textlib.addText("Er is onrust in het Oosten..");
-		textlib.addText("een oud kwaad is aan het herrijzen..");
-
-		asktextlib.addText("Aangenaam.");
-		itemtextlib.addText("Hopelijk heb je het niet nodig.");
-		learntextlib.addText("Daar weet ik niets over.");
-
-	} else if (language == "English" || language == "english") {
-
-		textlib.addText("There is trouble in the east..");
-		textlib.addText("an old evil stirs again..");
-
-		asktextlib.addText("Pleased to meet you.");
-		itemtextlib.addText("I hope you will not need it.");
-		learntextlib.addText("I do not know anything about that.");
-	} else {
-
-		textlib.addText("There is trouble in the east..");
-		textlib.addText("an old evil stirs again..");
-
-		asktextlib.addText("Pleased to meet you.");
-		itemtextlib.addText("I hope you will not need it.");
-		learntextlib.addText("I do not know anything about that.");
-	}
+	super(sx,sy,1,21);//FIXME fixed size 1 use setsize to enlarge
+	startx = sx;
+	starty = sy;
+	addImage("askwidgetlist-1.png");//background
 }
 
 };
