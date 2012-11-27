@@ -37,7 +37,7 @@ public FantasyTalkWidget(int sx, int sy)
 
 	backgroundimage = new ImageIcon(prefix+"talkbackgroundwidget-2.png").getImage();
 	addImage("talkwidget-1.png");
-	listwidget.addImage("talkwidgetlist-1.png");
+	listwidget.addImage("talkwidgetlist-2.png");
 }
 
 public Image getBackgroundImage()
