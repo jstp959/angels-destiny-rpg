@@ -44,7 +44,6 @@ public class Game extends JPanel implements ActionListener {
     double mapy = 0;
     double mapx = 0;
     double activationPixel = 0;
-    int levelnumber = 1;
     private int SCREENWIDTH = 320;
     private int SCREENHEIGHT = 200;
     private int spritecount = 3;
@@ -56,6 +55,8 @@ public class Game extends JPanel implements ActionListener {
     private Random rng = new Random();
 
     private LinkedList buildings = new LinkedList();
+    private LinkedList gateways = new LinkedList();
+    private int levelnumber = 1;
     private LinkedList nonplayercharacters = new LinkedList();
  
     private int numberofmonsters = 2; /////Random().nextInt(3)+1;
@@ -122,9 +123,7 @@ public class Game extends JPanel implements ActionListener {
         timer = new Timer(40, this);
         timer.start();
 
-	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage())); //FIXME
-	nonplayercharacters.add(new ElfGreen(200,0,displaylanguage)); //FIXME
-	//monsters.add(new Slime(48,96)); //FIXME
+	loadlevel1();
 
 
 	//delete, for starting battle mode
@@ -143,6 +142,25 @@ public class Game extends JPanel implements ActionListener {
         super.addNotify();
         GameInit();
     }
+
+    public void loadlevel1()
+    {
+	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage())); //FIXME
+	gateways.add(new Gateway(0,0,1024,10,2));//FIXME
+	nonplayercharacters.add(new ElfGreen(200,0,displaylanguage)); //FIXME
+	//monsters.add(new Slime(48,96)); //FIXME
+    }
+
+    public void loadlevel2()
+    {
+
+	buildings.clear();
+	gateways.clear();
+	nonplayercharacters.clear();
+
+    	map = new Map(0,0,640,640, new ImageIcon(prefix+"map-1024x1024-2.png").getImage(), 0, 0);
+    }
+
 
     public void addMonsterLevel1(int index, int numberofmonster) {
 	String monstername = monsterdatabase.getMonsterName(index);
@@ -322,6 +340,24 @@ public class Game extends JPanel implements ActionListener {
 	else
 		return false;
     }
+
+    public int CollideGateways()
+    {
+	int i;
+	boolean collide = false;
+
+	for ( i = 0; i < gateways.size(); i++) {
+
+		Object o = gateways.get(i);
+		Gateway b = (Gateway)o; 
+		
+		collide = collision(player.getx(), player.gety(), 32,32, b.getx()+map.getx(), b.gety()+map.gety(), b.getw(), b.geth()); //FIXME fixed width&height of player
+		if (collide) 
+			return b.getid();
+	}
+
+	return -1;
+     }
 
     public boolean CollideBuildings()
     {
@@ -763,7 +799,24 @@ public class Game extends JPanel implements ActionListener {
 			System.exit(0);
 		}
 	}
+	
+	int lvl = CollideGateways();
+	if (lvl != -1 || lvl == levelnumber) {
 
+		levelnumber = lvl;
+
+		switch(lvl) {
+			case 1:
+				loadlevel1();
+			case 2:
+				loadlevel2();
+			default:
+				;
+		}
+
+		return;//NOTE
+
+	}
 
 	//do not move if collided
 	   if (CollideBuildings()) {
