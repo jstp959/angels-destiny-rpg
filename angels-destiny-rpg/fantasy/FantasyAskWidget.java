@@ -29,11 +29,12 @@ protected FantasyAskListVerticalWidget listwidget = new FantasyAskListVerticalWi
 
 protected Image backgroundimage;
 protected String prefix = "pics/";
-public FantasyAskWidget(int sx, int sy)
+public FantasyAskWidget(int sx, int sy, int sz)
 {
 	super(sx,sy);
 	listwidget.setx(sx);
 	listwidget.sety(sy);
+	listwidget.setsize(sz);
 
 	backgroundimage = new ImageIcon(prefix+"askwidgetlistbackground-1.png").getImage();
 	///addImage("talkwidget-1.png");//FIXME

@@ -28,7 +28,7 @@ class FantasyTalkListVerticalWidget extends FantasyListVerticalWidget
  
 public FantasyTalkListVerticalWidget(int sx, int sy)
 {
-	super(sx,sy,6,21);
+	super(sx,sy,1,21);
 	startx = sx;
 	starty = sy;
 	addImage("talkwidgetlist-2.png");

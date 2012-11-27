@@ -75,8 +75,8 @@ public class Game extends JPanel implements ActionListener {
     String currenttalktext = "";
     int currenttalktextindex = -1;
     int currenttalktextmax = 0;
-    FantasyAskWidget askwidget = new FantasyAskWidget(0,0);
     AskWordDatabase askworddatabase = new AskWordDatabase();
+    FantasyAskWidget askwidget = new FantasyAskWidget(0,0,askworddatabase.learnedwordsize());//NOTE! use setsize for enlarging the askwidget
 
     boolean askmode = false;
 
@@ -228,7 +228,11 @@ public class Game extends JPanel implements ActionListener {
     }
 
     public void DrawTalkWidgetHandCursor(Graphics g2d) {
-	g2d.drawImage(talkwidget.getHandImage(), talkwidget.gethandx(), talkwidget.gethandy()+210, this);//FIXME +210 fixed size talkwidget offsets
+	g2d.drawImage(talkwidget.getHandImage(), talkwidget.gethandx()+50, talkwidget.gethandy(), this);//FIXME + 50
+    }
+
+    public void DrawAskWidgetHandCursor(Graphics g2d) {
+	g2d.drawImage(askwidget.getHandImage(), askwidget.gethandx()+50, askwidget.gethandy(), this);//FIXME + 50
     }
 
 
@@ -461,7 +465,8 @@ public class Game extends JPanel implements ActionListener {
 
 			DrawAskBackgroundWidget(g2d);
 			DrawAskLearnedWords(g2d);
-
+			DrawAskWidgetHandCursor(g2d);	
+			
 		}
 
 		if (!choosetalkmode && currenttalktextmax-1 == currenttalktextindex) {	

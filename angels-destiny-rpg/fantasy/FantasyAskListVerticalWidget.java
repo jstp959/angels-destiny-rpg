@@ -28,11 +28,10 @@ class FantasyAskListVerticalWidget extends FantasyListVerticalWidget
  
 public FantasyAskListVerticalWidget(int sx, int sy)
 {
-	super(sx,sy,6,21);
+	super(sx,sy,1,21);//fixed size 1 use setsize to enlarge
 	startx = sx;
 	starty = sy;
 	addImage("askwidgetlist-1.png");//background
 }
-
 
 };
