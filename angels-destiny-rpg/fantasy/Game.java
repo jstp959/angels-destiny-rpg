@@ -157,7 +157,7 @@ public class Game extends JPanel implements ActionListener {
 	map.setxy(-100,-100);
 
 	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage())); //FIXME
-	gateways.add(new Gateway(0,0,1024,100,2,1));//FIXME
+	gateways.add(new Gateway(0,0,1024,100,2,1,new ImageIcon(prefix+"gateway-1.png").getImage()));//FIXME
 	nonplayercharacters.add(new ElfGreen(200,0,displaylanguage)); //FIXME
 	//monsters.add(new Slime(48,96)); //FIXME
     }
@@ -175,7 +175,7 @@ public class Game extends JPanel implements ActionListener {
 
 	map.setxy(100,100);
 
-	gateways.add(new Gateway(0,350,1024,100,1,1));//FIXME
+	gateways.add(new Gateway(0,350,1024,100,1,1,new ImageIcon(prefix+"gateway-1.png").getImage()));//FIXME
 
     }
 
@@ -223,6 +223,20 @@ public class Game extends JPanel implements ActionListener {
 
 		Object o = buildings.get(i);
 		Building b = (Building)o; 
+        	g2d.drawImage((Image)b.getImage(), b.getx()+map.getx(), b.gety()+map.gety(), this);
+		
+
+	}
+
+     }
+
+    public void DrawGatewaysOnMap(Graphics2D g2d)
+    {
+	int i;
+	for ( i = 0; i < gateways.size(); i++) {
+
+		Object o = gateways.get(i);
+		Gateway b = (Gateway)o; 
         	g2d.drawImage((Image)b.getImage(), b.getx()+map.getx(), b.gety()+map.gety(), this);
 		
 
@@ -509,6 +523,7 @@ public class Game extends JPanel implements ActionListener {
       if (!battle) {
 	DrawMap(g2d);	
 	DrawBuildingsOnMap(g2d);	
+	DrawGatewaysOnMap(g2d);	
 	DrawNonPlayerCharacters(g2d);	
 	DrawPlayer(g2d);
 	if (talk && collidedwithnonplayercharacter) {

@@ -29,11 +29,14 @@ import java.util.*;
 
 class Gateway extends BoundingBox
 {
+protected Image image;
 protected int id = -1;
 protected int overlandcitynumber = -1;
-public Gateway(int startx, int starty, int startw, int starth, int identity, int cityn)
+public Gateway(int startx, int starty, int startw, int starth, int identity, int cityn, Image img)
 {
 	super(startx,starty,startw,starth);
+
+	image = img;
 
 	mapx = startx;
 	mapy = starty;
@@ -55,4 +58,8 @@ public int getid()
 	return id;
 }
 
+public Image getImage()
+{
+	return image;
+}
 };
