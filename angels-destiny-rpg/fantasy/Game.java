@@ -57,6 +57,8 @@ public class Game extends JPanel implements ActionListener {
     private LinkedList buildings = new LinkedList();
     private LinkedList gateways = new LinkedList();
     private int levelnumber = 1;
+    private int overlandcitynumber = 1;
+    private boolean levelnomonsters = true;
     private LinkedList nonplayercharacters = new LinkedList();
  
     private int numberofmonsters = 2; /////Random().nextInt(3)+1;
@@ -81,7 +83,6 @@ public class Game extends JPanel implements ActionListener {
     FantasyAskWidget askwidget = new FantasyAskWidget(0,0,askworddatabase.learnedwordsize());//NOTE! use setsize for enlarging the askwidget
 
     boolean askmode = false;
-
     boolean talk = false;
     boolean collidedwithnonplayercharacter = false;
     boolean gameover = false;
@@ -145,20 +146,37 @@ public class Game extends JPanel implements ActionListener {
 
     public void loadlevel1()
     {
+
+	levelnomonsters = true;
+
+	buildings.clear();
+	gateways.clear();
+	nonplayercharacters.clear();
+
+    	map = new Map(0,0,640,640, new ImageIcon(prefix+"map-1024x1024-1.png").getImage(), 0, 0);
+	map.setxy(-100,-100);
+
 	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage())); //FIXME
-	gateways.add(new Gateway(0,0,1024,10,2));//FIXME
+	gateways.add(new Gateway(0,0,1024,100,2,1));//FIXME
 	nonplayercharacters.add(new ElfGreen(200,0,displaylanguage)); //FIXME
 	//monsters.add(new Slime(48,96)); //FIXME
     }
 
     public void loadlevel2()
     {
+	levelnomonsters = false;
+/////not used here	overlandcitynumber = 2;
 
 	buildings.clear();
 	gateways.clear();
 	nonplayercharacters.clear();
 
     	map = new Map(0,0,640,640, new ImageIcon(prefix+"map-1024x1024-2.png").getImage(), 0, 0);
+
+	map.setxy(100,100);
+
+	gateways.add(new Gateway(0,350,1024,100,1,1));//FIXME
+
     }
 
 
@@ -352,8 +370,10 @@ public class Game extends JPanel implements ActionListener {
 		Gateway b = (Gateway)o; 
 		
 		collide = collision(player.getx(), player.gety(), 32,32, b.getx()+map.getx(), b.gety()+map.gety(), b.getw(), b.geth()); //FIXME fixed width&height of player
-		if (collide) 
+		if (collide) {
+			overlandcitynumber = b.getoverlandcitynumber();
 			return b.getid();
+		}
 	}
 
 	return -1;
@@ -707,20 +727,9 @@ public class Game extends JPanel implements ActionListener {
 					chooseattackmode = false;
 					attack = false;
 					battle = false;
+					
 					return "0";
 				}
-				/**********
-				int k;
-				for (k = 0; k < monsters.size(); k++) {
-
-					Object o3 = monsters.get(k);
-					Monster mo = (Monster)o3;
-
-					battlegridmonstertoattackx = 1 + mo.getx() / 48;	
-					battlegridmonstertoattacky = 1 + mo.gety() / 48;	
-				
-				}
-				**********/
 				break;
 			}
 		}
@@ -808,10 +817,12 @@ public class Game extends JPanel implements ActionListener {
 		switch(lvl) {
 			case 1:
 				loadlevel1();
+				break;
 			case 2:
 				loadlevel2();
+				break;
 			default:
-				;
+				break;
 		}
 
 		return;//NOTE
@@ -895,20 +906,22 @@ public class Game extends JPanel implements ActionListener {
 				//currenttalktext = "";
 			}
 
-      			int randomnumber = rng.nextInt(3200);
-      			if (randomnumber == 0) {
-				battle = true;
+			if (!levelnomonsters) {//generate monsters by walking around
+      				int randomnumber = rng.nextInt(3200);
+      				if (randomnumber == 0) {
+					battle = true;
 
-				int randomnumber2 = rng.nextInt(4);
-				numberofmonsters = randomnumber2 + 1;
+					int randomnumber2 = rng.nextInt(4);
+					numberofmonsters = randomnumber2 + 1;
 				
-				int number;
-				for (number = 0; number < numberofmonsters; number++) {
-					int randomnumber3 = rng.nextInt(monsterdatabase.size());
-					if (level == 1) 
-						addMonsterLevel1(randomnumber3, number);
+					int number;
+					for (number = 0; number < numberofmonsters; number++) {
+						int randomnumber3 = rng.nextInt(monsterdatabase.size());
+						if (level == 1) 
+							addMonsterLevel1(randomnumber3, number);
+					}
+					return;//NOTE!
 				}
-				return;//NOTE!
 			}
 		}	
 	   	if (key == KeyEvent.VK_X) {
@@ -1000,9 +1013,11 @@ public class Game extends JPanel implements ActionListener {
 					case 0://Attack
 						attack = true;
 						battlegoingon = true;
+						break;
 					default://Attack
 						attack = true;
-						battlegoingon = true;	
+						battlegoingon = true;
+						break;
 				}
 
 			}

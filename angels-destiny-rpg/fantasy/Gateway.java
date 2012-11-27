@@ -30,8 +30,8 @@ import java.util.*;
 class Gateway extends BoundingBox
 {
 protected int id = -1;
-
-public Gateway(int startx, int starty, int startw, int starth, int identity)
+protected int overlandcitynumber = -1;
+public Gateway(int startx, int starty, int startw, int starth, int identity, int cityn)
 {
 	super(startx,starty,startw,starth);
 
@@ -41,7 +41,13 @@ public Gateway(int startx, int starty, int startw, int starth, int identity)
 	maph = starth;
 
 	id = identity;
+	overlandcitynumber = cityn;
 
+}
+
+public int getoverlandcitynumber()
+{
+	return overlandcitynumber;
 }
 
 public int getid()

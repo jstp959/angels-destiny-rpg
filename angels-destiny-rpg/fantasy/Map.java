@@ -23,6 +23,10 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
+/*
+ * Map class, can be used for overland and town etc. maps
+ */
+
 class Map 
 {
 protected int mapx, mapy, mapw, maph, dx, dy;
@@ -38,6 +42,22 @@ public Map(int startx, int starty, int startw, int starth, Image img, int dxx, i
 	dx = dxx;
 	dy = dyy;
 	mapimg = img;
+}
+
+public void setx(int xx)
+{
+	mapx = xx;
+}
+
+public void sety(int yy)
+{
+	mapy = yy;
+}
+
+public void setxy(int xx, int yy)
+{
+	mapx = xx;
+	mapy = yy;
 }
 
 public int getdx()
