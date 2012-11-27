@@ -33,7 +33,10 @@ public ElfGreen(int startx, int starty)
 	direction = "down";
 
 	addDownImage("elfgreen-48x48-1.png");
+
 	textlib.addText("There is trouble in the east..");
+	textlib.addText("an old evil stirs again..");
+	/////textlib.addText("");//kludge to display no text for ending the conversation
 
 }
 

@@ -406,15 +406,16 @@ public class Game extends JPanel implements ActionListener {
 	DrawBuildingsOnMap(g2d);	
 	DrawNonPlayerCharacters(g2d);	
 	DrawPlayer(g2d);
-	if (talk) {
+	if (talk && collidedwithnonplayercharacter) {
 		DrawTalkWidget(g2d);
 		DrawTalkListWidget(g2d);
 
       		g2d.setColor(Color.darkGray);
-    		Font fontfoo = new Font("Serif", Font.PLAIN, 20);
+    		Font fontfoo = new Font("Serif", Font.PLAIN, 17);
         	g2d.setFont(fontfoo);
 
 		g2d.drawString(currenttalktext,20, 20);
+
 	}
       } else if (battle) {//battle screen
 	DrawBattleStage(g2d);
@@ -713,6 +714,8 @@ public class Game extends JPanel implements ActionListener {
 		collidedwithnonplayercharacter = true;
 
 		return;//FIXME leave this, collidedwithnonplayercharacter gets set in (key == ...) further on
+	   } else {//NOTE!
+		talk = false;
 	   }
 	   if (!battle) {//map screen
 
@@ -738,6 +741,8 @@ public class Game extends JPanel implements ActionListener {
 			key == KeyEvent.VK_DOWN) {
 
 			collidedwithnonplayercharacter = false;
+			//talk = false;
+			//currenttalktext = "";
 
       			int randomnumber = rng.nextInt(3000);
       			if (randomnumber == 0) {
@@ -756,14 +761,11 @@ public class Game extends JPanel implements ActionListener {
 			}
 		}	
 	   	if (key == KeyEvent.VK_X) {
-			if (talk) {
+			if (talk && collidedwithnonplayercharacter) {//FIXMENOTE
 				talk = false;
-			}
-
-			if (collidedwithnonplayercharacter) {
+			} else if (collidedwithnonplayercharacter) {
 				talk = true;
 			}
-		//	player.talk();
 	   	}
 	   } else if (battle) {
 	   	if (key == KeyEvent.VK_LEFT) {
