@@ -1,6 +1,6 @@
 package fantasy;
 /*
-Copyright (C) 2012 Johan Ceuppens
+Copyright (C) <year> <name of author>
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
@@ -23,20 +23,21 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-class FantasyTalkWidget extends FantasyWidget
+class FantasyItemWidget extends FantasyWidget
 {
-protected FantasyTalkListVerticalWidget listwidget = new FantasyTalkListVerticalWidget(0,0); 
+protected FantasyAskListVerticalWidget listwidget = new FantasyAskListVerticalWidget(0,0); 
 
 protected Image backgroundimage;
 protected String prefix = "pics/";
-public FantasyTalkWidget(int sx, int sy)
+public FantasyItemWidget(int sx, int sy, int sz)
 {
 	super(sx,sy);
 	listwidget.setx(sx);
 	listwidget.sety(sy);
+	listwidget.setsize(sz);
 
-	backgroundimage = new ImageIcon(prefix+"talkbackgroundwidget-2.png").getImage();
-	addImage("talkwidget-1.png");//FIXME
+	backgroundimage = new ImageIcon(prefix+"askwidgetlistbackground-1.png").getImage();
+	///addImage("talkwidget-1.png");//FIXME
 }
 
 public Image getBackgroundImage()

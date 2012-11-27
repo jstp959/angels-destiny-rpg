@@ -40,6 +40,7 @@ public ElfPurple(int startx, int starty, String language)
 		textlib.addText("maar ik heb hem tot mijn huis gemaakt.");
 
 		asktextlib.addText("Hallo vriend.");
+		itemtextlib.addText("Ik heb een kort zwaard voor mezelf.");
 
 	} else if (language == "English" || language == "english") {
 
@@ -47,12 +48,14 @@ public ElfPurple(int startx, int starty, String language)
 		textlib.addText("Now it is my home.");
 
 		asktextlib.addText("Hello friend.");
+		itemtextlib.addText("I have a short sword for my own use.");
 	} else {
 
 		textlib.addText("This used to be a dungeon..");
 		textlib.addText("Now it is my home.");
 
 		asktextlib.addText("Hello friend.");
+		itemtextlib.addText("I have a short sword for my own use.");
 	}
 }
 

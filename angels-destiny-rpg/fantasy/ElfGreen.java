@@ -40,6 +40,7 @@ public ElfGreen(int startx, int starty, String language)
 		textlib.addText("een oud kwaad is aan het herrijzen..");
 
 		asktextlib.addText("Aangenaam.");
+		itemtextlib.addText("Hopelijk heb je het niet nodig.");
 
 	} else if (language == "English" || language == "english") {
 
@@ -47,12 +48,14 @@ public ElfGreen(int startx, int starty, String language)
 		textlib.addText("an old evil stirs again..");
 
 		asktextlib.addText("Pleased to meet you.");
+		itemtextlib.addText("I hope you will not need it.");
 	} else {
 
 		textlib.addText("There is trouble in the east..");
 		textlib.addText("an old evil stirs again..");
 
 		asktextlib.addText("Pleased to meet you.");
+		itemtextlib.addText("I hope you will not need it.");
 	}
 }
 

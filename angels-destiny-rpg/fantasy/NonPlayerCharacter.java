@@ -38,6 +38,7 @@ protected String direction = "down";
 
 protected StateTextLibrary textlib = new StateTextLibrary();
 protected StateTextLibrary asktextlib = new StateTextLibrary();
+protected StateTextLibrary itemtextlib = new StateTextLibrary();
 
 public NonPlayerCharacter(int startx, int starty, int startw, int starth)
 {
@@ -181,6 +182,11 @@ public String asktalkto(int index)
 	return asktextlib.getText(index);
 }
 
+public String itemtalkto(int index)
+{
+	return itemtextlib.getText(index);
+}
+
 public int talktomaxindex()
 {
 	return textlib.getmax();
@@ -189,5 +195,10 @@ public int talktomaxindex()
 public int asktalktomaxindex()
 {
 	return asktextlib.getmax();
+}
+
+public int itemtalktomaxindex()
+{
+	return itemtextlib.getmax();
 }
 };

@@ -84,8 +84,12 @@ public class Game extends JPanel implements ActionListener {
     int currenttalktextmax = 0;
     AskWordDatabase askworddatabase = new AskWordDatabase();
     FantasyAskWidget askwidget = new FantasyAskWidget(0,0,askworddatabase.learnedwordsize());//NOTE! use setsize for enlarging the askwidget
+    ItemWordDatabase itemworddatabase = new ItemWordDatabase();
+    FantasyItemWidget itemwidget = new FantasyItemWidget(0,0,itemworddatabase.size());//NOTE! use setsize for enlarging the itemwidget
 
     boolean askmode = false;
+    boolean learnmode = false;
+    boolean itemmode = false;
     boolean talk = false;
     boolean collidedwithnonplayercharacter = false;
     boolean gameover = false;
@@ -98,6 +102,7 @@ public class Game extends JPanel implements ActionListener {
     boolean chooseattackmode = false;
     boolean choosetalkmode = false;
     boolean talkmodeafterask = false;
+    boolean talkmodeafteritem = false;
     boolean attack = false;
  
     private int battlegridmonstertoattackx = 0;
@@ -326,6 +331,27 @@ public class Game extends JPanel implements ActionListener {
 	g2d.drawImage(askwidget.getHandImage(), askwidget.gethandx()+50, askwidget.gethandy(), this);//FIXME + 50
     }
 
+    public void DrawItemLearnedWords(Graphics g2d) {
+      
+	g2d.setColor(Color.white);
+    	Font fontfoo = new Font("Serif", Font.PLAIN, 17);
+        g2d.setFont(fontfoo);
+
+
+	int i;
+	for (i = 0; i < itemworddatabase.size(); i++) {
+
+		g2d.drawString(itemworddatabase.getItemWord(i), 10, (i+1)*21);
+	}
+    }
+
+    public void DrawItemBackgroundWidget(Graphics g2d) {
+	g2d.drawImage(itemwidget.getBackgroundImage(), 0, 0, this);//FIXME fixed size
+    }
+
+    public void DrawItemWidgetHandCursor(Graphics g2d) {
+	g2d.drawImage(itemwidget.getHandImage(), itemwidget.gethandx()+50, itemwidget.gethandy(), this);//FIXME + 50
+    }
 
 /*
  * drawing battles 
@@ -464,11 +490,15 @@ public class Game extends JPanel implements ActionListener {
 		
 		collide = collision(player.getx(), player.gety(), 32,32, b.getx()+map.getx(), b.gety()+map.gety(), b.getw(), b.geth()); //FIXME fixed width&height of player
 
+		if (talkmodeafteritem) {
+			currenttalktext = b.itemtalkto(currenttalktextindex);
+			currenttalktextmax = b.itemtalktomaxindex();
+		}
 		if (talkmodeafterask) {
 			currenttalktext = b.asktalkto(currenttalktextindex);
 			currenttalktextmax = b.asktalktomaxindex();
 		}
-		if (!talkmodeafterask) {
+		if (!talkmodeafterask || !talkmodeafteritem) {
 			currenttalktext = b.talkto();
 			currenttalktextmax = b.talktomaxindex();
 		}
@@ -598,7 +628,15 @@ public class Game extends JPanel implements ActionListener {
 			
 		}
 
-		if (!talkmodeafterask && !askmode && !choosetalkmode && currenttalktextmax-1 == currenttalktextindex) {	
+		if (itemmode) {
+
+			DrawItemBackgroundWidget(g2d);
+			DrawItemLearnedWords(g2d);
+			DrawItemWidgetHandCursor(g2d);	
+			
+		}
+
+		if (!itemmode && !talkmodeafterask && !talkmodeafteritem && !askmode && !choosetalkmode && currenttalktextmax-1 == currenttalktextindex) {	
 			DrawTalkWidget(g2d);
 			DrawTalkListWidget(g2d);
 			//currenttalktextindex = -1;
@@ -606,7 +644,7 @@ public class Game extends JPanel implements ActionListener {
 			choosetalkmode = true;
 		}
 
-		if (!askmode || talkmodeafterask) {
+		if ((!askmode && !itemmode) || talkmodeafterask || talkmodeafteritem) {//FIXME !itemmode ?
       			g2d.setColor(Color.white);
     			Font fontfoo = new Font("Serif", Font.PLAIN, 17);
         		g2d.setFont(fontfoo);
@@ -1008,11 +1046,40 @@ public class Game extends JPanel implements ActionListener {
 				talkmodeafterask = true;
 			}
 
+			if (itemmode) {
+
+				int idx = itemwidget.getindex();
+				//String word = itemworddatabase.getItemWord(idx);
+
+				
+				currenttalktext = currentnonplayercharacter.itemtalkto(idx);	
+				//currenttalktextmax = currentnonplayercharacter.itemtalktomaxindex();
+				currenttalktextindex = -1;
+				itemmode = false;
+				//choosetalkmode = true;
+				//talk = true;
+				talkmodeafteritem = true;
+			}
 			if (choosetalkmode) {
 
 				choosetalkmode = false;
-				askmode = true;	//FIXME ask learn item
-
+				//ask learn item
+				int idx = talkwidget.getindex();
+				switch (idx) {
+				case 0:
+					askmode = true;
+					break;
+				case 1:
+					learnmode = true;
+					break;
+				case 2:
+					itemmode = true;
+					break;
+				default:
+					askmode = true;
+					break;
+				}
+					
 			} else if (!choosetalkmode) {
 
 				if (talk && collidedwithnonplayercharacter) {//FIXMENOTE
