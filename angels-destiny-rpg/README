@@ -1,9 +1,23 @@
 
+Display language settings :
+
+edit fantasy/Game.java and change the variable 'displaylanguage',
+	String displaylanguage = "english";
+change the word english there to your language.
+Only Dutch and English are supported for now. English is the default language
+no matter how you set the displaylanguage variable.
+
+Introduction screen:
+
 Press Escape to skip introduction
 
-Play Keys:
+Map keys :
 
-- arrow keys : movement on map, chooser for battle screen
-- x : choose string action
-- escape key : exit battle
+arrow keys : movement on map, chooser for battle screen
+x : talk to e.g. townsfolk
 
+Battle screen Keys:
+
+x : choose action described by text e.g. attack
+escape key : exit battle
+arrow keys : choose enemy to attck
