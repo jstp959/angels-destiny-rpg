@@ -39,16 +39,20 @@ public ElfGreen(int startx, int starty, String language)
 		textlib.addText("Er is onrust in het Oosten..");
 		textlib.addText("een oud kwaad is aan het herrijzen..");
 
+		asktextlib.addText("Aangenaam.");
+
 	} else if (language == "English" || language == "english") {
 
 		textlib.addText("There is trouble in the east..");
 		textlib.addText("an old evil stirs again..");
 
+		asktextlib.addText("Pleased to meet you.");
 	} else {
 
 		textlib.addText("There is trouble in the east..");
 		textlib.addText("an old evil stirs again..");
 
+		asktextlib.addText("Pleased to meet you.");
 	}
 }
 

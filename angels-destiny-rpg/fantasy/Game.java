@@ -73,6 +73,7 @@ public class Game extends JPanel implements ActionListener {
     FantasyHandCursorWidget handcursorwidget = new FantasyHandCursorWidget(96,96);
     FantasyTalkWidget talkwidget = new FantasyTalkWidget(0,0);
     String currenttalktext = "";
+    NonPlayerCharacter currentnonplayercharacter;
     int currenttalktextindex = -1;
     int currenttalktextmax = 0;
     AskWordDatabase askworddatabase = new AskWordDatabase();
@@ -91,6 +92,7 @@ public class Game extends JPanel implements ActionListener {
     boolean battlegoingon = false;
     boolean chooseattackmode = false;
     boolean choosetalkmode = false;
+    boolean talkmodeafterask = false;
     boolean attack = false;
  
     private int battlegridmonstertoattackx = 0;
@@ -351,8 +353,15 @@ public class Game extends JPanel implements ActionListener {
 		
 		collide = collision(player.getx(), player.gety(), 32,32, b.getx()+map.getx(), b.gety()+map.gety(), b.getw(), b.geth()); //FIXME fixed width&height of player
 
-		currenttalktext = b.talkto();
-		currenttalktextmax = b.talktomaxindex();
+		if (talkmodeafterask) {
+			currenttalktext = b.asktalkto(currenttalktextindex);
+			currenttalktextmax = b.asktalktomaxindex();
+		}
+		if (!talkmodeafterask) {
+			currenttalktext = b.talkto();
+			currenttalktextmax = b.talktomaxindex();
+		}
+		currentnonplayercharacter = b;
 
 		if (collide) 
 			return collide;
@@ -469,7 +478,7 @@ public class Game extends JPanel implements ActionListener {
 			
 		}
 
-		if (!choosetalkmode && currenttalktextmax-1 == currenttalktextindex) {	
+		if (!talkmodeafterask && !askmode && !choosetalkmode && currenttalktextmax-1 == currenttalktextindex) {	
 			DrawTalkWidget(g2d);
 			DrawTalkListWidget(g2d);
 			//currenttalktextindex = -1;
@@ -477,7 +486,7 @@ public class Game extends JPanel implements ActionListener {
 			choosetalkmode = true;
 		}
 
-		if (!askmode) {
+		if (!askmode || talkmodeafterask) {
       			g2d.setColor(Color.white);
     			Font fontfoo = new Font("Serif", Font.PLAIN, 17);
         		g2d.setFont(fontfoo);
@@ -851,6 +860,21 @@ public class Game extends JPanel implements ActionListener {
 		}	
 	   	if (key == KeyEvent.VK_X) {
 
+			if (askmode) {
+
+				int idx = askwidget.getindex();
+				//String word = askworddatabase.getLearnedWord(idx);
+
+				
+				currenttalktext = currentnonplayercharacter.asktalkto(idx);	
+				//currenttalktextmax = currentnonplayercharacter.asktalktomaxindex();
+				currenttalktextindex = -1;
+				askmode = false;
+				//choosetalkmode = true;
+				//talk = true;
+				talkmodeafterask = true;
+			}
+
 			if (choosetalkmode) {
 
 				choosetalkmode = false;
@@ -875,6 +899,10 @@ public class Game extends JPanel implements ActionListener {
 
 			if (askmode) {
 				askmode = false;
+			}
+
+			if (talkmodeafterask) {
+				talkmodeafterask = false;
 			}
 
 		}
