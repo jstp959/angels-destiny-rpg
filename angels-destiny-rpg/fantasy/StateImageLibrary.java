@@ -58,4 +58,9 @@ public Image getImage(int idx)
       return (Image)img;
 }
 
+public int getmax()
+{
+	return max;
+}
+
 };

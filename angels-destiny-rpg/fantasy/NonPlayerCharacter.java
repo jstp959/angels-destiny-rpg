@@ -175,4 +175,9 @@ public String talkto()
 	return textlib.getText();
 }
 
+public int talktomaxindex()
+{
+	return textlib.getmax();
+}
+
 };

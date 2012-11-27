@@ -73,6 +73,8 @@ public class Game extends JPanel implements ActionListener {
     FantasyHandCursorWidget handcursorwidget = new FantasyHandCursorWidget(96,96);
     FantasyTalkWidget talkwidget = new FantasyTalkWidget(0,0);
     String currenttalktext = "";
+    int currenttalktextindex = -1;
+    int currenttalktextmax = 0;
 
     boolean talk = false;
     boolean collidedwithnonplayercharacter = false;
@@ -84,6 +86,7 @@ public class Game extends JPanel implements ActionListener {
 	//a battle phase is being displayed
     boolean battlegoingon = false;
     boolean chooseattackmode = false;
+    boolean choosetalkmode = false;
     boolean attack = false;
  
     private int battlegridmonstertoattackx = 0;
@@ -319,6 +322,7 @@ public class Game extends JPanel implements ActionListener {
 		collide = collision(player.getx(), player.gety(), 32,32, b.getx()+map.getx(), b.gety()+map.gety(), b.getw(), b.geth()); //FIXME fixed width&height of player
 
 		currenttalktext = b.talkto();
+		currenttalktextmax = b.talktomaxindex();
 
 		if (collide) 
 			return collide;
@@ -414,8 +418,23 @@ public class Game extends JPanel implements ActionListener {
 	DrawPlayer(g2d);
 	if (talk && collidedwithnonplayercharacter) {
 		DrawTalkBackgroundWidget(g2d);
-		//DrawTalkWidget(g2d);
-		//DrawTalkListWidget(g2d);
+
+
+		if (choosetalkmode) {
+
+			DrawTalkWidget(g2d);
+			DrawTalkListWidget(g2d);
+			
+
+		}
+	
+		if (!choosetalkmode && currenttalktextmax-1 == currenttalktextindex) {	
+			DrawTalkWidget(g2d);
+			DrawTalkListWidget(g2d);
+			//currenttalktextindex = -1;
+
+			choosetalkmode = true;
+		}
 
       		g2d.setColor(Color.white);
     		Font fontfoo = new Font("Serif", Font.PLAIN, 17);
@@ -771,9 +790,18 @@ public class Game extends JPanel implements ActionListener {
 			if (talk && collidedwithnonplayercharacter) {//FIXMENOTE
 				talk = false;
 			} else if (collidedwithnonplayercharacter) {
+				currenttalktextindex++;
 				talk = true;
 			}
 	   	}
+	   	if (key == KeyEvent.VK_Z) {
+
+			if (choosetalkmode) {
+				choosetalkmode = false;
+				currenttalktextindex = -1;
+			}
+
+		}
 	   } else if (battle) {
 	   	if (key == KeyEvent.VK_LEFT) {
 			if (!chooseattackmode) {

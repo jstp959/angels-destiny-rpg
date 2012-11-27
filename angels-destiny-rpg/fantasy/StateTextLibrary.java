@@ -56,4 +56,9 @@ public String getText(int idx)
       return (String)s;
 }
 
+public int getmax()
+{
+	return max;
+}
+
 };
