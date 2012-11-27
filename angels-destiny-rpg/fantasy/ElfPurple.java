@@ -36,18 +36,21 @@ public ElfPurple(int startx, int starty, String language)
 
 	if (language == "Dutch" || language == "dutch") {
 
-		textlib.addText("..I heb niets te zeggen..");
+		textlib.addText("Waar je nu bent is een kerker geweest..");
+		textlib.addText("maar ik heb hem tot mijn huis gemaakt.");
 
 		asktextlib.addText("Hallo vriend.");
 
 	} else if (language == "English" || language == "english") {
 
-		textlib.addText("..I do not have anything to say to you..");
+		textlib.addText("This used to be a dungeon..");
+		textlib.addText("Now it is my home.");
 
 		asktextlib.addText("Hello friend.");
 	} else {
 
-		textlib.addText("..I do not have anything to say to you..");
+		textlib.addText("This used to be a dungeon..");
+		textlib.addText("Now it is my home.");
 
 		asktextlib.addText("Hello friend.");
 	}
