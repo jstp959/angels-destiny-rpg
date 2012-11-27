@@ -64,7 +64,8 @@ public class Game extends JPanel implements ActionListener {
     private int numberofmonsters = 2; /////Random().nextInt(3)+1;
     private LinkedList monsters = new LinkedList();
     private MonsterDatabase monsterdatabase = new MonsterDatabaseLevel1();
-
+    private CityNameDatabase citynamedatabase = new CityNameDatabase();
+    private int drawcounter1 = 0;
     Player player = new Player(100,100);
     int playerindex = -1;//NOTE!
     int numberofplayercharacters = 1;//start the game with 1 player character
@@ -149,6 +150,8 @@ public class Game extends JPanel implements ActionListener {
 
 	levelnomonsters = true;
 
+	drawcounter1 = 0;
+
 	buildings.clear();
 	gateways.clear();
 	nonplayercharacters.clear();
@@ -162,11 +165,11 @@ public class Game extends JPanel implements ActionListener {
 	buildings.add(new Building(300,600,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
 	buildings.add(new Building(800,400,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
 
-	gateways.add(new Gateway(0,0,1024,50,2,1,new ImageIcon(prefix+"nullimage.png").getImage()));
-	gateways.add(new Gateway(0,1024,1024,50,2,1,new ImageIcon(prefix+"nullimage.png").getImage()));
-	gateways.add(new Gateway(0,0,50,1024,2,1,new ImageIcon(prefix+"nullimage.png").getImage()));
-	gateways.add(new Gateway(1024,0,50,1024,2,1,new ImageIcon(prefix+"nullimage.png").getImage()));//FIXME
-	nonplayercharacters.add(new ElfGreen(200,0,displaylanguage)); //FIXME
+	gateways.add(new Gateway(0,0,1024,50,2,-1,new ImageIcon(prefix+"nullimage.png").getImage()));
+	gateways.add(new Gateway(0,1024,1024,50,2,-1,new ImageIcon(prefix+"nullimage.png").getImage()));
+	gateways.add(new Gateway(0,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage()));
+	gateways.add(new Gateway(1024,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage()));
+	nonplayercharacters.add(new ElfGreen(163,500,displaylanguage));
 	//monsters.add(new Slime(48,96)); //FIXME
     }
 
@@ -174,6 +177,8 @@ public class Game extends JPanel implements ActionListener {
     {
 	levelnomonsters = false;
 /////not used here	overlandcitynumber = 2;
+
+	drawcounter1 = 0;
 
 	buildings.clear();
 	gateways.clear();
@@ -534,6 +539,14 @@ public class Game extends JPanel implements ActionListener {
 	DrawGatewaysOnMap(g2d);	
 	DrawNonPlayerCharacters(g2d);	
 	DrawPlayer(g2d);
+
+	if (overlandcitynumber >= 0 && drawcounter1++ < 108) {
+    		Font fontfoo = new Font("Helvetica", Font.PLAIN, 18);
+        	g2d.setFont(fontfoo);
+      		g2d.setColor(Color.lightGray);
+		g2d.drawString(citynamedatabase.getCityName(overlandcitynumber-1), 100, 30);//NOTE - 1
+	}
+
 	if (talk && collidedwithnonplayercharacter) {
 
 		if (!askmode) {
