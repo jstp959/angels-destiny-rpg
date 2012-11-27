@@ -157,6 +157,11 @@ public class Game extends JPanel implements ActionListener {
 	map.setxy(0,0);
 
 	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage()));
+	buildings.add(new Building(0,300,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
+	buildings.add(new Building(500,300,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
+	buildings.add(new Building(300,600,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
+	buildings.add(new Building(800,400,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
+
 	gateways.add(new Gateway(0,0,1024,50,2,1,new ImageIcon(prefix+"nullimage.png").getImage()));
 	gateways.add(new Gateway(0,1024,1024,50,2,1,new ImageIcon(prefix+"nullimage.png").getImage()));
 	gateways.add(new Gateway(0,0,50,1024,2,1,new ImageIcon(prefix+"nullimage.png").getImage()));
