@@ -23,10 +23,10 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-class ElfGreen extends TownsFolk 
+class ElfGreenDutch extends TownsFolk 
 {
 
-public ElfGreen(int startx, int starty, String language)
+public ElfGreenDutch(int startx, int starty)
 {
 	super(startx,starty);
 
@@ -34,22 +34,8 @@ public ElfGreen(int startx, int starty, String language)
 
 	addDownImage("elfgreen-48x48-1.png");
 
-	if (language == "Dutch" || language == "dutch") {
+	/////textlib.addText("");//kludge to display no text for ending the conversation
 
-		textlib.addText("Er is onrust in het Oosten..");
-		textlib.addText("een oud kwaad is aan het herrijzen..");
-
-	} else if (language == "English" || language == "english") {
-
-		textlib.addText("There is trouble in the east..");
-		textlib.addText("an old evil stirs again..");
-
-	} else {
-
-		textlib.addText("There is trouble in the east..");
-		textlib.addText("an old evil stirs again..");
-
-	}
 }
 
 };

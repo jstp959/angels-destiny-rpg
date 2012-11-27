@@ -51,6 +51,8 @@ public class Game extends JPanel implements ActionListener {
     short screendata;
     Timer timer;
 
+    String displaylanguage = "english";
+
     private Random rng = new Random();
 
     private LinkedList buildings = new LinkedList();
@@ -112,7 +114,7 @@ public class Game extends JPanel implements ActionListener {
         timer.start();
 
 	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage())); //FIXME
-	nonplayercharacters.add(new ElfGreen(200,0)); //FIXME
+	nonplayercharacters.add(new ElfGreen(200,0,displaylanguage)); //FIXME
 	//monsters.add(new Slime(48,96)); //FIXME
 
 
