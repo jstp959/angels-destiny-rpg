@@ -1,2 +1,3 @@
 - mp3 sounds
 - unset learnmode etc. in level building methods
+- setListSize after talk breaks off (e.g. the new words must be choosable)

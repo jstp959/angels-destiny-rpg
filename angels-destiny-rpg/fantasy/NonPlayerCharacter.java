@@ -184,8 +184,17 @@ public String talkto()
 public int learn()
 {
 	String s = learnvarlib.getText();
+
 	int i = Integer.parseInt(s);
 	return i;
+}
+
+//must be called after currentlearn > 0 in fantasy/Game.java
+public void erasecurrent(int currentlearn) 
+{
+	//int idx = learnvarlib.getindex() - 1;
+	//learnvarlib.setText(idx, "-1");//remove learn index feature
+	learnvarlib.setText(currentlearn, "-1");//remove learn index feature
 }
 
 public String asktalkto(int index)

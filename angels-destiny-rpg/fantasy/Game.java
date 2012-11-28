@@ -544,23 +544,27 @@ public class Game extends JPanel implements ActionListener {
 
 		if (talkmodeafterlearnedanotherword) {
 			if (currenttalktextindex >= 0) {//FIXMENOTE!
-			currenttalktext = b.learnedanotherwordtalkto(currenttalktextindex);
-			currenttalktextmax = b.learnedanotherwordtalktomaxindex();
+				currenttalktext = b.learnedanotherwordtalkto(currenttalktextindex);
+				currenttalktextmax = b.learnedanotherwordtalktomaxindex();
 			}
 		}
 		else if (talkmodeafterlearn) {//FIXME elses
 			if (currenttalktextindex >= 0) {//FIXMENOTE!
-			currenttalktext = b.learntalkto(currenttalktextindex);
-			currenttalktextmax = b.learntalktomaxindex();
+				currenttalktext = b.learntalkto(currenttalktextindex);
+				currenttalktextmax = b.learntalktomaxindex();
 			}
 		}
 		else if (talkmodeafteritem) {
-			currenttalktext = b.itemtalkto(currenttalktextindex);
-			currenttalktextmax = b.itemtalktomaxindex();
+			if (currenttalktextindex >= 0) {//FIXMENOTE!
+				currenttalktext = b.itemtalkto(currenttalktextindex);
+				currenttalktextmax = b.itemtalktomaxindex();
+			}
 		}
 		else if (talkmodeafterask) {
-			currenttalktext = b.asktalkto(currenttalktextindex);
-			currenttalktextmax = b.asktalktomaxindex();
+			if (currenttalktextindex >= 0) {//FIXMENOTE!
+				currenttalktext = b.asktalkto(currenttalktextindex);
+				currenttalktextmax = b.asktalktomaxindex();
+			}
 		}
 		else if (!talkmodeafterask || !talkmodeafteritem || !talkmodeafterlearn || !talkmodeafterlearnedanotherword) {
 			currenttalktext = b.talkto();
@@ -744,7 +748,12 @@ public class Game extends JPanel implements ActionListener {
 			if (currentlearn > 0) {
 				learnedanotherwordmode = true;
 				talkwidget.setindex(1);
-				learnworddatabase.addWord(learnworddatabase.getNewWord(currentlearn));
+				learnworddatabase.addWord(learnworddatabase.getNewWord(currentlearn));//if the word is already in the db it does not learn it again
+	
+				learnedanotherwordwidget.setListSize(learnedanotherwordwidget.getListSize() + 1);
+
+				currentnonplayercharacter.erasecurrent(currentlearn);	// do not learn again
+
 				currentlearn = -1;
 			}
 
@@ -1237,7 +1246,7 @@ public class Game extends JPanel implements ActionListener {
 				//FIXME!
 				if (talk && collidedwithnonplayercharacter) {//FIXMENOTE
 					//end talking when through all text
-					if (currenttalktextindex >= currenttalktextmax) { 
+					if (currenttalktextindex > currenttalktextmax && currenttalktextindex >= 0) {//sometimes currenttalktextindex starts at -1 
 					    learnedanotherwordmode = false;
 					    askmode = false;
 					    learnmode = false;
@@ -1249,7 +1258,7 @@ public class Game extends JPanel implements ActionListener {
     					    talkmodeafteritem = false;
 					
     					    currenttalktext = "";
-    					    currenttalktextindex = -1;
+    					    currenttalktextindex = 0;//-1;
     					    currenttalktextmax = 0;
     					    currentlearn = -1;
 					}

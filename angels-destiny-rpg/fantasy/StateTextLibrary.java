@@ -48,19 +48,21 @@ public String getText()
       Object s = texts.get(index++);
       return (String)s;
 }
-/****public String getText(String learnedword)
-{
-      if (index >= max)
-	index = 0;
-      Object s = texts.get(index++);
-      return (String)s;
-}****/
 public String getText(int idx)
 {
-      if (idx >= max)
-	idx = 0;
+//      if (idx >= max || idx < 0)
+//	return "None";
+
       Object s = texts.get(idx);
       return (String)s;
+}
+
+public void setText(int idx, String s)
+{
+      if (idx >= max || idx < 0)
+	return;
+
+	texts.set(idx, s);
 }
 
 public int getmax()
@@ -68,4 +70,8 @@ public int getmax()
 	return max;
 }
 
+public int getindex()
+{
+	return index;
+}
 };

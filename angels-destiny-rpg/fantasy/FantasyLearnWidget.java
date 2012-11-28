@@ -90,6 +90,11 @@ public int getListSize()
 	return listwidget.getsize();
 }
 
+public void setListSize(int sz)
+{
+	listwidget.setsize(sz);
+}
+
 public Image getHandImage()
 {
 	return listwidget.getHandImage();
