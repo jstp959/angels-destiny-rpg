@@ -185,8 +185,7 @@ public class Game extends JPanel implements ActionListener {
 	gateways.add(new Gateway(0,1024,1024,50,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
 	gateways.add(new Gateway(0,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
 	gateways.add(new Gateway(1024,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
-	///////nonplayercharacters.add(new ElfGreen(163,500,displaylanguage));
-	nonplayercharacters.add(new ElfGreen(163,100,displaylanguage));
+	nonplayercharacters.add(new ElfGreen(163,500,displaylanguage));
 	//monsters.add(new Slime(48,96)); //FIXME
     }
 
