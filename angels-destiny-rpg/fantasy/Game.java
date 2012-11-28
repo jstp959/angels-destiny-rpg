@@ -141,7 +141,7 @@ public class Game extends JPanel implements ActionListener {
         timer = new Timer(40, this);
         timer.start();
 
-	loadlevel1002();
+	loadlevel1000();
 
 
 	//delete, for starting battle mode
