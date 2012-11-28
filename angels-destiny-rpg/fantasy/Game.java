@@ -242,7 +242,7 @@ public class Game extends JPanel implements ActionListener {
 	buildings.add(new Furniture(50,50,24,64,new ImageIcon(prefix+"furniture-japan-24x64-1.png").getImage()));
 	buildings.add(new Furniture(320-24-50,50,24,64,new ImageIcon(prefix+"furniture-japan-24x64-1.png").getImage()));
 	//exit to map gateways
-	gateways.add(new Gateway(0,200,320,50,1000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),0,-420));
+	gateways.add(new Gateway(0,200,320,50,1000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-500,-420));
 
 	nonplayercharacters.add(new ElfPriest(83,10,displaylanguage));
 
