@@ -215,7 +215,7 @@ public class Game extends JPanel implements ActionListener {
 	//exit to map gateways
 	gateways.add(new Gateway(0,200,320,50,1000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),0,-420));
 
-	nonplayercharacters.add(new ElfGreen(63,50,displaylanguage));
+	nonplayercharacters.add(new ElfHerbist(63,50,displaylanguage));
 
     }
     public void loadlevel2000()
@@ -783,7 +783,17 @@ public class Game extends JPanel implements ActionListener {
     			Font fontfoo = new Font("Serif", Font.PLAIN, 17);
         		g2d.setFont(fontfoo);
 
-			g2d.drawString(currenttalktext,20, 20);
+			//display images inside text widget e.g. onion, 1 at a time
+			String imagefilename = ParseTalkImage(currenttalktext);
+			String textwithoutfilename = ParseTalkImageText(currenttalktext);
+
+
+			if (imagefilename != "") {
+				g2d.drawString(textwithoutfilename,20, 20);
+        			g2d.drawImage(new ImageIcon(prefix+imagefilename).getImage(), 320-64, 25, this);
+			} else {
+				g2d.drawString(currenttalktext,20, 20);
+			}
 
 			if (currentlearn > 0) {
 				learnedanotherwordmode = true;
@@ -1467,4 +1477,32 @@ public class Game extends JPanel implements ActionListener {
         repaint();  
     }
 
+    public String ParseTalkImage(String str)
+    {
+
+	int idx1 = str.indexOf(']',0);
+	int idx2 = str.lastIndexOf('[',0);
+
+	String filename = "";
+	int i;
+	for (i = idx1+1; i < idx2; i++) {
+		filename += str.charAt(i);
+	}
+
+    	return filename;
+    }
+
+    public String ParseTalkImageText(String str)
+    {
+
+	int idx1 = str.indexOf('[',0);
+	String returntext = "";
+	int i;
+	for (i = 0; i < idx1; i++) {
+		returntext += str.charAt(i);
+	}
+
+	return returntext;
+
+    }
 }
