@@ -40,7 +40,7 @@ public class Game extends JPanel implements ActionListener {
     Dimension d;
     Font smallfont = new Font("Helvetica", Font.BOLD, 14);
     Font font2 = new Font("Serif", Font.PLAIN, 12);
-    private int level = 1;
+    ///private int level = 1;
     double mapy = 0;
     double mapx = 0;
     double activationPixel = 0;
@@ -76,6 +76,7 @@ public class Game extends JPanel implements ActionListener {
     private MonsterDatabase monsterdatabase = new MonsterDatabaseLevel1();
     private CityNameDatabase citynamedatabase = new CityNameDatabase();
     private int drawcounter1 = 0;
+    private int counter1 = 0;
     Player player = new Player(100,100);
     int playerindex = -1;//NOTE!
     int numberofplayercharacters = 1;//start the game with 1 player character
@@ -159,8 +160,8 @@ public class Game extends JPanel implements ActionListener {
 				int number;
 				for (number = 0; number < numberofmonsters; number++) {
 					int randomnumber3 = rng.nextInt(monsterdatabase.size());
-					if (level == 1) 
-						addMonsterLevel1(randomnumber3, number);
+					if (level == 2000) 
+						addMonsterLevel2000(randomnumber3, number);
 				}
     }
 
@@ -310,7 +311,7 @@ public class Game extends JPanel implements ActionListener {
     }
 
 
-    public void addMonsterLevel1(int index, int numberofmonster) {
+    public void addMonsterLevel2000(int index, int numberofmonster) {
 	String monstername = monsterdatabase.getMonsterName(index);
 	int hp = monsterdatabase.getMonsterHitpoints(index);
 	//NOTE! different moduli
@@ -1043,6 +1044,7 @@ public class Game extends JPanel implements ActionListener {
 					battle = false;
 					
 					battlebackgroundimageset = false;
+					counter1 = 0;
 
 					return "0";
 				}
@@ -1126,7 +1128,7 @@ public class Game extends JPanel implements ActionListener {
 	}
 	
 	int lvl = CollideGateways();
-	if (lvl != -1 || lvl == levelnumber) {
+	if (lvl != -1) {// || lvl == levelnumber) {
 
 		levelnumber = lvl;
 
@@ -1260,20 +1262,23 @@ public class Game extends JPanel implements ActionListener {
 			}
 
 			if (!levelnomonsters) {//generate monsters by walking around
-      				int randomnumber = rng.nextInt(77);//FIXMENOTE! 3200 initiate battle chance
-      				if (randomnumber == 0) {
-					battle = true;
-
-					int randomnumber2 = rng.nextInt(4);
-					numberofmonsters = randomnumber2 + 1;
+				if (counter1++ > 77) {
+      					int randomnumber = rng.nextInt(77);//FIXMENOTE! 3200 initiate battle chance
+			
+      					if (randomnumber == 0) {
+						battle = true;
+	
+						int randomnumber2 = rng.nextInt(4);
+						numberofmonsters = randomnumber2 + 1;
 				
-					int number;
-					for (number = 0; number < numberofmonsters; number++) {
-						int randomnumber3 = rng.nextInt(monsterdatabase.size());
-						if (level == 1) 
-							addMonsterLevel1(randomnumber3, number);
+						int number;
+						for (number = 0; number < numberofmonsters; number++) {
+							int randomnumber3 = rng.nextInt(monsterdatabase.size());
+							if (levelnumber == 2000) 
+								addMonsterLevel2000(randomnumber3, number);
+						}
+						return;//NOTE!
 					}
-					return;//NOTE!
 				}
 			}
 		}	
