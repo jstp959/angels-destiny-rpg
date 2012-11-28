@@ -63,7 +63,7 @@ public class FontPanel extends JPanel {
 	for (String fontName : fontNames) {
 		Font f = new Font(fontName, Font.PLAIN, 12);
 		if (f.canDisplay('a')) {
-			System.out.println(fontName);
+			//System.out.println(fontName);
 		}
 	}
     }

@@ -153,7 +153,7 @@ public double distance(int x1, int x2, int y1, int y2)
 public boolean collision(Entity e, double mapx)
 {
 	if (distance(e.getx()-(int)mapx, x, e.gety(), y) < 20) {
-		System.out.println("collision");	
+		//System.out.println("collision");	
 		return true;
 	}
 	else

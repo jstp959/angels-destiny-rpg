@@ -46,7 +46,7 @@ public void message(String message)
 public void update (Observable obj, Object arg) {
         if (arg instanceof String) {
             String resp = (String) arg;
-            System.out.println("\nReceived Response: "+ resp );
+            //System.out.println("\nReceived Response: "+ resp );
         }
 } 
 

@@ -111,7 +111,7 @@ public class Game extends JPanel implements ActionListener {
     boolean showintro = false;
     LinkedList introstrings = new LinkedList();
 	//battle screen is on 
-    boolean battle = true;//NOTE! false to start game
+    boolean battle = false;//NOTE! false to start game
 	//a battle phase is being displayed
     boolean battlegoingon = false;
     boolean chooseattackmode = false;
@@ -1029,7 +1029,7 @@ public class Game extends JPanel implements ActionListener {
 			//instanceof
 			Monster m = (Monster)o;
 
-			System.out.println("m.x= " + m.getx()/48 + " m.y= " + m.gety()/48 + " x=" + battlegridmonstertoattackx +" y=" + battlegridmonstertoattacky);
+			//System.out.println("m.x= " + m.getx()/48 + " m.y= " + m.gety()/48 + " x=" + battlegridmonstertoattackx +" y=" + battlegridmonstertoattacky);
 
 			if (battlegridmonstertoattackx == m.getx() / 48 && battlegridmonstertoattacky == m.gety() / 48) {
 				monsters.remove(j);
@@ -1260,7 +1260,7 @@ public class Game extends JPanel implements ActionListener {
 			}
 
 			if (!levelnomonsters) {//generate monsters by walking around
-      				int randomnumber = rng.nextInt(1000);//FIXMENOTE! 3200 initiate battle chance
+      				int randomnumber = rng.nextInt(77);//FIXMENOTE! 3200 initiate battle chance
       				if (randomnumber == 0) {
 					battle = true;
 

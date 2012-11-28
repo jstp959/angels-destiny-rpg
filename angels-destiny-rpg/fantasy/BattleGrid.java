@@ -98,7 +98,7 @@ public int hit(int xx, int yy, int hp)
 	set(xx,yy,s2, i);
 
 	if (i <= 0) {
-		System.out.println("a monster died");
+		//System.out.println("a monster died");
 	}	
 
 	return i;

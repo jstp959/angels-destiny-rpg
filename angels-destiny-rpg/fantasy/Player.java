@@ -62,7 +62,7 @@ public double distance(int x1, int x2, int y1, int y2)
 public boolean collision(Entity e)
 {
 	if (distance(e.getx(), playerx, e.gety(), playery) < 30) {
-		System.out.println("collision with player...gameover.");
+		//System.out.println("collision with player...gameover.");
 		System.exit(99);	
 		return true;
 	}
