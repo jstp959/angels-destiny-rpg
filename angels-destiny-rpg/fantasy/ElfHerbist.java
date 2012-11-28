@@ -32,7 +32,7 @@ public ElfHerbist(int startx, int starty, String language)
 
 	direction = "down";
 
-	addDownImage("elfgreen-48x48-1.png");
+	addDownImage("elfherbist-48x48-1.png");
 
 	if (language == "Dutch" || language == "dutch") {
 
@@ -49,7 +49,7 @@ public ElfHerbist(int startx, int starty, String language)
 	} else if (language == "English" || language == "english") {
 
 		textlib.addText("I am a herbist.");
-		textlib.addText("I am looking for wild onion [img]onion-1.png[img].");
+		textlib.addText("I am looking for wild onion : [img]onion-1.png[img].");
 		learnvarlib.addText("-1");
 		learnvarlib.addText("-1");
 
@@ -60,7 +60,7 @@ public ElfHerbist(int startx, int starty, String language)
 	} else {
 
 		textlib.addText("I am a herbist.");
-		textlib.addText("I am looking for wild onion [img]onion-1.png[img].");
+		textlib.addText("I am looking for wild onion : [img]onion-1.png[img].");
 		learnvarlib.addText("-1");
 		learnvarlib.addText("-1");
 

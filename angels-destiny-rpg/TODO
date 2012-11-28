@@ -1,3 +1,6 @@
 - mp3 sounds
 - unset learnmode etc. in level building methods
-- setListSize after talk breaks off (e.g. the new words must be choosable)
+
+done :
+
+- [img]onion-1.png[img] inside NPC text display
