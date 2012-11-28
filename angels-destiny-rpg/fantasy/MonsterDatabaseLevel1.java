@@ -33,11 +33,10 @@ public MonsterDatabaseLevel1()
 {
 	super();
 
-
 	//add slime monster
 	monsternames.add("slime");
-	monsterhitpoints.add("24");	
-	monsterstrengths.add("3");
+	monsterhitpoints.add("21");	
+	monsterstrengths.add("2");
 	monsterdexterities.add("2");
 	monsterintelligences.add("4");
 	monsterconstitutions.add("3");

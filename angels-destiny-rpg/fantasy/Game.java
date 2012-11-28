@@ -173,7 +173,7 @@ public class Game extends JPanel implements ActionListener {
     public void loadlevel1000()
     {
 
-	map.setxy(0,0);
+	map.setxy(0,-75);
 
 	levelnomonsters = true;
 
