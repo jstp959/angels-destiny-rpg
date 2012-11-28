@@ -1,7 +1,11 @@
-Run these 2 lines in a shell:
+To run the application, run the following line without quotes in a shell :
 
-javac fantasy/*.java;
-java fantasy/FF
+'java fantasy/FF'
 
-Play Keys:
-See README file
+To recompile the application run the following line in a shell, again without quotes :
+
+'javac fantasy/*.java;'
+
+Play Keys and further documentation :
+
+See README file.
