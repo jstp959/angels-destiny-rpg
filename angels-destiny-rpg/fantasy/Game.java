@@ -784,7 +784,7 @@ public class Game extends JPanel implements ActionListener {
         		g2d.setFont(fontfoo);
 
 			//display images inside text widget e.g. onion, 1 at a time
-			String imagefilename = ParseTalkImage(currenttalktext);
+			String imagefilename = "pics/" + ParseTalkImage(currenttalktext);
 			String textwithoutfilename = ParseTalkImageText(currenttalktext);
 
 

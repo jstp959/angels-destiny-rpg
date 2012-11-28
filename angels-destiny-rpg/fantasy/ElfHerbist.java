@@ -42,10 +42,10 @@ public ElfHerbist(int startx, int starty, String language)
 		learnvarlib.addText("-1");
 		learnvarlib.addText("-1");
 
-		asktextlib.addText("Aangenaam.");
-		itemtextlib.addText("Hopelijk heb je het niet nodig.");
-		learntextlib.addText("Dulandar is dit elfen dorpje.");
-		learnedanotherwordtextlib.addText("Elfen dansen en zingen graag.");
+		asktextlib.addText("Dag!");
+		itemtextlib.addText("Je zou het moeten wetten.");
+		learntextlib.addText("Dulandar is ons dorp.");
+		learnedanotherwordtextlib.addText("Elfen .. zijn elfen.");
 	} else if (language == "English" || language == "english") {
 
 		textlib.addText("I am a herbist.");
@@ -53,21 +53,21 @@ public ElfHerbist(int startx, int starty, String language)
 		learnvarlib.addText("-1");
 		learnvarlib.addText("-1");
 
-		asktextlib.addText("Pleased to meet you.");
-		itemtextlib.addText("I hope you will not need it.");
-		learntextlib.addText("Dulandar is this town, founded by elves.");
-		learnedanotherwordtextlib.addText("Elves love to dance and sing.");
+		asktextlib.addText("Goodday!");
+		itemtextlib.addText("You shoud whet your sword.");
+		learntextlib.addText("Dulandar is our town.");
+		learnedanotherwordtextlib.addText("Elves .. are elves.");
 	} else {
 
-		textlib.addText("There is trouble in the east..");
-		textlib.addText("an old evil stirs again..");
+		textlib.addText("I am a herbist.");
+		textlib.addText("I am looking for wild onion [img]onion-1.png[img].");
 		learnvarlib.addText("-1");
 		learnvarlib.addText("-1");
 
-		asktextlib.addText("Pleased to meet you.");
-		itemtextlib.addText("I hope you will not need it.");
-		learntextlib.addText("Dulandar is this town, founded by elves.");
-		learnedanotherwordtextlib.addText("Elves love to dance and sing.");
+		asktextlib.addText("Goodday!");
+		itemtextlib.addText("You shoud whet your sword.");
+		learntextlib.addText("Dulandar is our town.");
+		learnedanotherwordtextlib.addText("Elves .. are elves.");
 	}
 }
 
