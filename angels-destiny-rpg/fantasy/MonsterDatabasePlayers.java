@@ -44,6 +44,26 @@ public MonsterDatabasePlayers()
 	monsterconstitutions.add("10");
 	monsterhitchances.add("12");
 
+	//add second player character "" 
+	monsternames.add("Bea");
+	monsterhitpoints.add("53");	
+	monstermaxhitpoints.add("53");	
+	monsterstrengths.add("12");
+	monsterdexterities.add("12");
+	monsterintelligences.add("13");
+	monsterconstitutions.add("12");
+	monsterhitchances.add("20");
+
+	//add third player character "" 
+	monsternames.add("Bongo");
+	monsterhitpoints.add("71");	
+	monstermaxhitpoints.add("71");	
+	monsterstrengths.add("14");
+	monsterdexterities.add("11");
+	monsterintelligences.add("16");
+	monsterconstitutions.add("14");
+	monsterhitchances.add("26");
+
 }
 
 };

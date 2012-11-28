@@ -32,10 +32,10 @@ class AskWordDatabase extends AskWordDatabaseBase
 public AskWordDatabase()
 {
 	//add all words which can be learned
-	words.add("Anita");
+	words.add("Adventuring");
 
 	//add starter words which are already learned
-	learnedwords.add("Anita");
+	learnedwords.add("Adventuring");
 }
 
 };

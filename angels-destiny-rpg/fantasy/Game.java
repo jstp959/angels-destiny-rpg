@@ -62,7 +62,7 @@ public class Game extends JPanel implements ActionListener {
 
     //note that battlebackgrounddatabases are empty to start with and need to get filled every level initialisation
     private BattleBackgroundDatabase battlebackgrounddatabaselevel2000 = new BattleBackgroundDatabase();   
-    private BattleBackgroundDatabase backgrounddatabaselevelXXXX = new BattleBackgroundDatabase();   
+    private BattleBackgroundDatabase battlebackgrounddatabaselevelstub = new BattleBackgroundDatabase();   
     private BattleBackgroundDatabase currentbattlebackgrounddatabase;
     private boolean battlebackgroundimageset = false;
     private Image battlebackgroundimage;
@@ -81,7 +81,7 @@ public class Game extends JPanel implements ActionListener {
     private int counter1 = 0;
     Player player = new Player(100,100);
     int playerindex = -1;//NOTE!
-    int numberofplayercharacters = 1;//start the game with 1 player character
+    int numberofplayercharacters = 3;//start the game with 1 player character
     Map map = new Map(0,0,640,640, new ImageIcon(prefix+"map-1024x1024-1.png").getImage(), 0, 0);
 
     FantasyBattleWidget battlewidget = new FantasyBattleWidget(0,200-64);
@@ -131,7 +131,7 @@ public class Game extends JPanel implements ActionListener {
     BattleGrid battlegrid = new BattleGrid(6);
 
     public Game() {
-	midiplayer.playfile("music/" + "wilderness.mid", true);//repeat song (true) 
+	midiplayer.playfile("music/" + "wilderness.mid", 3);//repeat song 3 times 
 
 	/// intro string show setup
 	introstrings.add("The land of Aricea was at peace");
@@ -159,11 +159,13 @@ public class Game extends JPanel implements ActionListener {
 	//delete, for starting battle mode
 				int randomnumber2 = rng.nextInt(4);
 				numberofmonsters = randomnumber2 + 1;
-				
+			
+				//System.out.println("levelnumber 123> " + levelnumber);
+	
 				int number;
 				for (number = 0; number < numberofmonsters; number++) {
 					int randomnumber3 = rng.nextInt(monsterdatabase.size());
-					if (levelnumber == 2000) 
+					if (levelnumber == 2000)//FIXMENOTE add other level numbers 
 						addMonsterLevel2000(randomnumber3, number);
 				}
     }
@@ -176,9 +178,11 @@ public class Game extends JPanel implements ActionListener {
     //Inside the City of Dulandar
     public void loadlevel1000()
     {
-
+	levelnumber = 1000;
         //midiplayer = new SimpleMidiPlayer();
 	//midiplayer.playfile("music/" + "towntheme.mid"); 
+	currentbattlebackgrounddatabase = battlebackgrounddatabaselevelstub;
+
 
 	map.setxy(0,-75);
 
@@ -222,6 +226,7 @@ public class Game extends JPanel implements ActionListener {
     public void loadlevel1001()
     {
 
+	levelnumber = 1001;
 	levelnomonsters = true;
 
         overlandcitynumber = -1;
@@ -247,7 +252,7 @@ public class Game extends JPanel implements ActionListener {
     //Dulandar city - inside priest house
     public void loadlevel1002()
     {
-
+	levelnumber = 1002;
 	levelnomonsters = true;
 
 	drawcounter1 = 0;
@@ -275,6 +280,7 @@ public class Game extends JPanel implements ActionListener {
 
     public void loadlevel2000()
     {
+	levelnumber = 2000;
         //midiplayer = new SimpleMidiPlayer();
 	//midiplayer.playfile("music/" + "wilderness.mid"); 
 
@@ -301,7 +307,7 @@ public class Game extends JPanel implements ActionListener {
 
     public void loadlevel3000()
     {
-
+	levelnumber = 3000;
 	levelnomonsters = true;
 
 	drawcounter1 = 0;
@@ -516,7 +522,7 @@ public class Game extends JPanel implements ActionListener {
 	int i;
         for (i = 0; i < numberofplayercharacters; i++) {
       		g2d.setColor(Color.white);
-    		g2d.drawString("" + player.getPlayerName(i) + "  " + player.getPlayerHitpoints(i) + "/" + player.getPlayerMaxHitpoints(i), battlewidget.getx()+210, battlewidget.gety()+30);
+    		g2d.drawString("" + player.getPlayerName(i) + "  " + player.getPlayerHitpoints(i) + "/" + player.getPlayerMaxHitpoints(i), battlewidget.getx()+210, battlewidget.gety() + 12*i + 16);
 	}
     }
 
@@ -536,7 +542,10 @@ public class Game extends JPanel implements ActionListener {
 
     public void DrawBattlePlayer(Graphics g2d, int dx, int dy) {
 	//draw battle stage in combination with map environment
-	g2d.drawImage(player.getLeftImage(2), 250+dx, 96+dy, this);
+	g2d.drawImage(player.getFirstCharacterLeftImage(2), 250+dx, 20+dy, this);
+	g2d.drawImage(player.getSecondCharacterLeftImage(2), 250+dx, 50+dy, this);
+	g2d.drawImage(player.getThirdCharacterLeftImage(2), 250+dx, 80+dy, this);
+	g2d.drawImage(player.getFourthCharacterLeftImage(2), 250+dx, 110+dy, this);
     }
 
     public void DrawBattleMonsters(Graphics2D g2d)
@@ -1148,6 +1157,8 @@ public class Game extends JPanel implements ActionListener {
 	int lvl = CollideGateways();
 	if (lvl != -1) {// || lvl == levelnumber) {
 
+		//System.out.println("lvl 123> " + lvl);
+
 		levelnumber = lvl;
 
 		switch(lvl) {
@@ -1280,8 +1291,8 @@ public class Game extends JPanel implements ActionListener {
 			}
 
 			if (!levelnomonsters) {//generate monsters by walking around
-				if (counter1++ > 77) {
-      					int randomnumber = rng.nextInt(77);//FIXMENOTE! 3200 initiate battle chance
+				if (counter1++ > 77) {//77
+      					int randomnumber = rng.nextInt(77);//FIXMENOTE! 77 initiate battle chance 3200
 			
       					if (randomnumber == 0) {
 						battle = true;

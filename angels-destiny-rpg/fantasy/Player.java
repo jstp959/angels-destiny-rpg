@@ -23,11 +23,16 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-class Player extends NonPlayerCharacter
+class Player extends NonPlayerCharacter //the base class is for use on maps
 {
 protected int hitpoints = 10;
 protected int maxhitpoints = 10;
+protected int numberofplayercharacters = 3;
 protected MonsterDatabasePlayers characterdatabase = new MonsterDatabasePlayers();
+private NonPlayerCharacter firstplayercharacter = new NonPlayerCharacter(0,0,32,32);
+private NonPlayerCharacter secondplayercharacter = new NonPlayerCharacter(0,0,32,32);
+private NonPlayerCharacter thirdplayercharacter = new NonPlayerCharacter(0,0,32,32);
+private NonPlayerCharacter fourthplayercharacter = new NonPlayerCharacter(0,0,32,32);
 
 public Player(int startx, int starty)
 {
@@ -36,6 +41,7 @@ public Player(int startx, int starty)
 
 	maxhitpoints = hitpoints;
 
+	//image on maps
 	addLeftImage("girlglassesleft-32x32-1.png");
 	addLeftImage("girlglassesleft-32x32-2.png");
 	addLeftImage("girlglassesleft-32x32-1.png");
@@ -52,9 +58,103 @@ public Player(int startx, int starty)
 	addDownImage("girlglassesdown-32x32-2.png");
 	addDownImage("girlglassesdown-32x32-1.png");
 	addDownImage("girlglassesdown-32x32-3.png");
+
+	//first player character
+	firstplayercharacter.addLeftImage("girlglassesleft-32x32-1.png");
+	firstplayercharacter.addLeftImage("girlglassesleft-32x32-2.png");
+	firstplayercharacter.addLeftImage("girlglassesleft-32x32-1.png");
+	firstplayercharacter.addLeftImage("girlglassesleft-32x32-3.png");
+	firstplayercharacter.addRightImage("girlglassesright-32x32-1.png");
+	firstplayercharacter.addRightImage("girlglassesright-32x32-2.png");
+	firstplayercharacter.addRightImage("girlglassesright-32x32-1.png");
+	firstplayercharacter.addRightImage("girlglassesright-32x32-3.png");
+	firstplayercharacter.addUpImage("girlglassesup-32x32-1.png");
+	firstplayercharacter.addUpImage("girlglassesup-32x32-2.png");
+	firstplayercharacter.addUpImage("girlglassesup-32x32-1.png");
+	firstplayercharacter.addUpImage("girlglassesup-32x32-3.png");
+	firstplayercharacter.addDownImage("girlglassesdown-32x32-1.png");
+	firstplayercharacter.addDownImage("girlglassesdown-32x32-2.png");
+	firstplayercharacter.addDownImage("girlglassesdown-32x32-1.png");
+	firstplayercharacter.addDownImage("girlglassesdown-32x32-3.png");
+
+	//second player character
+	secondplayercharacter.addLeftImage("girl2left-32x32-1.png");
+	secondplayercharacter.addLeftImage("girl2left-32x32-2.png");
+	secondplayercharacter.addLeftImage("girl2left-32x32-1.png");
+	secondplayercharacter.addLeftImage("girl2left-32x32-3.png");
+	secondplayercharacter.addRightImage("girl2right-32x32-1.png");
+	secondplayercharacter.addRightImage("girl2right-32x32-2.png");
+	secondplayercharacter.addRightImage("girl2right-32x32-1.png");
+	secondplayercharacter.addRightImage("girl2right-32x32-3.png");
+	secondplayercharacter.addUpImage("girl2up-32x32-1.png");
+	secondplayercharacter.addUpImage("girl2up-32x32-2.png");
+	secondplayercharacter.addUpImage("girl2up-32x32-1.png");
+	secondplayercharacter.addUpImage("girl2up-32x32-3.png");
+	secondplayercharacter.addDownImage("girl2down-32x32-1.png");
+	secondplayercharacter.addDownImage("girl2down-32x32-2.png");
+	secondplayercharacter.addDownImage("girl2down-32x32-1.png");
+	secondplayercharacter.addDownImage("girl2down-32x32-3.png");
+
+
+	//third player character
+	thirdplayercharacter.addLeftImage("girl3left-32x32-1.png");
+	thirdplayercharacter.addLeftImage("girl3left-32x32-2.png");
+	thirdplayercharacter.addLeftImage("girl3left-32x32-1.png");
+	thirdplayercharacter.addLeftImage("girl3left-32x32-3.png");
+	thirdplayercharacter.addRightImage("girl3right-32x32-1.png");
+	thirdplayercharacter.addRightImage("girl3right-32x32-2.png");
+	thirdplayercharacter.addRightImage("girl3right-32x32-1.png");
+	thirdplayercharacter.addRightImage("girl3right-32x32-3.png");
+	thirdplayercharacter.addUpImage("girl3up-32x32-1.png");
+	thirdplayercharacter.addUpImage("girl3up-32x32-2.png");
+	thirdplayercharacter.addUpImage("girl3up-32x32-1.png");
+	thirdplayercharacter.addUpImage("girl3up-32x32-3.png");
+	thirdplayercharacter.addDownImage("girl3down-32x32-1.png");
+	thirdplayercharacter.addDownImage("girl3down-32x32-2.png");
+	thirdplayercharacter.addDownImage("girl3down-32x32-1.png");
+	thirdplayercharacter.addDownImage("girl3down-32x32-3.png");
+
+	//fourth player character (stub to start with)
+	fourthplayercharacter.addLeftImage("nullimage.png");
+	fourthplayercharacter.addLeftImage("nullimage.png");
+	fourthplayercharacter.addLeftImage("nullimage.png");
+	fourthplayercharacter.addLeftImage("nullimage.png");
+	fourthplayercharacter.addRightImage("nullimage.png");
+	fourthplayercharacter.addRightImage("nullimage.png");
+	fourthplayercharacter.addRightImage("nullimage.png");
+	fourthplayercharacter.addRightImage("nullimage.png");
+	fourthplayercharacter.addUpImage("nullimage.png");
+	fourthplayercharacter.addUpImage("nullimage.png");
+	fourthplayercharacter.addUpImage("nullimage.png");
+	fourthplayercharacter.addUpImage("nullimage.png");
+	fourthplayercharacter.addDownImage("nullimage.png");
+	fourthplayercharacter.addDownImage("nullimage.png");
+	fourthplayercharacter.addDownImage("nullimage.png");
+	fourthplayercharacter.addDownImage("nullimage.png");
+
 }
 
-/*
+public Image getFirstCharacterLeftImage(int idx)
+{
+	return firstplayercharacter.getLeftImage(idx);
+}
+
+public Image getSecondCharacterLeftImage(int idx)
+{
+	return secondplayercharacter.getLeftImage(idx);
+}
+
+public Image getThirdCharacterLeftImage(int idx)
+{
+	return thirdplayercharacter.getLeftImage(idx);
+}
+
+public Image getFourthCharacterLeftImage(int idx)
+{
+	return fourthplayercharacter.getLeftImage(idx);
+}
+
+/***
 public double distance(int x1, int x2, int y1, int y2)
 {
 	return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
@@ -68,7 +168,7 @@ public boolean collision(Entity e)
 	}
 	else
 		return false;
-}*/
+}***/
 
 public void hit(int index, int hp)
 {

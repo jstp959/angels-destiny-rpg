@@ -120,7 +120,7 @@ public class SimpleMidiPlayer
 
 
 
-	public static void playfile(String midifilename, boolean repeat)
+	public static void playfile(String midifilename, int repeat)
 	{
 		/*
 		 *	We check if there is no command-line argument at all
@@ -290,8 +290,9 @@ public class SimpleMidiPlayer
 		 */
 		sm_sequencer.start();
 
-		if (repeat)
-			playfile(midifilename);
+		if (repeat-- <= 0)
+			return;
+		playfile(midifilename, repeat);
 	}
 
 
