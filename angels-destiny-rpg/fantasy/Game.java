@@ -131,7 +131,7 @@ public class Game extends JPanel implements ActionListener {
     BattleGrid battlegrid = new BattleGrid(6);
 
     public Game() {
-	midiplayer.playfile("music/" + "wilderness.mid"); 
+	midiplayer.playfile("music/" + "wilderness.mid", true);//repeat song (true) 
 
 	/// intro string show setup
 	introstrings.add("The land of Aricea was at peace");
