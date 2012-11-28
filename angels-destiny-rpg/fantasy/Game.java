@@ -165,6 +165,8 @@ public class Game extends JPanel implements ActionListener {
     public void loadlevel1000()
     {
 
+	map.setxy(0,0);
+
 	levelnomonsters = true;
 
 	drawcounter1 = 0;
@@ -176,7 +178,7 @@ public class Game extends JPanel implements ActionListener {
     	map = new Map(0,0,1024,1024, new ImageIcon(prefix+"map-1024x1024-1.png").getImage(), 0, 0);
 	map.setxy(overlandx,overlandy);
 
-	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage()));
+	buildings.add(new Building(0,0,1024,100,new ImageIcon(prefix+"wallrock-1024x100-1.png").getImage()));
 	buildings.add(new Building(0,300,200,200,new ImageIcon(prefix+"building-house-herbist-200x200-2.png").getImage()));
 	buildings.add(new Building(500,300,200,200,new ImageIcon(prefix+"building-house-priest-200x200-2.png").getImage()));
 	buildings.add(new Building(420,280,64,64,new ImageIcon(prefix+"tomb-64x64-1.png").getImage()));
@@ -197,6 +199,7 @@ public class Game extends JPanel implements ActionListener {
 	gateways.add(new Gateway(1024,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
 
 	nonplayercharacters.add(new ElfGreen(163,500,displaylanguage));
+	nonplayercharacters.add(new ElfGreen2(400,200,displaylanguage));
 
     }
 
