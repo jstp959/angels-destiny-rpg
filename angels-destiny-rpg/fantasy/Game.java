@@ -532,6 +532,35 @@ public class Game extends JPanel implements ActionListener {
 	return collide;
      }
 
+    public boolean SetTexts()
+    {
+
+		NonPlayerCharacter b = currentnonplayercharacter;
+
+		if (talkmodeafterlearnedanotherword) {
+			currenttalktext = b.learnedanotherwordtalkto();
+			currenttalktextmax = b.learnedanotherwordtalktomaxindex();
+		}
+		else if (talkmodeafterlearn) {//FIXME elses
+			currenttalktext = b.learntalkto();
+			currenttalktextmax = b.learntalktomaxindex();
+		}
+		else if (talkmodeafteritem) {
+			currenttalktext = b.itemtalkto();
+			currenttalktextmax = b.itemtalktomaxindex();
+		}
+		else if (talkmodeafterask) {
+			currenttalktext = b.asktalkto();
+			currenttalktextmax = b.asktalktomaxindex();
+		}
+		else if (!talkmodeafterask || !talkmodeafteritem || !talkmodeafterlearn || !talkmodeafterlearnedanotherword) {
+			currenttalktext = b.talkto();
+			currenttalktextmax = b.talktomaxindex();
+			currentlearn = b.learn();
+		}
+	return true;
+    }
+
     public boolean CollideNonPlayerCharacters()
     {
 	int i;
@@ -545,28 +574,20 @@ public class Game extends JPanel implements ActionListener {
 		collide = collision(player.getx(), player.gety(), 32,32, b.getx()+map.getx(), b.gety()+map.gety(), b.getw(), b.geth()); //FIXME fixed width&height of player
 
 		if (talkmodeafterlearnedanotherword) {
-			if (currenttalktextindex >= 0) {//FIXMENOTE!
-				currenttalktext = b.learnedanotherwordtalkto(currenttalktextindex);
-				currenttalktextmax = b.learnedanotherwordtalktomaxindex();
-			}
+			currenttalktext = b.learnedanotherwordtalkto();
+			currenttalktextmax = b.learnedanotherwordtalktomaxindex();
 		}
 		else if (talkmodeafterlearn) {//FIXME elses
-			if (currenttalktextindex >= 0) {//FIXMENOTE!
-				currenttalktext = b.learntalkto(currenttalktextindex);
-				currenttalktextmax = b.learntalktomaxindex();
-			}
+			currenttalktext = b.learntalkto();
+			currenttalktextmax = b.learntalktomaxindex();
 		}
 		else if (talkmodeafteritem) {
-			if (currenttalktextindex >= 0) {//FIXMENOTE!
-				currenttalktext = b.itemtalkto(currenttalktextindex);
-				currenttalktextmax = b.itemtalktomaxindex();
-			}
+			currenttalktext = b.itemtalkto();
+			currenttalktextmax = b.itemtalktomaxindex();
 		}
 		else if (talkmodeafterask) {
-			if (currenttalktextindex >= 0) {//FIXMENOTE!
-				currenttalktext = b.asktalkto(currenttalktextindex);
-				currenttalktextmax = b.asktalktomaxindex();
-			}
+			currenttalktext = b.asktalkto();
+			currenttalktextmax = b.asktalktomaxindex();
 		}
 		else if (!talkmodeafterask || !talkmodeafteritem || !talkmodeafterlearn || !talkmodeafterlearnedanotherword) {
 			currenttalktext = b.talkto();
@@ -1155,7 +1176,7 @@ public class Game extends JPanel implements ActionListener {
 		}	
 	   	if (key == KeyEvent.VK_X) {
 
-
+			boolean b = SetTexts();
 			if (currenttalktextindex >= currenttalktextmax && currenttalktextindex >= 0) {
 		       	    learnedanotherwordmode = false;
 			    askmode = false;
@@ -1294,6 +1315,8 @@ public class Game extends JPanel implements ActionListener {
 			}
 	   	}
 	   	if (key == KeyEvent.VK_Z) {//go back to history of talkmodes
+			boolean b = SetTexts();
+
 			learnedanotherwordmode = false;
 			askmode = false;
 			learnmode = false;

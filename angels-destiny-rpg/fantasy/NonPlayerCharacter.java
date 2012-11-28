@@ -197,9 +197,19 @@ public void erasecurrent(int currentlearn)
 	learnvarlib.setText(currentlearn, "-1");//remove learn index feature
 }
 
+public String asktalkto()
+{
+	return asktextlib.getText();
+}
+
 public String asktalkto(int index)
 {
 	return asktextlib.getText(index);
+}
+
+public String itemtalkto()
+{
+	return itemtextlib.getText();
 }
 
 public String itemtalkto(int index)
@@ -207,9 +217,19 @@ public String itemtalkto(int index)
 	return itemtextlib.getText(index);
 }
 
+public String learntalkto()
+{
+	return learntextlib.getText();
+}
+
 public String learntalkto(int index)
 {
 	return learntextlib.getText(index);
+}
+
+public String learnedanotherwordtalkto()
+{
+	return learnedanotherwordtextlib.getText();
 }
 
 public String learnedanotherwordtalkto(int index)
