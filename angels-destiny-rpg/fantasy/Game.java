@@ -548,21 +548,21 @@ public class Game extends JPanel implements ActionListener {
 			currenttalktextmax = b.learnedanotherwordtalktomaxindex();
 			}
 		}
-		if (talkmodeafterlearn) {
+		else if (talkmodeafterlearn) {//FIXME elses
 			if (currenttalktextindex >= 0) {//FIXMENOTE!
 			currenttalktext = b.learntalkto(currenttalktextindex);
 			currenttalktextmax = b.learntalktomaxindex();
 			}
 		}
-		if (talkmodeafteritem) {
+		else if (talkmodeafteritem) {
 			currenttalktext = b.itemtalkto(currenttalktextindex);
 			currenttalktextmax = b.itemtalktomaxindex();
 		}
-		if (talkmodeafterask) {
+		else if (talkmodeafterask) {
 			currenttalktext = b.asktalkto(currenttalktextindex);
 			currenttalktextmax = b.asktalktomaxindex();
 		}
-		if (!talkmodeafterask || !talkmodeafteritem || !talkmodeafterlearn || !talkmodeafterlearnedanotherword) {
+		else if (!talkmodeafterask || !talkmodeafteritem || !talkmodeafterlearn || !talkmodeafterlearnedanotherword) {
 			currenttalktext = b.talkto();
 			currenttalktextmax = b.talktomaxindex();
 			currentlearn = b.learn();
@@ -672,8 +672,8 @@ public class Game extends JPanel implements ActionListener {
 
 	if (talk && collidedwithnonplayercharacter) {
 
-		if (!askmode || !learnedanotherwordmode) {// || !itemmode || !learnmode) {//FIXMENOTE!
-			DrawTalkBackgroundWidget(g2d);
+		//////*****if (!askmode) {// || !learnedanotherwordmode || !itemmode || !learnmode) {//FIXMENOTE!
+	/*****		DrawTalkBackgroundWidget(g2d);
 			if (choosetalkmode) {
 
 				DrawTalkWidget(g2d);
@@ -682,8 +682,8 @@ public class Game extends JPanel implements ActionListener {
 				DrawTalkWidgetHandCursor(g2d);	
 
 			}
-	
-		}
+	******/
+		////}/////*****/
 
 		if (askmode) {
 
@@ -726,6 +726,15 @@ public class Game extends JPanel implements ActionListener {
 		}
 
 		if ((!learnmode && !askmode && !itemmode && !learnedanotherwordmode) || talkmodeafterask || talkmodeafteritem || talkmodeafterlearn || talkmodeafterlearnedanotherword) {//FIXME !itemmode ?
+			DrawTalkBackgroundWidget(g2d);
+			if (choosetalkmode) {
+
+				DrawTalkWidget(g2d);
+				DrawTalkListWidget(g2d);
+			
+				DrawTalkWidgetHandCursor(g2d);	
+
+			}
       			g2d.setColor(Color.white);
     			Font fontfoo = new Font("Serif", Font.PLAIN, 17);
         		g2d.setFont(fontfoo);
@@ -1084,7 +1093,7 @@ public class Game extends JPanel implements ActionListener {
 			} else if (learnedanotherwordmode) {
 				learnedanotherwordwidget.movehandup();
 
-			} else {		
+			} else if (!talk) {		
 				player.settomoving("up");
 				map.movedown();
 			}
@@ -1101,7 +1110,7 @@ public class Game extends JPanel implements ActionListener {
 			} else if (learnedanotherwordmode) {
 				learnedanotherwordwidget.movehanddown();
 				
-			} else {		
+			} else if (!talk) {		
 				player.settomoving("down");
 				map.moveup();
 			}
@@ -1176,7 +1185,7 @@ public class Game extends JPanel implements ActionListener {
 				
 				currenttalktext = currentnonplayercharacter.learntalkto(idx);	
 				//currenttalktextmax = currentnonplayercharacter.learntalktomaxindex();
-				currenttalktextindex = -1;
+				currenttalktextindex = 0;//FIXMENOTE! -1
 				learnmode = false;
 				//choosetalkmode = true;
 				//talk = true;
@@ -1191,7 +1200,8 @@ public class Game extends JPanel implements ActionListener {
 				
 				currenttalktext = currentnonplayercharacter.learnedanotherwordtalkto(idx);	
 				//currenttalktextmax = currentnonplayercharacter.learntalktomaxindex();
-				currenttalktextindex = -1;
+				currenttalktextindex = 0;//FIXMENOTE! -1;
+				///////learnmode = false;//FIXMENOTE
 				learnedanotherwordmode = false;
 				//choosetalkmode = true;
 				//talk = true;
@@ -1209,7 +1219,10 @@ public class Game extends JPanel implements ActionListener {
 					askmode = true;
 					break;
 				case 1:
-					//if (learnedanotherwordmode, not (!) set above in pure learnmode
+					//if (learnedanotherwordmode, not (!) set above in pure learnmode FIXMENOTE
+					//if (currentlearn >= 0)
+					//	learnedanotherwordmode = true;
+					//else
 					learnmode = true;
 					break;
 				case 2:
@@ -1223,7 +1236,23 @@ public class Game extends JPanel implements ActionListener {
 			} else if (!choosetalkmode) {
 				//FIXME!
 				if (talk && collidedwithnonplayercharacter) {//FIXMENOTE
-					talk = false;
+					//end talking when through all text
+					if (currenttalktextindex >= currenttalktextmax) { 
+					    learnedanotherwordmode = false;
+					    askmode = false;
+					    learnmode = false;
+					    itemmode = false;
+					    talk = false;
+    					    talkmodeafterlearnedanotherword = false;
+    					    talkmodeafterask = false;
+    					    talkmodeafterlearn = false;
+    					    talkmodeafteritem = false;
+					
+    					    currenttalktext = "";
+    					    currenttalktextindex = -1;
+    					    currenttalktextmax = 0;
+    					    currentlearn = -1;
+					}
 				} else if (collidedwithnonplayercharacter) {
 					currenttalktextindex++;
 					talk = true;
