@@ -23,7 +23,7 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-class ElfPriest extends TownsFolk 
+class ElfPriest extends TownsFolk2 
 {
 
 public ElfPriest(int startx, int starty, String language)
@@ -32,7 +32,7 @@ public ElfPriest(int startx, int starty, String language)
 
 	direction = "down";
 
-	addDownImage("elfherbist-48x48-1.png");
+	addDownImage("priest-48x64-1.png");
 
 	if (language == "Dutch" || language == "dutch") {
 

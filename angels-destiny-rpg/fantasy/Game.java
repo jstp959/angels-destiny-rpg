@@ -141,7 +141,7 @@ public class Game extends JPanel implements ActionListener {
         timer = new Timer(40, this);
         timer.start();
 
-	loadlevel1000();
+	loadlevel1002();
 
 
 	//delete, for starting battle mode
@@ -244,7 +244,7 @@ public class Game extends JPanel implements ActionListener {
 	//exit to map gateways
 	gateways.add(new Gateway(0,200,320,50,1000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),0,-420));
 
-	nonplayercharacters.add(new ElfPriest(83,40,displaylanguage));
+	nonplayercharacters.add(new ElfPriest(83,10,displaylanguage));
 
     }
 
