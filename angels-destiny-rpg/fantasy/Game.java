@@ -178,7 +178,11 @@ public class Game extends JPanel implements ActionListener {
 
 	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage()));
 	buildings.add(new Building(0,300,200,200,new ImageIcon(prefix+"building-house-herbist-200x200-2.png").getImage()));
-	buildings.add(new Building(500,300,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
+	buildings.add(new Building(500,300,200,200,new ImageIcon(prefix+"building-house-priest-200x200-2.png").getImage()));
+	buildings.add(new Building(420,280,64,64,new ImageIcon(prefix+"tomb-64x64-1.png").getImage()));
+	buildings.add(new Building(430,340,64,64,new ImageIcon(prefix+"tomb-64x64-1.png").getImage()));
+	buildings.add(new Building(425,400,64,64,new ImageIcon(prefix+"tomb-64x64-1.png").getImage()));
+	buildings.add(new Building(432,460,64,64,new ImageIcon(prefix+"tomb-64x64-1.png").getImage()));
 	buildings.add(new Building(300,600,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
 	buildings.add(new Building(800,400,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
 
@@ -210,8 +214,8 @@ public class Game extends JPanel implements ActionListener {
     	map = new Map(0,0,320,200, new ImageIcon(prefix+"map-herbist-house-320x200-1.png").getImage(), 0, 0);
 	map.setxy(overlandx,overlandy);
 
-	buildings.add(new Furniture(0,0,24,64,new ImageIcon(prefix+"furniture-japan-24x64-1.png").getImage()));
-	buildings.add(new Furniture(320-24,0,24,64,new ImageIcon(prefix+"furniture-japan-24x64-1.png").getImage()));
+	buildings.add(new Furniture(50,50,24,64,new ImageIcon(prefix+"furniture-japan-24x64-1.png").getImage()));
+	buildings.add(new Furniture(320-24-50,50,24,64,new ImageIcon(prefix+"furniture-japan-24x64-1.png").getImage()));
 	//exit to map gateways
 	gateways.add(new Gateway(0,200,320,50,1000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),0,-420));
 
@@ -1375,37 +1379,6 @@ public class Game extends JPanel implements ActionListener {
     			currenttalktextmax = 0;
     			currentlearn = -1;
 			return;
-		/******************
-			if (choosetalkmode) {
-				choosetalkmode = false;
-				//currenttalktextindex = -1;
-			}
-
-			if (learnmode) {
-				learnmode = false;
-			}
-
-			if (askmode) {
-				askmode = false;
-			}
-
-			if (itemmode) {
-				itemmode = false;
-			}
-
-			if (talkmodeafterask) {
-				talkmodeafterask = false;
-			}
-			if (talkmodeafteritem) {
-				talkmodeafteritem = false;
-			}
-			if (talkmodeafterlearn) {
-				talkmodeafterlearn = false;
-			}
-			if (talkmodeafterlearnedanotherword) {
-				talkmodeafterlearnedanotherword = false;
-			}
-			******************/
 		}
 	   } else if (battle) {
 	   	if (key == KeyEvent.VK_LEFT) {
