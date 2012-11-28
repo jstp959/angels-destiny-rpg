@@ -148,8 +148,9 @@ public class SimpleMidiPlayer
 			 *	including the stack trace to the console.
 			 *	Then, we exit the program.
 			 */
-			e.printStackTrace();
-			System.exit(1);
+			//e.printStackTrace();
+			//System.exit(1);
+			return;
 		}
 		catch (IOException e)
 		{
@@ -158,8 +159,9 @@ public class SimpleMidiPlayer
 			 *	including the stack trace to the console.
 			 *	Then, we exit the program.
 			 */
-			e.printStackTrace();
-			System.exit(1);
+			//e.printStackTrace();
+			//System.exit(1);
+			return;
 		}
 
 		/*
@@ -172,13 +174,15 @@ public class SimpleMidiPlayer
 		}
 		catch (MidiUnavailableException e)
 		{
-			e.printStackTrace();
-			System.exit(1);
+			//e.printStackTrace();
+			//System.exit(1);
+			return;
 		}
 		if (sm_sequencer == null)
 		{
-			out("SimpleMidiPlayer.main(): can't get a Sequencer");
-			System.exit(1);
+			//out("SimpleMidiPlayer.main(): can't get a Sequencer");
+			//System.exit(1);
+			return;
 		}
 
 		/*
@@ -202,7 +206,8 @@ public class SimpleMidiPlayer
 						{
 							sm_synthesizer.close();
 						}
-						System.exit(0);
+						//System.exit(0);
+						return;
 					}
 				}
 			});
@@ -219,8 +224,9 @@ public class SimpleMidiPlayer
 		}
 		catch (MidiUnavailableException e)
 		{
-			e.printStackTrace();
-			System.exit(1);
+			//e.printStackTrace();
+			//System.exit(1);
+			return;
 		}
 
 		/*
@@ -234,8 +240,9 @@ public class SimpleMidiPlayer
 		}
 		catch (InvalidMidiDataException e)
 		{
-			e.printStackTrace();
-			System.exit(1);
+			//e.printStackTrace();
+			//System.exit(1);
+			return;
 		}
 
 		/*
@@ -288,16 +295,17 @@ public class SimpleMidiPlayer
 
 	private static void printUsageAndExit()
 	{
-		out("SimpleMidiPlayer: usage:");
-		out("\tjava SimpleMidiPlayer <midifile>");
-		System.exit(1);
+		//out("SimpleMidiPlayer: usage:");
+		//out("\tjava SimpleMidiPlayer <midifile>");
+		//System.exit(1);
+		return;
 	}
 
 
 
 	private static void out(String strMessage)
 	{
-		System.out.println(strMessage);
+		//System.out.println(strMessage);
 	}
 }
 
