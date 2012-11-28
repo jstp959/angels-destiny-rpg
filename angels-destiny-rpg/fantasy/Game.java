@@ -187,7 +187,8 @@ public class Game extends JPanel implements ActionListener {
 	buildings.add(new Building(800,400,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
 
 	//house gateways
-	gateways.add(new Gateway(0,300+200,200,-1,1001,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-200,-200));
+	gateways.add(new Gateway(0,300+200,200,15,1001,-1,new ImageIcon(prefix+"nullimage.png").getImage(),0,0));
+	gateways.add(new Gateway(500,300+200,200,15,1002,-1,new ImageIcon(prefix+"nullimage.png").getImage(),0,0));
 
 	//exit map gateways
 	gateways.add(new Gateway(0,0,1024,50,2000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
@@ -219,9 +220,36 @@ public class Game extends JPanel implements ActionListener {
 	//exit to map gateways
 	gateways.add(new Gateway(0,200,320,50,1000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),0,-420));
 
-	nonplayercharacters.add(new ElfHerbist(63,50,displaylanguage));
+	nonplayercharacters.add(new ElfHerbist(73,50,displaylanguage));
 
     }
+
+    //Dulandar city - inside priest house
+    public void loadlevel1002()
+    {
+
+	levelnomonsters = true;
+
+	drawcounter1 = 0;
+
+	buildings.clear();
+	gateways.clear();
+	nonplayercharacters.clear();
+
+    	map = new Map(0,0,320,200, new ImageIcon(prefix+"map-priest-house-320x200-1.png").getImage(), 0, 0);
+	map.setxy(overlandx,overlandy);
+
+	buildings.add(new Furniture(50,50,24,64,new ImageIcon(prefix+"furniture-japan-24x64-1.png").getImage()));
+	buildings.add(new Furniture(320-24-50,50,24,64,new ImageIcon(prefix+"furniture-japan-24x64-1.png").getImage()));
+	//exit to map gateways
+	gateways.add(new Gateway(0,200,320,50,1000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),0,-420));
+
+	nonplayercharacters.add(new ElfPriest(83,40,displaylanguage));
+
+    }
+
+
+
     public void loadlevel2000()
     {
 	levelnomonsters = false;
@@ -1083,6 +1111,9 @@ public class Game extends JPanel implements ActionListener {
 				break;
 			case 1001:
 				loadlevel1001();
+				break;
+			case 1002:
+				loadlevel1002();
 				break;
 			case 2000:
 				loadlevel2000();

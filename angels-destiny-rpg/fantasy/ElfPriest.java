@@ -23,10 +23,10 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-class ElfHerbist extends TownsFolk 
+class ElfPriest extends TownsFolk 
 {
 
-public ElfHerbist(int startx, int starty, String language)
+public ElfPriest(int startx, int starty, String language)
 {
 	super(startx,starty);
 
@@ -36,38 +36,33 @@ public ElfHerbist(int startx, int starty, String language)
 
 	if (language == "Dutch" || language == "dutch") {
 
-		textlib.addText("Ik ben de kruidendokter.");
-		textlib.addText("Ik zoek wilde ajuin : [img]onion-1.png[img].");
+		textlib.addText("Ik ben de priester.");
 		//set to "-1" for not popping up the learn widget
 		learnvarlib.addText("-1");
-		learnvarlib.addText("-1");
 
-		asktextlib.addText("Dag!");
-		itemtextlib.addText("Je zou het moeten wetten.");
-		learntextlib.addText("Dulandar is ons dorp.");
-		learnedanotherwordtextlib.addText("Elfen .. zijn elfen.");
+		asktextlib.addText("Uw naam weze gezegend.");
+		itemtextlib.addText("Mooi onderhouden zwaard.");
+		learntextlib.addText("Dulandar betekent hemel op aarde.");
+		learnedanotherwordtextlib.addText("Elfen zijn stoicijns.");
 	} else if (language == "English" || language == "english") {
 
-		textlib.addText("I am a herbist.");
-		textlib.addText("I am looking for wild onion : [img]onion-1.png[img].");
-		learnvarlib.addText("-1");
+		textlib.addText("I am the priest around here.");
 		learnvarlib.addText("-1");
 
-		asktextlib.addText("Goodday!");
-		itemtextlib.addText("You should whet your sword.");
-		learntextlib.addText("Dulandar is our town.");
-		learnedanotherwordtextlib.addText("Elves .. are elves.");
+		asktextlib.addText("Your name be blessed.");
+		itemtextlib.addText("Looks like a fine sword to me.");
+		learntextlib.addText("Dulandar means heaven on earth.");
+		learnedanotherwordtextlib.addText("Elves are stoic.");
 	} else {
 
-		textlib.addText("I am a herbist.");
-		textlib.addText("I am looking for wild onion : [img]onion-1.png[img].");
-		learnvarlib.addText("-1");
+
+		textlib.addText("I am the priest around here.");
 		learnvarlib.addText("-1");
 
-		asktextlib.addText("Goodday!");
-		itemtextlib.addText("You should whet your sword.");
-		learntextlib.addText("Dulandar is our town.");
-		learnedanotherwordtextlib.addText("Elves .. are elves.");
+		asktextlib.addText("Your name be blessed.");
+		itemtextlib.addText("Looks like a fine sword to me.");
+		learntextlib.addText("Dulandar means heaven on earth.");
+		learnedanotherwordtextlib.addText("Elves are stoic.");
 	}
 }
 
