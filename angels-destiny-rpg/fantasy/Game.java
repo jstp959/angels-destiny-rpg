@@ -91,6 +91,8 @@ public class Game extends JPanel implements ActionListener {
     FantasyLearnWidget learnwidget = new FantasyLearnWidget(0,0,learnworddatabase.size());//NOTE! use setsize for enlarging the learnwidget
     FantasyLearnWidget learnedanotherwordwidget = new FantasyLearnWidget(0,0,learnworddatabase.size());//NOTE! use setsize for enlarging the learnwidget
 
+
+    boolean handmove = false;
     boolean learnedanotherwordmode = false;
     boolean askmode = false;
     boolean learnmode = false;
@@ -676,19 +678,6 @@ public class Game extends JPanel implements ActionListener {
 
 	if (talk && collidedwithnonplayercharacter) {
 
-		//////*****if (!askmode) {// || !learnedanotherwordmode || !itemmode || !learnmode) {//FIXMENOTE!
-	/*****		DrawTalkBackgroundWidget(g2d);
-			if (choosetalkmode) {
-
-				DrawTalkWidget(g2d);
-				DrawTalkListWidget(g2d);
-			
-				DrawTalkWidgetHandCursor(g2d);	
-
-			}
-	******/
-		////}/////*****/
-
 		if (askmode) {
 
 			DrawAskBackgroundWidget(g2d);
@@ -1093,14 +1082,19 @@ public class Game extends JPanel implements ActionListener {
 
 			if (choosetalkmode) {
 				talkwidget.movehandup();
+				handmove = true;
 			} else if (askmode) {
 				askwidget.movehandup();
+				handmove = true;
 			} else if (learnmode) {
 				learnwidget.movehandup();
+				handmove = true;
 			} else if (itemmode) {
 				itemwidget.movehandup();
+				handmove = true;
 			} else if (learnedanotherwordmode) {
 				learnedanotherwordwidget.movehandup();
+				handmove = true;
 
 			} else if (!talk) {		
 				player.settomoving("up");
@@ -1110,14 +1104,19 @@ public class Game extends JPanel implements ActionListener {
 	   	if (key == KeyEvent.VK_DOWN) {
 			if (choosetalkmode) {
 				talkwidget.movehanddown();
+				handmove = true;
 			} else if (askmode) {
 				askwidget.movehanddown();
+				handmove = true;
 			} else if (learnmode) {
 				learnwidget.movehanddown();
+				handmove = true;
 			} else if (itemmode) {
 				itemwidget.movehanddown();
+				handmove = true;
 			} else if (learnedanotherwordmode) {
 				learnedanotherwordwidget.movehanddown();
+				handmove = true;
 				
 			} else if (!talk) {		
 				player.settomoving("down");
@@ -1156,6 +1155,26 @@ public class Game extends JPanel implements ActionListener {
 		}	
 	   	if (key == KeyEvent.VK_X) {
 
+
+			if (currenttalktextindex >= currenttalktextmax && currenttalktextindex >= 0) {
+		       	    learnedanotherwordmode = false;
+			    askmode = false;
+			    learnmode = false;
+			    itemmode = false;
+			    talk = false;
+    			    talkmodeafterlearnedanotherword = false;
+    			    talkmodeafterask = false;
+    			    talkmodeafterlearn = false;
+    			    talkmodeafteritem = false;
+					
+    			    currenttalktext = "";
+    			    currenttalktextindex = 0;//-1;
+    			    currenttalktextmax = 0;
+    			    currentlearn = -1;
+				
+				return;
+			}
+
 			if (askmode) {
 
 				int idx = askwidget.getindex();
@@ -1163,7 +1182,7 @@ public class Game extends JPanel implements ActionListener {
 
 				
 				currenttalktext = currentnonplayercharacter.asktalkto(idx);	
-				//currenttalktextmax = currentnonplayercharacter.asktalktomaxindex();
+				currenttalktextmax = currentnonplayercharacter.asktalktomaxindex();
 				currenttalktextindex = -1;
 				askmode = false;
 				//choosetalkmode = true;
@@ -1178,7 +1197,7 @@ public class Game extends JPanel implements ActionListener {
 
 				
 				currenttalktext = currentnonplayercharacter.itemtalkto(idx);	
-				//currenttalktextmax = currentnonplayercharacter.itemtalktomaxindex();
+				currenttalktextmax = currentnonplayercharacter.itemtalktomaxindex();
 				currenttalktextindex = -1;
 				itemmode = false;
 				//choosetalkmode = true;
@@ -1193,7 +1212,7 @@ public class Game extends JPanel implements ActionListener {
 
 				
 				currenttalktext = currentnonplayercharacter.learntalkto(idx);	
-				//currenttalktextmax = currentnonplayercharacter.learntalktomaxindex();
+				currenttalktextmax = currentnonplayercharacter.learntalktomaxindex();
 				currenttalktextindex = 0;//FIXMENOTE! -1
 				learnmode = false;
 				//choosetalkmode = true;
@@ -1208,7 +1227,7 @@ public class Game extends JPanel implements ActionListener {
 
 				
 				currenttalktext = currentnonplayercharacter.learnedanotherwordtalkto(idx);	
-				//currenttalktextmax = currentnonplayercharacter.learntalktomaxindex();
+				currenttalktextmax = currentnonplayercharacter.learntalktomaxindex();
 				currenttalktextindex = 0;//FIXMENOTE! -1;
 				///////learnmode = false;//FIXMENOTE
 				learnedanotherwordmode = false;
@@ -1263,20 +1282,49 @@ public class Game extends JPanel implements ActionListener {
     					    currentlearn = -1;
 					}
 				} else if (collidedwithnonplayercharacter) {
-					currenttalktextindex++;
+
+					//if (!handmove) {
+    						if (currenttalktextindex >= currenttalktextmax)
+							currenttalktextindex = -1;
+						currenttalktextindex++;
+					//} 
+					//handmove = false;
 					talk = true;
 				}
 			}
 	   	}
 	   	if (key == KeyEvent.VK_Z) {//go back to history of talkmodes
-
+			learnedanotherwordmode = false;
+			askmode = false;
+			learnmode = false;
+			itemmode = false;
+			talk = false;
+    			talkmodeafterlearnedanotherword = false;
+    			talkmodeafterask = false;
+    			talkmodeafterlearn = false;
+    			talkmodeafteritem = false;
+				
+    			currenttalktext = "";
+    			currenttalktextindex = 0;//-1;
+    			currenttalktextmax = 0;
+    			currentlearn = -1;
+			return;
+		/******************
 			if (choosetalkmode) {
 				choosetalkmode = false;
-				currenttalktextindex = -1;
+				//currenttalktextindex = -1;
+			}
+
+			if (learnmode) {
+				learnmode = false;
 			}
 
 			if (askmode) {
 				askmode = false;
+			}
+
+			if (itemmode) {
+				itemmode = false;
 			}
 
 			if (talkmodeafterask) {
@@ -1291,6 +1339,7 @@ public class Game extends JPanel implements ActionListener {
 			if (talkmodeafterlearnedanotherword) {
 				talkmodeafterlearnedanotherword = false;
 			}
+			******************/
 		}
 	   } else if (battle) {
 	   	if (key == KeyEvent.VK_LEFT) {

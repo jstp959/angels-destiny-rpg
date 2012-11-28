@@ -38,28 +38,37 @@ public ElfPurple(int startx, int starty, String language)
 
 		textlib.addText("Waar je nu bent is een kerker geweest..");
 		textlib.addText("maar ik heb hem tot mijn huis gemaakt.");
+		learnvarlib.addText("-1");
+		learnvarlib.addText("-1");
 
 		asktextlib.addText("Hallo vriend.");
 		itemtextlib.addText("Ik heb een kort zwaard voor mezelf.");
 		learntextlib.addText("Daar weet ik niets van.");
+		learnedanotherwordtextlib.addText("Ik ben een rode elf.");
 
 	} else if (language == "English" || language == "english") {
 
 		textlib.addText("This used to be a dungeon..");
 		textlib.addText("Now it is my home.");
+		learnvarlib.addText("-1");
+		learnvarlib.addText("-1");
 
 		asktextlib.addText("Hello friend.");
 		itemtextlib.addText("I have a short sword for my own use.");
 		learntextlib.addText("I do not know anything about that.");
+		learnedanotherwordtextlib.addText("I am a red elf.");
 
 	} else {
 
 		textlib.addText("This used to be a dungeon..");
 		textlib.addText("Now it is my home.");
+		learnvarlib.addText("-1");
+		learnvarlib.addText("-1");
 
 		asktextlib.addText("Hello friend.");
 		itemtextlib.addText("I have a short sword for my own use.");
 		learntextlib.addText("I do not know anything about that.");
+		learnedanotherwordtextlib.addText("I am a red elf.");
 
 	}
 }
