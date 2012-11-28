@@ -183,7 +183,8 @@ public class Game extends JPanel implements ActionListener {
 	gateways.add(new Gateway(0,1024,1024,50,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
 	gateways.add(new Gateway(0,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
 	gateways.add(new Gateway(1024,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
-	nonplayercharacters.add(new ElfGreen(163,500,displaylanguage));
+	///////nonplayercharacters.add(new ElfGreen(163,500,displaylanguage));
+	nonplayercharacters.add(new ElfGreen(163,100,displaylanguage));
 	//monsters.add(new Slime(48,96)); //FIXME
     }
 
@@ -542,12 +543,16 @@ public class Game extends JPanel implements ActionListener {
 		collide = collision(player.getx(), player.gety(), 32,32, b.getx()+map.getx(), b.gety()+map.gety(), b.getw(), b.geth()); //FIXME fixed width&height of player
 
 		if (talkmodeafterlearnedanotherword) {
+			if (currenttalktextindex >= 0) {//FIXMENOTE!
 			currenttalktext = b.learnedanotherwordtalkto(currenttalktextindex);
 			currenttalktextmax = b.learnedanotherwordtalktomaxindex();
+			}
 		}
 		if (talkmodeafterlearn) {
+			if (currenttalktextindex >= 0) {//FIXMENOTE!
 			currenttalktext = b.learntalkto(currenttalktextindex);
 			currenttalktextmax = b.learntalktomaxindex();
+			}
 		}
 		if (talkmodeafteritem) {
 			currenttalktext = b.itemtalkto(currenttalktextindex);
@@ -667,7 +672,7 @@ public class Game extends JPanel implements ActionListener {
 
 	if (talk && collidedwithnonplayercharacter) {
 
-		if (!askmode || !learnedanotherwordmode || !itemmode || !learnmode) {//FIXMENOTE!
+		if (!askmode || !learnedanotherwordmode) {// || !itemmode || !learnmode) {//FIXMENOTE!
 			DrawTalkBackgroundWidget(g2d);
 			if (choosetalkmode) {
 
@@ -1044,7 +1049,7 @@ public class Game extends JPanel implements ActionListener {
 		collidedwithnonplayercharacter = true;
 
 		//FIXMEif (!choosetalkmode) {
-			return;//FIXME leave this, collidedwithnonplayercharacter gets set in (key == ...) further on
+			return;//FIXMENOTE leave this, collidedwithnonplayercharacter gets set in (key == ...) further on
 		//}
 	   } else {//NOTE!
 		if (!choosetalkmode) {//FIXME
@@ -1070,6 +1075,15 @@ public class Game extends JPanel implements ActionListener {
 
 			if (choosetalkmode) {
 				talkwidget.movehandup();
+			} else if (askmode) {
+				askwidget.movehandup();
+			} else if (learnmode) {
+				learnwidget.movehandup();
+			} else if (itemmode) {
+				itemwidget.movehandup();
+			} else if (learnedanotherwordmode) {
+				learnedanotherwordwidget.movehandup();
+
 			} else {		
 				player.settomoving("up");
 				map.movedown();
@@ -1078,6 +1092,15 @@ public class Game extends JPanel implements ActionListener {
 	   	if (key == KeyEvent.VK_DOWN) {
 			if (choosetalkmode) {
 				talkwidget.movehanddown();
+			} else if (askmode) {
+				askwidget.movehanddown();
+			} else if (learnmode) {
+				learnwidget.movehanddown();
+			} else if (itemmode) {
+				itemwidget.movehanddown();
+			} else if (learnedanotherwordmode) {
+				learnedanotherwordwidget.movehanddown();
+				
 			} else {		
 				player.settomoving("down");
 				map.moveup();
@@ -1145,7 +1168,7 @@ public class Game extends JPanel implements ActionListener {
 				talkmodeafteritem = true;
 			}
 
-			if (learnmode && !learnedanotherwordmode) {//FIXMENOTE!
+			if (learnmode) { // && !learnedanotherwordmode) {//FIXMENOTE!
 
 				int idx = learnwidget.getindex();
 				//String word = learnworddatabase.getWord(idx);
