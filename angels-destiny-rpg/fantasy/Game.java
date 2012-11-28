@@ -141,7 +141,7 @@ public class Game extends JPanel implements ActionListener {
         timer = new Timer(40, this);
         timer.start();
 
-	loadlevel1();
+	loadlevel1000();
 
 
 	//delete, for starting battle mode
@@ -161,7 +161,8 @@ public class Game extends JPanel implements ActionListener {
         GameInit();
     }
 
-    public void loadlevel1()
+    //Inside the City of Dulandar
+    public void loadlevel1000()
     {
 
 	levelnomonsters = true;
@@ -195,7 +196,41 @@ public class Game extends JPanel implements ActionListener {
 
     }
 
-    public void loadlevel2()
+    //Dulandar city - inside herbist house
+    public void loadlevel1001()
+    {
+
+	levelnomonsters = true;
+
+	drawcounter1 = 0;
+
+	buildings.clear();
+	gateways.clear();
+	nonplayercharacters.clear();
+
+    	map = new Map(0,0,320,200, new ImageIcon(prefix+"map-herbist-house-320x200-1.png").getImage(), 0, 0);
+	map.setxy(overlandx,overlandy);
+
+	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage()));
+	buildings.add(new Building(0,300,200,200,new ImageIcon(prefix+"building-house-herbist-200x200-2.png").getImage()));
+	buildings.add(new Building(500,300,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
+	buildings.add(new Building(300,600,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
+	buildings.add(new Building(800,400,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
+
+	//house gateways
+	gateways.add(new Gateway(0,300+200,200,10,1001,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-200,-200));
+
+	//exit map gateways
+	gateways.add(new Gateway(0,0,1024,50,2000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
+	gateways.add(new Gateway(0,1024,1024,50,2000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
+	gateways.add(new Gateway(0,0,50,1024,2000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
+	gateways.add(new Gateway(1024,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
+
+	nonplayercharacters.add(new ElfGreen(163,500,displaylanguage));
+	//monsters.add(new Slime(48,96)); //FIXME
+
+    }
+    public void loadlevel2000()
     {
 	levelnomonsters = false;
 /////not used here	overlandcitynumber = 2;
@@ -214,7 +249,7 @@ public class Game extends JPanel implements ActionListener {
 
     }
 
-    public void loadlevel3()
+    public void loadlevel3000()
     {
 
 	levelnomonsters = true;
@@ -1042,13 +1077,16 @@ public class Game extends JPanel implements ActionListener {
 
 		switch(lvl) {
 			case 1000:
-				loadlevel1();
+				loadlevel1000();
+				break;
+			case 1001:
+				loadlevel1001();
 				break;
 			case 2000:
-				loadlevel2();
+				loadlevel2000();
 				break;
 			case 3000:
-				loadlevel3();
+				loadlevel3000();
 				break;
 			default:
 				break;
