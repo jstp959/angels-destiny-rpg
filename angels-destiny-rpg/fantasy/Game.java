@@ -756,7 +756,7 @@ public class Game extends JPanel implements ActionListener {
 
 			if (currentlearn > 0) {
 				learnedanotherwordmode = true;
-				talkwidget.setindex(1);
+				talkwidget.setindex(currentlearn);
 				learnworddatabase.addWord(learnworddatabase.getNewWord(currentlearn));//if the word is already in the db it does not learn it again
 	
 				learnedanotherwordwidget.setListSize(learnedanotherwordwidget.getListSize() + 1);
