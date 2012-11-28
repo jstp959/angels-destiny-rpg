@@ -141,7 +141,7 @@ public class Game extends JPanel implements ActionListener {
         timer = new Timer(40, this);
         timer.start();
 
-	loadlevel1000();
+	loadlevel1001();
 
 
 	//delete, for starting battle mode
@@ -183,7 +183,7 @@ public class Game extends JPanel implements ActionListener {
 	buildings.add(new Building(800,400,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
 
 	//house gateways
-	gateways.add(new Gateway(0,300+200,200,10,2000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-200,-200));
+	gateways.add(new Gateway(0,300+200,200,-1,1001,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-200,-200));
 
 	//exit map gateways
 	gateways.add(new Gateway(0,0,1024,50,2000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
@@ -192,7 +192,6 @@ public class Game extends JPanel implements ActionListener {
 	gateways.add(new Gateway(1024,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
 
 	nonplayercharacters.add(new ElfGreen(163,500,displaylanguage));
-	//monsters.add(new Slime(48,96)); //FIXME
 
     }
 
@@ -211,23 +210,12 @@ public class Game extends JPanel implements ActionListener {
     	map = new Map(0,0,320,200, new ImageIcon(prefix+"map-herbist-house-320x200-1.png").getImage(), 0, 0);
 	map.setxy(overlandx,overlandy);
 
-	buildings.add(new Building(0,0,100,100,new ImageIcon(prefix+"wallrock-100x100-1.png").getImage()));
-	buildings.add(new Building(0,300,200,200,new ImageIcon(prefix+"building-house-herbist-200x200-2.png").getImage()));
-	buildings.add(new Building(500,300,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
-	buildings.add(new Building(300,600,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
-	buildings.add(new Building(800,400,200,200,new ImageIcon(prefix+"building-house-200x200-2.png").getImage()));
+	buildings.add(new Furniture(0,0,24,64,new ImageIcon(prefix+"furniture-japan-24x64-1.png").getImage()));
+	buildings.add(new Furniture(320-24,0,24,64,new ImageIcon(prefix+"furniture-japan-24x64-1.png").getImage()));
+	//exit to map gateways
+	gateways.add(new Gateway(0,200,320,50,1000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),0,-420));
 
-	//house gateways
-	gateways.add(new Gateway(0,300+200,200,10,1001,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-200,-200));
-
-	//exit map gateways
-	gateways.add(new Gateway(0,0,1024,50,2000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
-	gateways.add(new Gateway(0,1024,1024,50,2000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
-	gateways.add(new Gateway(0,0,50,1024,2000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
-	gateways.add(new Gateway(1024,0,50,1024,2,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-100,-100));
-
-	nonplayercharacters.add(new ElfGreen(163,500,displaylanguage));
-	//monsters.add(new Slime(48,96)); //FIXME
+	nonplayercharacters.add(new ElfGreen(63,50,displaylanguage));
 
     }
     public void loadlevel2000()
