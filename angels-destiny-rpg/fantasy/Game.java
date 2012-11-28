@@ -58,6 +58,8 @@ public class Game extends JPanel implements ActionListener {
     private LinkedList gateways = new LinkedList();
     private int levelnumber = 1000;
 
+    private SimpleMidiPlayer midiplayer = new SimpleMidiPlayer();
+
     //note that battlebackgrounddatabases are empty to start with and need to get filled every level initialisation
     private BattleBackgroundDatabase battlebackgrounddatabaselevel2000 = new BattleBackgroundDatabase();   
     private BattleBackgroundDatabase backgrounddatabaselevelXXXX = new BattleBackgroundDatabase();   
@@ -129,6 +131,7 @@ public class Game extends JPanel implements ActionListener {
     BattleGrid battlegrid = new BattleGrid(6);
 
     public Game() {
+	midiplayer.playfile("music/" + "wilderness.mid"); 
 
 	/// intro string show setup
 	introstrings.add("The land of Aricea was at peace");
@@ -173,6 +176,9 @@ public class Game extends JPanel implements ActionListener {
     //Inside the City of Dulandar
     public void loadlevel1000()
     {
+
+        //midiplayer = new SimpleMidiPlayer();
+	//midiplayer.playfile("music/" + "towntheme.mid"); 
 
 	map.setxy(0,-75);
 
@@ -269,6 +275,9 @@ public class Game extends JPanel implements ActionListener {
 
     public void loadlevel2000()
     {
+        //midiplayer = new SimpleMidiPlayer();
+	//midiplayer.playfile("music/" + "wilderness.mid"); 
+
 	levelnomonsters = false;//you can be attacked in this map
         battlebackgrounddatabaselevel2000.addImage("battlestage-cave-1.png");   
         battlebackgrounddatabaselevel2000.addImage("battlestage-badlands-1.png");   
@@ -868,6 +877,9 @@ public class Game extends JPanel implements ActionListener {
 	if (battlebackgroundimageset) {
 		DrawBattleStage(g2d);
 	} else {
+        	//midiplayer = new SimpleMidiPlayer();
+		//midiplayer.playfile("music/" + "battle.mid");
+
 		int randomnumber = rng.nextInt(currentbattlebackgrounddatabase.size());
 		battlebackgroundimage = currentbattlebackgrounddatabase.getImage(randomnumber); 
 		battlebackgroundimageset = true;
