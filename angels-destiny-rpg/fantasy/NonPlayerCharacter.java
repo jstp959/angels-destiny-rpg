@@ -40,6 +40,7 @@ protected StateTextLibrary textlib = new StateTextLibrary();
 protected StateTextLibrary asktextlib = new StateTextLibrary();
 protected StateTextLibrary itemtextlib = new StateTextLibrary();
 protected StateTextLibrary learntextlib = new StateTextLibrary();
+protected StateTextLibrary learnedanotherwordtextlib = new StateTextLibrary();
 
 protected StateTextLibrary learnvarlib = new StateTextLibrary();
 
@@ -202,6 +203,11 @@ public String learntalkto(int index)
 	return learntextlib.getText(index);
 }
 
+public String learnedanotherwordtalkto(int index)
+{
+	return learnedanotherwordtextlib.getText(index);
+}
+
 public int talktomaxindex()
 {
 	return textlib.getmax();
@@ -220,6 +226,11 @@ public int itemtalktomaxindex()
 public int learntalktomaxindex()
 {
 	return learntextlib.getmax();
+}
+
+public int learnedanotherwordtalktomaxindex()
+{
+	return learnedanotherwordtextlib.getmax();
 }
 
 };

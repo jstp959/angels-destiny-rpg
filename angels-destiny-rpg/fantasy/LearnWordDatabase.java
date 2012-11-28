@@ -40,6 +40,11 @@ public LearnWordDatabase()
 
 public void addWord(String w)
 {
+	int i;
+	for (i = 0; i < words.size(); i++)//check if word is already in list
+		if (w == words.get(i))
+			return;
+
 	words.add(w);
 }
 
