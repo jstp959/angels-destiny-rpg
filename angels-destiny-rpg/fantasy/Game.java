@@ -692,8 +692,8 @@ public class Game extends JPanel implements ActionListener {
 
 			if (currentlearn > 0) {
 				//askmode = true;
-				askwidget.setindex(1);
-				learnworddatabase.addWord("Foo");	
+				talkwidget.setindex(1);
+				learnworddatabase.addWord(learnworddatabase.getNewWord(currentlearn));
 				currentlearn = -1;
 			}
 

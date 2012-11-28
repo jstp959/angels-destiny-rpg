@@ -31,9 +31,11 @@ class LearnWordDatabase extends LearnWordDatabaseBase
 
 public LearnWordDatabase()
 {
-	//add all words which can be learned
 	words.add("Dulandar");
 
+	//add all words which can be learned
+	allwords.add("Dulandar");
+	allwords.add("Elves");
 }
 
 public void addWord(String w)

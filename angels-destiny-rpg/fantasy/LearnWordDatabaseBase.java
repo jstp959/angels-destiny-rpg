@@ -29,6 +29,7 @@ import java.util.*;
 class LearnWordDatabaseBase
 {
 protected LinkedList words = new LinkedList();
+protected LinkedList allwords = new LinkedList();
 
 public LearnWordDatabaseBase()
 {
@@ -43,6 +44,13 @@ public int size()
 public String getWord(int index)
 {
 	Object o = words.get(index);
+	String s = (String)o;
+	return s;
+}
+
+public String getNewWord(int index)
+{
+	Object o = allwords.get(index);
 	String s = (String)o;
 	return s;
 }
