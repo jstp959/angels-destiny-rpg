@@ -57,6 +57,14 @@ public class Game extends JPanel implements ActionListener {
     private LinkedList buildings = new LinkedList();
     private LinkedList gateways = new LinkedList();
     private int levelnumber = 1000;
+
+    //note that battlebackgrounddatabases are empty to start with and need to get filled every level initialisation
+    private BattleBackgroundDatabase battlebackgrounddatabaselevel2000 = new BattleBackgroundDatabase();   
+    private BattleBackgroundDatabase backgrounddatabaselevelXXXX = new BattleBackgroundDatabase();   
+    private BattleBackgroundDatabase currentbattlebackgrounddatabase;
+    private boolean battlebackgroundimageset = false;
+    private Image battlebackgroundimage;
+
     private int overlandcitynumber = 1;
     private int overlandx = 0;
     private int overlandy = 0;
@@ -103,7 +111,7 @@ public class Game extends JPanel implements ActionListener {
     boolean showintro = false;
     LinkedList introstrings = new LinkedList();
 	//battle screen is on 
-    boolean battle = false;//NOTE! false to start game
+    boolean battle = true;//NOTE! false to start game
 	//a battle phase is being displayed
     boolean battlegoingon = false;
     boolean chooseattackmode = false;
@@ -244,6 +252,7 @@ public class Game extends JPanel implements ActionListener {
 
 	buildings.add(new Furniture(50,50,24,64,new ImageIcon(prefix+"furniture-japan-24x64-1.png").getImage()));
 	buildings.add(new Furniture(320-24-50,50,24,64,new ImageIcon(prefix+"furniture-japan-24x64-1.png").getImage()));
+	buildings.add(new Furniture(120,10,48,48,new ImageIcon(prefix+"macintosh-1.png").getImage()));
 	//exit to map gateways
 	gateways.add(new Gateway(0,200,320,50,1000,-1,new ImageIcon(prefix+"nullimage.png").getImage(),-500,-420));
 
@@ -255,8 +264,10 @@ public class Game extends JPanel implements ActionListener {
 
     public void loadlevel2000()
     {
-	levelnomonsters = false;
-/////not used here	overlandcitynumber = 2;
+	levelnomonsters = false;//you can be attacked in this map
+        battlebackgrounddatabaselevel2000.addImage("battlestage-cave-1.png");   
+        battlebackgrounddatabaselevel2000.addImage("battlestage-badlands-1.png");   
+	currentbattlebackgrounddatabase = battlebackgrounddatabaselevel2000;
 
 	drawcounter1 = 0;
 
@@ -503,7 +514,8 @@ public class Game extends JPanel implements ActionListener {
 
     public void DrawBattleStage(Graphics g2d) {
 	//draw battle stage in combination with map environment
-	g2d.drawImage(new ImageIcon(prefix+"battlestage-1.png").getImage(), 0, 0, this);
+	////////g2d.drawImage(new ImageIcon(prefix+"battlestage-1.png").getImage(), 0, 0, this);
+	g2d.drawImage(battlebackgroundimage, 0, 0, this);
     }
 
     public void DrawBattlePlayer(Graphics g2d, int dx, int dy) {
@@ -845,7 +857,15 @@ public class Game extends JPanel implements ActionListener {
 		}
 	}
       } else if (battle) {//battle screen
-	DrawBattleStage(g2d);
+
+	if (battlebackgroundimageset) {
+		DrawBattleStage(g2d);
+	} else {
+		int randomnumber = rng.nextInt(currentbattlebackgrounddatabase.size());
+		battlebackgroundimage = currentbattlebackgrounddatabase.getImage(randomnumber); 
+		battlebackgroundimageset = true;
+	}
+
 	DrawBattleMonsters(g2d);
 	DrawBattlePlayer(g2d,0,0);
 	DrawBattleWidget(g2d);
@@ -1022,6 +1042,8 @@ public class Game extends JPanel implements ActionListener {
 					attack = false;
 					battle = false;
 					
+					battlebackgroundimageset = false;
+
 					return "0";
 				}
 				break;
@@ -1238,7 +1260,7 @@ public class Game extends JPanel implements ActionListener {
 			}
 
 			if (!levelnomonsters) {//generate monsters by walking around
-      				int randomnumber = rng.nextInt(3200);
+      				int randomnumber = rng.nextInt(1000);//FIXMENOTE! 3200 initiate battle chance
       				if (randomnumber == 0) {
 					battle = true;
 
