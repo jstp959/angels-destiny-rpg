@@ -90,7 +90,7 @@ public class Game extends JPanel implements ActionListener {
     FantasyHandCursorWidget handcursorwidget = new FantasyHandCursorWidget(96,96);
     FantasyTalkWidget talkwidget = new FantasyTalkWidget(0,0);
     String currenttalktext = "";
-    NonPlayerCharacter currentnonplayercharacter;
+    private NonPlayerCharacter currentnonplayercharacter;
     int currenttalktextindex = -1;
     int currenttalktextmax = 0;
     int currentlearn = -1;
