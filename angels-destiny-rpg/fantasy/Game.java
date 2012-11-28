@@ -160,7 +160,7 @@ public class Game extends JPanel implements ActionListener {
 				int number;
 				for (number = 0; number < numberofmonsters; number++) {
 					int randomnumber3 = rng.nextInt(monsterdatabase.size());
-					if (level == 2000) 
+					if (levelnumber == 2000) 
 						addMonsterLevel2000(randomnumber3, number);
 				}
     }
@@ -218,6 +218,8 @@ public class Game extends JPanel implements ActionListener {
 
 	levelnomonsters = true;
 
+        overlandcitynumber = -1;
+
 	drawcounter1 = 0;
 
 	buildings.clear();
@@ -244,6 +246,8 @@ public class Game extends JPanel implements ActionListener {
 
 	drawcounter1 = 0;
 
+        overlandcitynumber = -1;
+
 	buildings.clear();
 	gateways.clear();
 	nonplayercharacters.clear();
@@ -269,6 +273,8 @@ public class Game extends JPanel implements ActionListener {
         battlebackgrounddatabaselevel2000.addImage("battlestage-cave-1.png");   
         battlebackgrounddatabaselevel2000.addImage("battlestage-badlands-1.png");   
 	currentbattlebackgrounddatabase = battlebackgrounddatabaselevel2000;
+
+        overlandcitynumber = -1;
 
 	drawcounter1 = 0;
 
