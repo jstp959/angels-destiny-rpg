@@ -23,9 +23,9 @@ import java.awt.event.KeyEvent;
 
 import java.util.*;
 
-class FantasyAskWidget extends FantasyWidget
+class FantasyInventoryChooserWidget extends FantasyWidget
 {
-protected FantasyAskListVerticalWidget listwidget = new FantasyAskListVerticalWidget(0,0); 
+protected FantasyInventoryChooseVerticalWidget listwidget = new FantasyInventoryChooserListVerticalWidget(0,0); 
 
 protected Image backgroundimage;
 protected String prefix = "pics/";
@@ -36,8 +36,7 @@ public FantasyAskWidget(int sx, int sy, int sz)
 	listwidget.sety(sy);
 	listwidget.setsize(sz);
 
-	backgroundimage = new ImageIcon(prefix+"askwidgetlistbackground-1.png").getImage();
-	///addImage("talkwidget-1.png");//FIXME
+	backgroundimage = new ImageIcon(prefix+"inventorywidgetlistbackground-1.png").getImage();
 }
 
 public Image getBackgroundImage()
